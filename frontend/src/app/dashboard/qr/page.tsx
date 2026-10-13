@@ -143,7 +143,7 @@ export default function QrManagementPage() {
           <Skeleton className="h-64 w-full" />
         </div>
       ) : qrCodes.length === 0 ? (
-        <div className="bg-white border border-[#DECDB5] p-12 text-center text-xs font-bold uppercase text-[#594B42]">
+        <div className="bg-white rounded-2xl border border-[#E8E2D9] p-12 text-center text-xs font-bold uppercase text-[#594B42] shadow-xs">
           No QR codes generated yet. Click &quot;Generate QR Code&quot; to create your table menu stand.
         </div>
       ) : (
@@ -158,7 +158,7 @@ export default function QrManagementPage() {
             return (
               <div
                 key={qr._id}
-                className="bg-white border-2 border-[#5E0B15] p-6 flex flex-col justify-between shadow-xs"
+                className="bg-white rounded-2xl border border-[#E8E2D9] p-6 flex flex-col justify-between shadow-xs hover:shadow-md transition-all"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
@@ -168,14 +168,14 @@ export default function QrManagementPage() {
                     <button
                       onClick={() => handleRegenerate(qr._id)}
                       title="Regenerate QR Graphic"
-                      className="text-[#594B42] hover:text-[#5E0B15] p-1 transition-colors cursor-pointer"
+                      className="text-[#594B42] hover:text-[#5E0B15] p-1.5 rounded-lg hover:bg-[#FAF7F2] transition-colors cursor-pointer"
                     >
                       <RefreshCw className="w-4 h-4" />
                     </button>
                   </div>
 
                   {/* QR Image Canvas */}
-                  <div className="bg-[#F7F3EC] p-4 border border-[#DECDB5] flex items-center justify-center mb-4">
+                  <div className="bg-[#FAF7F2] p-4 rounded-xl border border-[#E8E2D9] flex items-center justify-center mb-4">
                     <img
                       src={qr.imageData}
                       alt="Dine-in QR"
@@ -183,7 +183,7 @@ export default function QrManagementPage() {
                     />
                   </div>
 
-                  <h3 className="text-sm font-black text-[#5E0B15] uppercase tracking-wider mb-1 truncate">
+                  <h3 className="text-sm font-bold text-[#5E0B15] uppercase tracking-wider mb-1 truncate">
                     {isMenu ? currentRestaurant?.name : dishName}
                   </h3>
 
@@ -192,13 +192,13 @@ export default function QrManagementPage() {
                   </p>
                 </div>
 
-                <div className="space-y-2 pt-4 border-t border-[#DECDB5]">
+                <div className="space-y-2 pt-4 border-t border-[#E8E2D9]">
                   <div className="grid grid-cols-2 gap-2">
                     <Button
                       variant="primary"
                       size="sm"
                       onClick={() => downloadQrPng(qr)}
-                      className="uppercase font-bold text-[11px]"
+                      className="uppercase font-bold text-[11px] rounded-lg shadow-xs"
                     >
                       <Download className="w-3.5 h-3.5 mr-1" /> PNG
                     </Button>
@@ -206,7 +206,7 @@ export default function QrManagementPage() {
                       variant="outline"
                       size="sm"
                       onClick={() => handlePrint(qr)}
-                      className="uppercase font-bold text-[11px]"
+                      className="uppercase font-bold text-[11px] rounded-lg shadow-xs"
                     >
                       <Printer className="w-3.5 h-3.5 mr-1" /> Print
                     </Button>

@@ -76,10 +76,10 @@ export default function DashboardOverviewPage() {
   return (
     <DashboardShell>
       {/* Restaurant Status Banner */}
-      <div className="bg-white border-2 border-[#5E0B15] p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="bg-white rounded-2xl border border-[#E8E2D9] p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-xs">
         <div>
-          <div className="flex items-center gap-3 mb-1">
-            <h1 className="text-xl font-black text-[#5E0B15] uppercase tracking-wider">
+          <div className="flex items-center gap-3 mb-1.5">
+            <h1 className="text-xl sm:text-2xl font-black text-[#5E0B15] uppercase tracking-wider">
               {currentRestaurant?.name || 'Selected Dining Venue'}
             </h1>
             {currentRestaurant?.approvalStatus === RestaurantApprovalStatus.APPROVED ? (
@@ -88,7 +88,7 @@ export default function DashboardOverviewPage() {
               <Badge variant="warning">{currentRestaurant?.approvalStatus || 'PENDING'}</Badge>
             )}
           </div>
-          <p className="text-xs text-[#594B42] max-w-xl">
+          <p className="text-xs text-[#594B42] max-w-xl leading-relaxed">
             {currentRestaurant?.description || 'Authentic pure dining experience with interactive 3D AR digital menu.'}
           </p>
         </div>
@@ -98,7 +98,7 @@ export default function DashboardOverviewPage() {
             <Link
               href={`/r/${currentRestaurant.slug}`}
               target="_blank"
-              className="inline-flex items-center gap-2 bg-[#5E0B15] text-[#EDE1CF] px-4 py-2.5 text-xs font-bold uppercase tracking-wider hover:bg-[#450810] transition-colors border border-[#5E0B15]"
+              className="inline-flex items-center gap-2 bg-[#5E0B15] text-white px-4 py-2.5 text-xs font-bold uppercase tracking-wider hover:bg-[#480810] transition-colors rounded-lg shadow-xs"
             >
               <span>View Customer Menu</span>
               <ExternalLink className="w-4 h-4" />
@@ -191,29 +191,30 @@ export default function DashboardOverviewPage() {
       {/* Quick Actions & Menu Preview */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left 2 Cols: Recent Dishes */}
-        <div className="lg:col-span-2 bg-white border border-[#DECDB5] p-6 space-y-4">
-          <div className="flex items-center justify-between border-b border-[#DECDB5] pb-3">
-            <h2 className="text-sm font-extrabold uppercase tracking-wider text-[#5E0B15]">
+        <div className="lg:col-span-2 bg-white rounded-2xl border border-[#E8E2D9] p-6 space-y-4 shadow-xs">
+          <div className="flex items-center justify-between border-b border-[#E8E2D9] pb-3">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-[#5E0B15]">
               Dishes & AR Food Offerings
             </h2>
             <Link href="/dashboard/dishes">
-              <Button variant="primary" size="sm" className="uppercase font-bold tracking-wider">
+              <Button variant="primary" size="sm" className="uppercase font-bold tracking-wider rounded-lg shadow-xs">
                 <Plus className="w-3.5 h-3.5 mr-1" /> Add Dish
               </Button>
             </Link>
           </div>
 
           {isLoading ? (
-            <div className="space-y-2 py-4">
-              <Skeleton className="h-10 w-full" />
-              <Skeleton className="h-10 w-full" />
+            <div className="space-y-3 py-2">
+              <Skeleton className="h-12 w-full rounded-xl" />
+              <Skeleton className="h-12 w-full rounded-xl" />
+              <Skeleton className="h-12 w-full rounded-xl" />
             </div>
           ) : dishes.length === 0 ? (
             <div className="py-8 text-center text-xs font-semibold text-[#594B42] uppercase tracking-wider">
               No dishes created yet. Start by creating categories and adding items.
             </div>
           ) : (
-            <div className="divide-y divide-[#DECDB5]">
+            <div className="divide-y divide-[#F5EFE6]">
               {dishes.slice(0, 5).map((d) => (
                 <div key={d._id} className="py-3 flex items-center justify-between">
                   <div>
@@ -222,7 +223,7 @@ export default function DashboardOverviewPage() {
                         {d.name}
                       </span>
                       {d.model3dUrl && (
-                        <span className="text-[10px] bg-[#EDE1CF] text-[#5E0B15] font-extrabold px-1.5 py-0.2 border border-[#5E0B15]">
+                        <span className="text-[10px] bg-[#EBF7ED] text-[#1E562A] font-bold px-2 py-0.5 rounded-full border border-[#C3E4C8]">
                           3D AR
                         </span>
                       )}
@@ -245,14 +246,14 @@ export default function DashboardOverviewPage() {
         </div>
 
         {/* Right Col: Operations Quick Links */}
-        <div className="bg-white border border-[#DECDB5] p-6 space-y-4">
-          <h2 className="text-sm font-extrabold uppercase tracking-wider text-[#5E0B15] border-b border-[#DECDB5] pb-3">
+        <div className="bg-white rounded-2xl border border-[#E8E2D9] p-6 space-y-4 shadow-xs">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-[#5E0B15] border-b border-[#E8E2D9] pb-3">
             Quick Operations
           </h2>
-          <div className="space-y-2">
+          <div className="space-y-2.5">
             <Link
               href="/dashboard/categories"
-              className="flex items-center justify-between p-3 bg-[#F7F3EC] border border-[#DECDB5] hover:border-[#5E0B15] text-xs font-bold uppercase tracking-wider text-[#5E0B15] transition-colors"
+              className="flex items-center justify-between p-3.5 bg-[#FAF7F2] rounded-xl border border-[#E8E2D9] hover:border-[#90323D] hover:bg-white text-xs font-bold uppercase tracking-wider text-[#5E0B15] transition-all shadow-xs"
             >
               <span>Organize Menu Categories</span>
               <ArrowRight className="w-4 h-4 text-[#90323D]" />
@@ -260,7 +261,7 @@ export default function DashboardOverviewPage() {
 
             <Link
               href="/dashboard/media"
-              className="flex items-center justify-between p-3 bg-[#F7F3EC] border border-[#DECDB5] hover:border-[#5E0B15] text-xs font-bold uppercase tracking-wider text-[#5E0B15] transition-colors"
+              className="flex items-center justify-between p-3.5 bg-[#FAF7F2] rounded-xl border border-[#E8E2D9] hover:border-[#90323D] hover:bg-white text-xs font-bold uppercase tracking-wider text-[#5E0B15] transition-all shadow-xs"
             >
               <span>Upload 3D Models & Photos</span>
               <ArrowRight className="w-4 h-4 text-[#90323D]" />
@@ -268,7 +269,7 @@ export default function DashboardOverviewPage() {
 
             <Link
               href="/dashboard/qr"
-              className="flex items-center justify-between p-3 bg-[#F7F3EC] border border-[#DECDB5] hover:border-[#5E0B15] text-xs font-bold uppercase tracking-wider text-[#5E0B15] transition-colors"
+              className="flex items-center justify-between p-3.5 bg-[#FAF7F2] rounded-xl border border-[#E8E2D9] hover:border-[#90323D] hover:bg-white text-xs font-bold uppercase tracking-wider text-[#5E0B15] transition-all shadow-xs"
             >
               <span>Download Dine-In QR Stand</span>
               <ArrowRight className="w-4 h-4 text-[#90323D]" />
@@ -276,7 +277,7 @@ export default function DashboardOverviewPage() {
 
             <Link
               href="/dashboard/staff"
-              className="flex items-center justify-between p-3 bg-[#F7F3EC] border border-[#DECDB5] hover:border-[#5E0B15] text-xs font-bold uppercase tracking-wider text-[#5E0B15] transition-colors"
+              className="flex items-center justify-between p-3.5 bg-[#FAF7F2] rounded-xl border border-[#E8E2D9] hover:border-[#90323D] hover:bg-white text-xs font-bold uppercase tracking-wider text-[#5E0B15] transition-all shadow-xs"
             >
               <span>Manage Staff Team</span>
               <ArrowRight className="w-4 h-4 text-[#90323D]" />

@@ -108,7 +108,7 @@ export default function AdminRestaurantsPage() {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white border border-[#DECDB5] p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="bg-white rounded-xl border border-[#E8E2D9] p-4 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xs">
         <div className="w-full sm:w-72 relative">
           <Input
             placeholder="SEARCH BY RESTAURANT NAME..."
@@ -119,15 +119,15 @@ export default function AdminRestaurantsPage() {
         </div>
 
         {/* Status Filter Buttons */}
-        <div className="flex items-center gap-1 overflow-x-auto w-full sm:w-auto">
+        <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto">
           {['ALL', 'PENDING', 'APPROVED', 'SUSPENDED'].map((st) => (
             <button
               key={st}
               onClick={() => setStatusFilter(st)}
-              className={`px-3 py-1.5 text-xs font-bold uppercase tracking-wider border cursor-pointer transition-colors ${
+              className={`px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider rounded-lg border cursor-pointer transition-all ${
                 statusFilter === st
-                  ? 'bg-[#5E0B15] text-[#EDE1CF] border-[#5E0B15]'
-                  : 'bg-white text-[#594B42] border-[#DECDB5] hover:bg-[#F7F3EC]'
+                  ? 'bg-[#5E0B15] text-white border-[#5E0B15] shadow-xs'
+                  : 'bg-white text-[#594B42] border-[#E8E2D9] hover:bg-[#FAF7F2]'
               }`}
             >
               {st}

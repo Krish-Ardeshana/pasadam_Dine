@@ -99,7 +99,7 @@ export default function RestaurantSettingsPage() {
               </label>
               <textarea
                 rows={3}
-                className="w-full px-3 py-2 bg-white border border-[#D6C5A9] text-sm text-[#1C120C] focus:outline-none focus:border-[#5E0B15]"
+                className="w-full px-3.5 py-2 bg-white rounded-lg border border-[#DCD5C9] text-sm text-[#1C120C] shadow-xs focus:outline-none focus:ring-2 focus:ring-[#90323D]/20 focus:border-[#90323D] transition-all"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />

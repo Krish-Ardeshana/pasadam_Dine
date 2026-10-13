@@ -24,10 +24,10 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           id={inputId}
           ref={ref}
           className={clsx(
-            'w-full px-3 py-2 bg-white border text-sm text-[#1C120C] placeholder-[#9C8B7E] transition-colors',
-            'focus:outline-none focus:border-[#5E0B15]',
-            error ? 'border-[#90323D]' : 'border-[#D6C5A9] hover:border-[#B89E78]',
-            props.disabled && 'bg-[#F7F3EC] opacity-60 cursor-not-allowed',
+            'w-full px-3.5 py-2 bg-white rounded-lg border text-sm text-[#1C120C] placeholder-[#9C8B7E] shadow-xs transition-all',
+            'focus:outline-none focus:ring-2 focus:ring-[#90323D]/20 focus:border-[#90323D]',
+            error ? 'border-[#90323D]' : 'border-[#DCD5C9] hover:border-[#B89E78]',
+            props.disabled && 'bg-[#FAF7F2] opacity-60 cursor-not-allowed',
             className,
           )}
           {...props}
@@ -64,10 +64,10 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
           id={selectId}
           ref={ref}
           className={clsx(
-            'w-full px-3 py-2 bg-white border text-sm text-[#1C120C] transition-colors appearance-none cursor-pointer',
-            'focus:outline-none focus:border-[#5E0B15]',
-            error ? 'border-[#90323D]' : 'border-[#D6C5A9] hover:border-[#B89E78]',
-            props.disabled && 'bg-[#F7F3EC] opacity-60 cursor-not-allowed',
+            'w-full px-3.5 py-2 bg-white rounded-lg border text-sm text-[#1C120C] shadow-xs transition-all appearance-none cursor-pointer',
+            'focus:outline-none focus:ring-2 focus:ring-[#90323D]/20 focus:border-[#90323D]',
+            error ? 'border-[#90323D]' : 'border-[#DCD5C9] hover:border-[#B89E78]',
+            props.disabled && 'bg-[#FAF7F2] opacity-60 cursor-not-allowed',
             className,
           )}
           {...props}

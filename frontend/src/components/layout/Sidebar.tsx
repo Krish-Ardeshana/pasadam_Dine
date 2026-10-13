@@ -19,7 +19,6 @@ import {
   ShieldCheck,
 } from 'lucide-react';
 import { useAuth } from '@/context/auth-context';
-import { Role } from '@/lib/types';
 
 interface SidebarProps {
   onCloseMobile?: () => void;
@@ -52,18 +51,18 @@ export const Sidebar: React.FC<SidebarProps> = ({ onCloseMobile }) => {
   const navItems = isSuperAdmin && pathname.startsWith('/admin') ? adminNav : restaurantNav;
 
   return (
-    <aside className="w-64 bg-[#90323D] text-white flex flex-col h-full border-r border-[#782732] shrink-0">
+    <aside className="w-64 bg-[#90323D] text-white flex flex-col h-full border-r border-[#782732] shrink-0 select-none shadow-sm">
       {/* Brand Header */}
-      <div className="p-5 border-b border-[#782732] bg-[#782732]">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-[#5E0B15] text-[#EDE1CF] flex items-center justify-center font-black text-lg border border-[#EDE1CF]/20">
+      <div className="p-5 border-b border-[#782732] bg-[#782732]/70">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 bg-[#5E0B15] text-[#EDE1CF] rounded-xl flex items-center justify-center font-black text-lg border border-white/10 shadow-sm">
             P
           </div>
           <div>
             <h1 className="text-sm font-extrabold tracking-widest text-[#EDE1CF] uppercase">
               PRASADAM_DINE
             </h1>
-            <p className="text-[10px] tracking-wider text-[#EDE1CF]/70 uppercase">
+            <p className="text-[10px] font-medium tracking-wider text-[#EDE1CF]/70 uppercase">
               AR Smart Dining System
             </p>
           </div>
@@ -72,8 +71,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ onCloseMobile }) => {
 
       {/* Multi-Restaurant Switcher */}
       {!isSuperAdmin && assignedRestaurants.length > 0 && (
-        <div className="px-4 py-3 bg-[#782732]/60 border-b border-[#782732]">
-          <label className="text-[10px] font-bold tracking-wider text-[#EDE1CF]/70 uppercase block mb-1">
+        <div className="px-4 py-3 bg-[#782732]/50 border-b border-[#782732]">
+          <label className="text-[10px] font-bold tracking-wider text-[#EDE1CF]/80 uppercase block mb-1.5">
             Active Restaurant
           </label>
           <div className="relative">
@@ -83,21 +82,21 @@ export const Sidebar: React.FC<SidebarProps> = ({ onCloseMobile }) => {
                 const found = assignedRestaurants.find((r) => r._id === e.target.value);
                 if (found) setCurrentRestaurant(found);
               }}
-              className="w-full bg-[#5E0B15] text-[#EDE1CF] text-xs font-semibold px-2.5 py-1.5 border border-[#EDE1CF]/20 appearance-none cursor-pointer focus:outline-none"
+              className="w-full bg-[#5E0B15] text-white text-xs font-semibold px-3 py-2 rounded-lg border border-white/10 appearance-none cursor-pointer focus:outline-none focus:ring-1 focus:ring-white/30 shadow-xs"
             >
               {assignedRestaurants.map((r) => (
-                <option key={r._id} value={r._id}>
+                <option key={r._id} value={r._id} className="bg-[#5E0B15] text-white">
                   {r.name}
                 </option>
               ))}
             </select>
-            <ChevronDown className="w-3.5 h-3.5 text-[#EDE1CF]/70 absolute right-2.5 top-2.5 pointer-events-none" />
+            <ChevronDown className="w-3.5 h-3.5 text-white/70 absolute right-3 top-3 pointer-events-none" />
           </div>
         </div>
       )}
 
       {/* Navigation Links */}
-      <nav className="flex-1 py-4 px-3 space-y-1 overflow-y-auto">
+      <nav className="flex-1 py-4 px-3 space-y-1.5 overflow-y-auto">
         {navItems.map((item) => {
           const isActive = pathname === item.href;
           const Icon = item.icon;
@@ -108,9 +107,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ onCloseMobile }) => {
               href={item.href}
               onClick={onCloseMobile}
               className={clsx(
-                'flex items-center gap-3 px-3 py-2.5 text-xs font-semibold uppercase tracking-wider transition-colors',
+                'flex items-center gap-3 px-3.5 py-2.5 text-xs font-semibold uppercase tracking-wider rounded-lg transition-all duration-150',
                 isActive
-                  ? 'bg-[#5E0B15] text-[#EDE1CF] border-l-4 border-[#EDE1CF]'
+                  ? 'bg-[#5E0B15] text-white shadow-xs font-bold'
                   : 'text-white/80 hover:bg-[#782732] hover:text-white',
               )}
             >
@@ -127,54 +126,47 @@ export const Sidebar: React.FC<SidebarProps> = ({ onCloseMobile }) => {
               <Link
                 href="/dashboard"
                 onClick={onCloseMobile}
-                className="flex items-center gap-3 px-3 py-2 text-xs font-semibold uppercase tracking-wider text-[#EDE1CF]/80 hover:text-white"
+                className="flex items-center gap-3 px-3.5 py-2.5 text-xs font-semibold uppercase tracking-wider rounded-lg text-[#EDE1CF]/90 hover:bg-[#782732] hover:text-white transition-colors"
               >
-                <UtensilsCrossed className="w-4 h-4" />
-                <span>Restaurant View</span>
+                <Building2 className="w-4 h-4 shrink-0" />
+                <span>Go to Restaurant Ops</span>
               </Link>
             ) : (
               <Link
                 href="/admin"
                 onClick={onCloseMobile}
-                className="flex items-center gap-3 px-3 py-2 text-xs font-semibold uppercase tracking-wider text-[#EDE1CF] bg-[#5E0B15] hover:bg-[#450810]"
+                className="flex items-center gap-3 px-3.5 py-2.5 text-xs font-semibold uppercase tracking-wider rounded-lg text-[#EDE1CF]/90 hover:bg-[#782732] hover:text-white transition-colors"
               >
-                <ShieldCheck className="w-4 h-4 text-[#EDE1CF]" />
-                <span>Super Admin Portal</span>
+                <ShieldCheck className="w-4 h-4 shrink-0" />
+                <span>Go to Super Admin</span>
               </Link>
             )}
           </div>
         )}
       </nav>
 
-      {/* Public Menu Quick Link */}
-      {currentRestaurant?.slug && (
-        <div className="p-3 border-t border-[#782732] bg-[#782732]/40">
-          <Link
-            href={`/r/${currentRestaurant.slug}`}
-            target="_blank"
-            className="flex items-center justify-between px-3 py-2 text-xs font-bold text-[#EDE1CF] bg-[#5E0B15] hover:bg-[#450810] border border-[#EDE1CF]/20 transition-colors uppercase tracking-wider"
+      {/* User Footer Profile & Logout */}
+      <div className="p-4 border-t border-[#782732] bg-[#782732]/70">
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div className="w-8 h-8 rounded-full bg-[#5E0B15] border border-white/20 flex items-center justify-center text-xs font-bold text-white shrink-0 shadow-xs">
+              {user?.name?.charAt(0).toUpperCase() || 'U'}
+            </div>
+            <div className="min-w-0">
+              <p className="text-xs font-bold text-white truncate">{user?.name || 'User'}</p>
+              <p className="text-[10px] text-[#EDE1CF]/80 uppercase truncate tracking-wider">
+                {user?.role?.replace('_', ' ')}
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={() => logout()}
+            title="Log Out"
+            className="p-1.5 rounded-lg text-[#EDE1CF]/80 hover:text-white hover:bg-[#5E0B15] transition-colors cursor-pointer"
           >
-            <span>View Public Menu</span>
-            <ExternalLink className="w-3.5 h-3.5" />
-          </Link>
+            <LogOut className="w-4 h-4" />
+          </button>
         </div>
-      )}
-
-      {/* User Footer & Logout */}
-      <div className="p-4 border-t border-[#782732] bg-[#782732] flex items-center justify-between">
-        <div className="truncate mr-2">
-          <p className="text-xs font-bold text-[#EDE1CF] truncate uppercase tracking-wider">
-            {user?.name || 'Authorized User'}
-          </p>
-          <p className="text-[10px] text-[#EDE1CF]/70 truncate">{user?.role}</p>
-        </div>
-        <button
-          onClick={logout}
-          title="Logout"
-          className="text-[#EDE1CF]/70 hover:text-white p-1.5 transition-colors cursor-pointer"
-        >
-          <LogOut className="w-4 h-4" />
-        </button>
       </div>
     </aside>
   );

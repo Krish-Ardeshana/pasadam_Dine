@@ -18,27 +18,27 @@ export const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const baseClasses =
-    'inline-flex items-center justify-center font-medium tracking-wide transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed select-none border text-sm';
+    'inline-flex items-center justify-center font-medium tracking-wide transition-all duration-150 active:scale-[0.98] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed select-none border text-sm rounded-lg shadow-xs';
 
   const sizeClasses = {
-    sm: 'px-3 py-1.5 text-xs',
-    md: 'px-4 py-2 text-sm',
-    lg: 'px-6 py-3 text-base',
+    sm: 'px-3 py-1.5 text-xs rounded-md',
+    md: 'px-4 py-2 text-sm rounded-lg',
+    lg: 'px-6 py-2.5 text-base rounded-xl',
   };
 
   const variantClasses = {
-    // 10% Chocolate Cosmos primary action
+    // Chocolate Cosmos primary action with crisp white text
     primary:
-      'bg-[#5E0B15] text-[#EDE1CF] border-[#5E0B15] hover:bg-[#450810] active:bg-[#34040A]',
-    // 30% Cordovan secondary action
+      'bg-[#5E0B15] text-white border-[#5E0B15] hover:bg-[#480810] active:bg-[#34040A] shadow-sm hover:shadow',
+    // Cordovan secondary action
     secondary:
-      'bg-[#90323D] text-white border-[#90323D] hover:bg-[#782732] active:bg-[#5E0B15]',
+      'bg-[#90323D] text-white border-[#90323D] hover:bg-[#782732] active:bg-[#5E0B15] shadow-sm hover:shadow',
     outline:
-      'bg-transparent text-[#5E0B15] border-[#5E0B15] hover:bg-[#F7F3EC] active:bg-[#EDE1CF]',
+      'bg-white text-[#5E0B15] border-[#E8E2D9] hover:bg-[#FAF7F2] hover:border-[#90323D] active:bg-[#EDE1CF]',
     ghost:
-      'bg-transparent text-[#5E0B15] border-transparent hover:bg-[#F7F3EC] active:bg-[#EDE1CF]',
+      'bg-transparent text-[#5E0B15] border-transparent hover:bg-[#FAF7F2] active:bg-[#EDE1CF] shadow-none',
     danger:
-      'bg-[#90323D] text-white border-[#90323D] hover:bg-[#5E0B15]',
+      'bg-[#90323D] text-white border-[#90323D] hover:bg-[#5E0B15] shadow-sm',
   };
 
   return (

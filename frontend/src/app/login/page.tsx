@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { UtensilsCrossed, Lock, Mail, ShieldAlert, AlertCircle } from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
 import { useAuth } from '@/context/auth-context';
 import { useToast } from '@/context/toast-context';
 import { Button } from '@/components/ui/Button';
@@ -55,15 +55,15 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#EDE1CF] flex flex-col justify-center items-center p-4">
-      {/* Container with 90-degree square borders */}
-      <div className="w-full max-w-md bg-white border-2 border-[#5E0B15] shadow-2xl p-8">
+    <div className="min-h-screen bg-[#F8F7F4] flex flex-col justify-center items-center p-4">
+      {/* Modern Card with rounded-2xl and elegant soft shadow */}
+      <div className="w-full max-w-md bg-white rounded-2xl border border-[#E8E2D9] shadow-xl p-8 transition-all">
         {/* Brand Header */}
-        <div className="text-center mb-8 border-b border-[#DECDB5] pb-6">
-          <div className="inline-flex w-12 h-12 bg-[#5E0B15] text-[#EDE1CF] items-center justify-center font-black text-2xl mb-3">
+        <div className="text-center mb-8 border-b border-[#E8E2D9] pb-6">
+          <div className="inline-flex w-12 h-12 bg-[#5E0B15] text-[#EDE1CF] rounded-2xl items-center justify-center font-black text-2xl mb-3 shadow-sm">
             P
           </div>
-          <h1 className="text-lg font-black tracking-widest text-[#5E0B15] uppercase">
+          <h1 className="text-xl font-black tracking-widest text-[#5E0B15] uppercase">
             PRASADAM_DINE
           </h1>
           <p className="text-xs font-semibold tracking-wider text-[#594B42] uppercase mt-1">
@@ -73,8 +73,8 @@ export default function LoginPage() {
 
         {/* Error Alert */}
         {errorMessage && (
-          <div className="mb-6 p-3 bg-[#5E0B15] text-[#EDE1CF] text-xs font-medium flex items-center gap-2 border border-[#450810]">
-            <AlertCircle className="w-4 h-4 shrink-0 text-[#EDE1CF]" />
+          <div className="mb-6 p-3.5 bg-[#FDF0F1] text-[#90323D] text-xs font-medium rounded-xl flex items-center gap-2.5 border border-[#F6C6CC]">
+            <AlertCircle className="w-4 h-4 shrink-0 text-[#90323D]" />
             <span>{errorMessage}</span>
           </div>
         )}
@@ -105,7 +105,7 @@ export default function LoginPage() {
             type="submit"
             variant="primary"
             size="lg"
-            className="w-full uppercase font-bold tracking-wider"
+            className="w-full uppercase font-bold tracking-wider rounded-xl shadow-md hover:shadow-lg"
             isLoading={isLoading}
           >
             Sign In to Dashboard
@@ -113,15 +113,15 @@ export default function LoginPage() {
         </form>
 
         {/* Quick Testing Credentials Helper */}
-        <div className="mt-8 pt-6 border-t border-[#DECDB5] space-y-3">
+        <div className="mt-8 pt-6 border-t border-[#E8E2D9] space-y-3">
           <p className="text-[11px] font-bold text-[#594B42] uppercase tracking-wider text-center">
             Quick Demo Credentials:
           </p>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 gap-2.5">
             <button
               type="button"
               onClick={() => fillQuickCreds('admin@prasadamdine.com', 'Admin@SecurePrasadam2026!')}
-              className="px-2 py-1.5 bg-[#F7F3EC] border border-[#DECDB5] hover:border-[#5E0B15] text-[11px] font-semibold text-[#5E0B15] text-left transition-colors cursor-pointer"
+              className="px-3 py-2 bg-[#FAF7F2] rounded-xl border border-[#E8E2D9] hover:border-[#90323D] text-[11px] font-semibold text-[#5E0B15] text-left transition-colors cursor-pointer"
             >
               <span className="block font-bold">Super Admin</span>
               <span className="text-[9px] text-[#594B42] truncate block">admin@prasadamdine.com</span>
@@ -129,7 +129,7 @@ export default function LoginPage() {
             <button
               type="button"
               onClick={() => fillQuickCreds('owner@restaurant.com', 'Password123!')}
-              className="px-2 py-1.5 bg-[#F7F3EC] border border-[#DECDB5] hover:border-[#5E0B15] text-[11px] font-semibold text-[#5E0B15] text-left transition-colors cursor-pointer"
+              className="px-3 py-2 bg-[#FAF7F2] rounded-xl border border-[#E8E2D9] hover:border-[#90323D] text-[11px] font-semibold text-[#5E0B15] text-left transition-colors cursor-pointer"
             >
               <span className="block font-bold">Restaurant Owner</span>
               <span className="text-[9px] text-[#594B42] truncate block">owner@restaurant.com</span>

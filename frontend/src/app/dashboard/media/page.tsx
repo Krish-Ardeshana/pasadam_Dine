@@ -114,8 +114,8 @@ export default function MediaManagementPage() {
       </div>
 
       {/* Upload Dropzone Card */}
-      <div className="bg-white border-2 border-[#5E0B15] p-6 space-y-4">
-        <h2 className="text-sm font-extrabold uppercase tracking-wider text-[#5E0B15] border-b border-[#DECDB5] pb-2">
+      <div className="bg-white rounded-2xl border border-[#E8E2D9] p-6 space-y-4 shadow-xs">
+        <h2 className="text-sm font-bold uppercase tracking-wider text-[#5E0B15] border-b border-[#E8E2D9] pb-3">
           Upload New Asset
         </h2>
 
@@ -127,7 +127,7 @@ export default function MediaManagementPage() {
             <select
               value={uploadMediaType}
               onChange={(e) => setUploadMediaType(e.target.value as MediaType)}
-              className="w-full px-3 py-2 bg-white border border-[#D6C5A9] text-xs font-bold uppercase text-[#1C120C] focus:outline-none focus:border-[#5E0B15]"
+              className="w-full px-3 py-2 bg-white rounded-lg border border-[#DCD5C9] text-xs font-bold uppercase text-[#1C120C] focus:outline-none focus:ring-2 focus:ring-[#90323D]/20 focus:border-[#90323D] shadow-xs"
             >
               <option value={MediaType.IMAGE}>Dish Photograph (JPEG, PNG, WEBP — Max 5MB)</option>
               <option value={MediaType.MODEL_3D}>3D AR Model (.GLB / .GLTF — Max 15MB)</option>
@@ -148,7 +148,7 @@ export default function MediaManagementPage() {
                   : 'image/jpeg,image/png,image/webp,image/svg+xml'
               }
               onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
-              className="w-full px-2 py-1.5 bg-[#F7F3EC] border border-[#D6C5A9] text-xs text-[#594B42] file:mr-2 file:py-1 file:px-2 file:border file:border-[#5E0B15] file:bg-[#5E0B15] file:text-[#EDE1CF] file:text-xs file:font-bold file:uppercase cursor-pointer"
+              className="w-full px-3 py-1.5 bg-white rounded-lg border border-[#DCD5C9] text-xs text-[#594B42] file:mr-2 file:py-1 file:px-2.5 file:rounded-md file:border-0 file:bg-[#5E0B15] file:text-white file:text-xs file:font-bold file:uppercase cursor-pointer shadow-xs"
               required
             />
           </div>
@@ -157,7 +157,7 @@ export default function MediaManagementPage() {
             <Button
               type="submit"
               variant="primary"
-              className="w-full uppercase font-bold tracking-wider"
+              className="w-full uppercase font-bold tracking-wider rounded-lg shadow-sm"
               isLoading={isUploading}
             >
               <Upload className="w-4 h-4 mr-1.5" /> Upload Asset
@@ -167,15 +167,15 @@ export default function MediaManagementPage() {
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex items-center gap-2 border-b border-[#DECDB5] pb-2">
+      <div className="flex items-center gap-2 border-b border-[#E8E2D9] pb-3">
         {['ALL', MediaType.IMAGE, MediaType.MODEL_3D, MediaType.LOGO].map((t) => (
           <button
             key={t}
             onClick={() => setFilterType(t)}
-            className={`px-3 py-1.5 text-xs font-bold uppercase tracking-wider border cursor-pointer transition-colors ${
+            className={`px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider rounded-lg border cursor-pointer transition-all ${
               filterType === t
-                ? 'bg-[#5E0B15] text-[#EDE1CF] border-[#5E0B15]'
-                : 'bg-white text-[#594B42] border-[#DECDB5] hover:bg-[#F7F3EC]'
+                ? 'bg-[#5E0B15] text-white border-[#5E0B15] shadow-xs'
+                : 'bg-white text-[#594B42] border-[#E8E2D9] hover:bg-[#FAF7F2]'
             }`}
           >
             {t === 'ALL' ? 'All Files' : t}
@@ -186,13 +186,13 @@ export default function MediaManagementPage() {
       {/* Media Grid */}
       {isLoading ? (
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-          <Skeleton className="h-48 w-full" />
-          <Skeleton className="h-48 w-full" />
-          <Skeleton className="h-48 w-full" />
-          <Skeleton className="h-48 w-full" />
+          <Skeleton className="h-48 w-full rounded-xl" />
+          <Skeleton className="h-48 w-full rounded-xl" />
+          <Skeleton className="h-48 w-full rounded-xl" />
+          <Skeleton className="h-48 w-full rounded-xl" />
         </div>
       ) : filteredAssets.length === 0 ? (
-        <div className="bg-white border border-[#DECDB5] p-12 text-center text-xs font-bold uppercase text-[#594B42]">
+        <div className="bg-white rounded-2xl border border-[#E8E2D9] p-12 text-center text-xs font-bold uppercase text-[#594B42] shadow-xs">
           No media assets found in this category.
         </div>
       ) : (
@@ -205,7 +205,7 @@ export default function MediaManagementPage() {
             return (
               <div
                 key={asset._id}
-                className="bg-white border border-[#DECDB5] flex flex-col justify-between overflow-hidden"
+                className="bg-white rounded-xl border border-[#E8E2D9] shadow-xs hover:shadow-md transition-all flex flex-col justify-between overflow-hidden"
               >
                 <div className="h-40 bg-[#F7F3EC] flex items-center justify-center relative border-b border-[#DECDB5]">
                   {is3D ? (

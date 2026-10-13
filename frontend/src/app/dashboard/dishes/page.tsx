@@ -260,13 +260,13 @@ export default function DishesPage() {
       </div>
 
       {categories.length === 0 && (
-        <div className="p-4 bg-[#FCECEE] border border-[#90323D] text-[#90323D] text-xs font-semibold uppercase tracking-wider">
+        <div className="p-4 bg-[#FDF0F1] rounded-xl border border-[#F6C6CC] text-[#90323D] text-xs font-semibold uppercase tracking-wider">
           Notice: You must create at least one Menu Category before adding dishes.
         </div>
       )}
 
       {/* Filter and Search Bar */}
-      <div className="bg-white border border-[#DECDB5] p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="bg-white rounded-xl border border-[#E8E2D9] p-4 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xs">
         <div className="w-full sm:w-72">
           <Input
             placeholder="SEARCH DISHES..."
@@ -280,7 +280,7 @@ export default function DishesPage() {
           <select
             value={selectedCatId}
             onChange={(e) => setSelectedCatId(e.target.value)}
-            className="w-full px-3 py-2 bg-white border border-[#D6C5A9] text-xs font-semibold uppercase text-[#594B42] focus:outline-none focus:border-[#5E0B15]"
+            className="w-full px-3 py-2 bg-white rounded-lg border border-[#DCD5C9] text-xs font-semibold uppercase text-[#594B42] focus:outline-none focus:ring-2 focus:ring-[#90323D]/20 focus:border-[#90323D] shadow-xs"
           >
             <option value="">All Categories</option>
             {categories.map((c) => (
