@@ -213,3 +213,90 @@ server {
    docker-compose -f docker-compose.prod.yml up -d --remove-orphans
    ```
    To rollback: Re-deploy the previously tagged Docker image or checkout the prior Git tag.
+
+---
+
+## 10. Operator Step-by-Step Cloud Deployment Checklist
+
+### Step 1: Provision MongoDB Atlas Production Database
+1. Go to [MongoDB Atlas](https://cloud.mongodb.com/) and create or open your cluster.
+2. Under **Database Access** -> **Add New Database User**:
+   - Authentication Method: **Password** (SCRAM-SHA-256).
+   - Database User Privileges: Select **Built-in Role** -> **Read and write to any database** OR custom role with `readWrite` strictly restricted to `prasadam_dine`.
+   - Record the username and a strong generated password.
+3. Under **Network Access** -> **Add IP Access List Entry**:
+   - For Railway/Render dynamic egress: Add `0.0.0.0/0` (Allow Access from Anywhere) with description `PaaS Dynamic Ingress` (secured by strong SCRAM credentials).
+4. Under **Database** -> **Connect** -> **Drivers** (Node.js):
+   - Copy connection string: `mongodb+srv://<username>:<password>@<cluster>.mongodb.net/prasadam_dine?retryWrites=true&w=majority&appName=PrasadamDine`.
+
+### Step 2: Configure Cloudinary Media Storage
+1. Sign in to [Cloudinary Console](https://console.cloudinary.com/).
+2. From the **Dashboard**, note:
+   - **Cloud Name** (`CLOUDINARY_CLOUD_NAME`)
+   - **API Key** (`CLOUDINARY_API_KEY`)
+   - **API Secret** (`CLOUDINARY_API_SECRET`)
+3. Under **Settings** -> **Upload**, ensure default upload presets allow unsigned or signed uploads (Prasadam Dine backend uses signed SDK uploads with `CLOUDINARY_API_SECRET`).
+
+### Step 3: Deploy Backend (Option A: Railway)
+1. In [Railway.app](https://railway.app/), create a **New Project** -> **Deploy from GitHub Repo** -> select `Krish-Ardeshana/pasadam_Dine`.
+2. In Railway Service **Settings**:
+   - **Root Directory**: Set to `backend` (CRITICAL: without this, Railway attempts to build the root folder).
+   - **Builder**: Dockerfile (`Dockerfile` in `backend`).
+   - **Healthcheck Path**: `/api/v1/health`
+   - **Healthcheck Timeout**: `30`
+3. Under **Variables**, add:
+   ```env
+   NODE_ENV=production
+   PORT=4000
+   API_PREFIX=api/v1
+   MONGODB_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/prasadam_dine?retryWrites=true&w=majority
+   JWT_SECRET=<generated-64-char-hex>
+   JWT_EXPIRES_IN=1d
+   JWT_REFRESH_SECRET=<different-generated-64-char-hex>
+   JWT_REFRESH_EXPIRES_IN=7d
+   SUPER_ADMIN_NAME=Platform Administrator
+   SUPER_ADMIN_EMAIL=admin@prasadamdine.com
+   SUPER_ADMIN_PASSWORD=<strong-super-admin-password>
+   MEDIA_STORAGE_DRIVER=cloudinary
+   CLOUDINARY_CLOUD_NAME=<your-cloud-name>
+   CLOUDINARY_API_KEY=<your-api-key>
+   CLOUDINARY_API_SECRET=<your-api-secret>
+   CLOUDINARY_FOLDER=prasadam_dine
+   FRONTEND_BASE_URL=https://temporary.placeholder
+   CORS_ORIGINS=https://temporary.placeholder
+   ```
+4. Under **Settings** -> **Networking**, click **Generate Domain** (e.g. `https://pasadamdine-production.up.railway.app`).
+5. Verify health: `curl -f https://<your-railway-url>/api/v1/health`.
+
+### Step 3 (Alternative): Deploy Backend on Render
+1. In [Render Dashboard](https://dashboard.render.com/), choose **New** -> **Blueprint** or **Web Service**.
+   - If using **Blueprint**: Select `render.yaml` from the repository root.
+   - If using **Web Service**: Set **Runtime** to `Docker`, **Dockerfile Path** to `backend/Dockerfile`, and **Docker Context** to `backend`.
+2. Populate the required environment variables (see table above).
+3. Copy the assigned URL (e.g. `https://prasadam-dine-backend.onrender.com`).
+4. Verify health: `curl -f https://<your-render-url>/api/v1/health`.
+
+### Step 4: Deploy Frontend (Vercel)
+1. In [Vercel](https://vercel.com/new), import repository `Krish-Ardeshana/pasadam_Dine`.
+2. In project configuration:
+   - **Framework Preset**: `Next.js`
+   - **Root Directory**: Click **Edit** and select `frontend` (MANDATORY).
+   - **Build Command**: `npm run build`
+   - **Install Command**: `npm install`
+3. In **Environment Variables**, configure:
+   ```env
+   NEXT_PUBLIC_API_URL=https://<your-backend-url>/api/v1
+   NEXT_PUBLIC_BACKEND_ORIGIN=https://<your-backend-url>
+   ```
+4. Click **Deploy**. Vercel will build the Next.js standalone bundle and assign a domain (e.g. `https://prasadam-dine.vercel.app`).
+5. Verify frontend health: `curl -f https://<your-vercel-domain>/api/health`.
+
+### Step 5: Close the Loop (CORS & QR URL Sync)
+1. Now that the live frontend domain is known (e.g. `https://prasadam-dine.vercel.app`):
+2. Return to the Backend hosting dashboard (Railway or Render) and update:
+   ```env
+   FRONTEND_BASE_URL=https://prasadam-dine.vercel.app
+   CORS_ORIGINS=https://prasadam-dine.vercel.app,https://*.vercel.app
+   ```
+3. Trigger a redeploy on the backend service.
+4. Now, all QR codes generated will point to `https://prasadam-dine.vercel.app/r/<slug>`, and all browser API requests will pass CORS without origin errors.

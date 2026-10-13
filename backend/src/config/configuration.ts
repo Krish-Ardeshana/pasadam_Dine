@@ -3,6 +3,7 @@ export interface AppConfig {
   port: number;
   apiPrefix: string;
   frontendBaseUrl: string;
+  corsOrigins: string[];
   mongodb: {
     uri: string;
   };
@@ -38,7 +39,11 @@ export default (): AppConfig => ({
   env: process.env.NODE_ENV || 'development',
   port: parseInt(process.env.PORT || '4000', 10),
   apiPrefix: process.env.API_PREFIX || 'api/v1',
-  frontendBaseUrl: process.env.FRONTEND_BASE_URL || 'http://localhost:3000',
+  frontendBaseUrl: (process.env.FRONTEND_BASE_URL || 'http://localhost:3000').replace(/\/+$/, ''),
+  corsOrigins: (process.env.CORS_ORIGINS || '')
+    .split(',')
+    .map((origin) => origin.trim().replace(/\/+$/, ''))
+    .filter(Boolean),
   mongodb: {
     uri: process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/prasadam_dine',
   },

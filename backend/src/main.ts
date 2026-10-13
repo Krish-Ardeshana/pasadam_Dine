@@ -29,8 +29,44 @@ async function bootstrap() {
   );
 
   // CORS Configuration
+  const corsOriginsConfig = configService.get<string[]>('corsOrigins') || [];
+  const allowedOrigins = Array.from(
+    new Set([
+      frontendBaseUrl,
+      ...corsOriginsConfig,
+      'http://localhost:3000',
+      'http://127.0.0.1:3000',
+      'http://localhost:5173',
+      'http://127.0.0.1:5173',
+    ]),
+  );
+
   app.enableCors({
-    origin: [frontendBaseUrl, 'http://localhost:3000', 'http://localhost:5173'],
+    origin: (
+      requestOrigin: string | undefined,
+      callback: (err: Error | null, allow?: boolean) => void,
+    ) => {
+      // Allow requests with no origin (like mobile apps, curl, server-to-server)
+      if (!requestOrigin) {
+        return callback(null, true);
+      }
+
+      const normalizedOrigin = requestOrigin.replace(/\/+$/, '');
+      const isDirectMatch = allowedOrigins.includes(normalizedOrigin);
+      const isSubdomainMatch = corsOriginsConfig.some((allowed) => {
+        if (allowed.startsWith('*.')) {
+          return normalizedOrigin.endsWith(allowed.slice(1));
+        }
+        return false;
+      });
+
+      if (isDirectMatch || isSubdomainMatch || process.env.NODE_ENV !== 'production') {
+        callback(null, true);
+      } else {
+        logger.warn(`Blocked CORS request from disallowed origin: ${requestOrigin}`);
+        callback(null, false);
+      }
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
@@ -58,8 +94,8 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('api/docs', app, document);
 
-  await app.listen(port);
-  logger.log(`Prasadam Dine Backend running on http://localhost:${port}/${apiPrefix}`);
+  await app.listen(port, '0.0.0.0');
+  logger.log(`Prasadam Dine Backend running on http://0.0.0.0:${port}/${apiPrefix}`);
   logger.log(`Swagger documentation available at http://localhost:${port}/api/docs`);
 }
 

@@ -49,6 +49,6 @@ EXPOSE 4000
 
 # Production Healthcheck
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD curl -f http://localhost:4000/api/v1/health || exit 1
+  CMD /bin/sh -c "curl -f http://localhost:\${PORT:-4000}/api/v1/health || exit 1"
 
 CMD ["node", "dist/main.js"]
