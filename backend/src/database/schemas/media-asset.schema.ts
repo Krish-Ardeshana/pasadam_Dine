@@ -9,7 +9,7 @@ export class MediaAsset {
   @Prop({ type: Types.ObjectId, ref: 'Restaurant', required: true, index: true })
   restaurantId: Types.ObjectId;
 
-  @Prop({ type: Types.ObjectId, ref: 'Dish', index: true })
+  @Prop({ type: Types.ObjectId, ref: 'Dish' })
   dishId?: Types.ObjectId;
 
   @Prop({ type: String, required: true, enum: Object.values(MediaType), default: MediaType.IMAGE })

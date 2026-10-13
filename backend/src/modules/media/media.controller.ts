@@ -87,10 +87,10 @@ export class MediaController {
   }
 
   @Public()
-  @Get('media/file/*')
+  @Get('media/file/{*path}')
   @ApiOperation({ summary: 'Public access to uploaded media files (Local fallback)' })
   async serveFile(@Param() params: Record<string, string>, @Res() res: Response) {
-    const rawPath = params['0'];
+    const rawPath = params['path'] || params['0'];
     if (!rawPath) {
       throw new NotFoundException('File path missing');
     }
