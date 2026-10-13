@@ -29,8 +29,24 @@ async function bootstrap() {
   );
 
   // CORS Configuration
+  const configuredOrigins = (process.env.CORS_ORIGINS || frontendBaseUrl)
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+
+  const allowedOrigins = Array.from(
+    new Set([...configuredOrigins, 'http://localhost:3000', 'http://localhost:5173']),
+  );
+
   app.enableCors({
-    origin: [frontendBaseUrl, 'http://localhost:3000', 'http://localhost:5173'],
+    origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+      // Allow server-to-server or requests without origin (like mobile apps, health checks, curl)
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error(`Origin ${origin} not permitted by CORS policy`));
+      }
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],

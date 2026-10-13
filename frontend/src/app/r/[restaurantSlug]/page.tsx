@@ -225,7 +225,7 @@ function PublicRestaurantMenuContent() {
                           className="w-full h-full object-cover"
                         />
                       ) : (
-                        <UtensilsCrossed className="w-8 h-8 text-[#DECDB5]" />
+                        <UtensilsCrossed className="w-8 h-8 text-[#D6C5A9]" />
                       )}
                       {has3D && (
                         <span className="absolute top-1.5 left-1.5 bg-[#5E0B15] text-white text-[9px] font-black px-1.5 py-0.5 rounded-md uppercase tracking-wider shadow-xs">

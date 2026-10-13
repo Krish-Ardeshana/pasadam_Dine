@@ -240,7 +240,7 @@ export default function DishesPage() {
   return (
     <DashboardShell>
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#DECDB5] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E8E2D9] pb-4">
         <div>
           <h1 className="text-xl font-black text-[#5E0B15] uppercase tracking-wider">
             Dishes & 3D AR Assets
@@ -478,7 +478,7 @@ export default function DishesPage() {
           </div>
 
           {/* Media Attachments Section */}
-          <div className="p-4 bg-[#F7F3EC] border border-[#DECDB5] space-y-4">
+          <div className="p-4 bg-[#F8F7F4] border border-[#E8E2D9] rounded-xl space-y-4">
             <h3 className="text-xs font-extrabold text-[#5E0B15] uppercase tracking-wider">
               Visual & 3D AR Assets
             </h3>
@@ -495,7 +495,7 @@ export default function DishesPage() {
                     accept="image/*"
                     onChange={handleImageUpload}
                     disabled={isUploadingImage}
-                    className="text-xs text-[#594B42] file:mr-2 file:py-1.5 file:px-3 file:border file:border-[#5E0B15] file:bg-[#5E0B15] file:text-[#EDE1CF] file:text-xs file:font-bold file:uppercase cursor-pointer"
+                    className="text-xs text-[#594B42] file:mr-2 file:py-1.5 file:px-3 file:rounded-md file:border file:border-[#5E0B15] file:bg-[#5E0B15] file:text-[#EDE1CF] file:text-xs file:font-bold file:uppercase cursor-pointer"
                   />
                   {isUploadingImage && <span className="text-xs text-[#5E0B15] animate-pulse">Uploading...</span>}
                 </div>
@@ -517,7 +517,7 @@ export default function DishesPage() {
                     accept=".glb,.gltf"
                     onChange={handleModelUpload}
                     disabled={isUploading3D}
-                    className="text-xs text-[#594B42] file:mr-2 file:py-1.5 file:px-3 file:border file:border-[#90323D] file:bg-[#90323D] file:text-white file:text-xs file:font-bold file:uppercase cursor-pointer"
+                    className="text-xs text-[#594B42] file:mr-2 file:py-1.5 file:px-3 file:rounded-md file:border file:border-[#90323D] file:bg-[#90323D] file:text-white file:text-xs file:font-bold file:uppercase cursor-pointer"
                   />
                   {isUploading3D && <span className="text-xs text-[#90323D] animate-pulse">Uploading 3D...</span>}
                 </div>
@@ -552,7 +552,7 @@ export default function DishesPage() {
             </label>
           </div>
 
-          <div className="flex justify-end gap-3 pt-4 border-t border-[#DECDB5]">
+          <div className="flex justify-end gap-3 pt-4 border-t border-[#E8E2D9]">
             <Button
               type="button"
               variant="outline"
@@ -583,7 +583,7 @@ export default function DishesPage() {
             <p className="text-xs text-[#594B42]">
               This will remove the item from all active menus and invalidate the direct QR target.
             </p>
-            <div className="flex justify-end gap-3 pt-4 border-t border-[#DECDB5]">
+            <div className="flex justify-end gap-3 pt-4 border-t border-[#E8E2D9]">
               <Button
                 variant="outline"
                 onClick={() => setDeletingDish(null)}

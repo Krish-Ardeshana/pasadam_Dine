@@ -1,0 +1,91 @@
+# ==============================================================================
+# PRASADAM DINE - PRODUCTION DOCKER COMPOSE
+# Orchestration for Frontend, Backend, and MongoDB with Health Checks
+# ==============================================================================
+
+version: '3.8'
+
+services:
+  # ----------------------------------------------------------------------------
+  # Backend API Service (NestJS)
+  # ----------------------------------------------------------------------------
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: prasadamdine-backend:latest
+    container_name: prasadamdine_backend
+    restart: unless-stopped
+    ports:
+      - "${PORT:-4000}:4000"
+    environment:
+      - NODE_ENV=production
+      - PORT=4000
+      - API_PREFIX=${API_PREFIX:-api/v1}
+      - FRONTEND_BASE_URL=${FRONTEND_BASE_URL}
+      - CORS_ORIGINS=${CORS_ORIGINS}
+      - MONGODB_URI=${MONGODB_URI}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRES_IN=${JWT_EXPIRES_IN:-1d}
+      - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET}
+      - JWT_REFRESH_EXPIRES_IN=${JWT_REFRESH_EXPIRES_IN:-7d}
+      - SUPER_ADMIN_NAME=${SUPER_ADMIN_NAME:-Platform Administrator}
+      - SUPER_ADMIN_EMAIL=${SUPER_ADMIN_EMAIL}
+      - SUPER_ADMIN_PASSWORD=${SUPER_ADMIN_PASSWORD}
+      - MEDIA_STORAGE_DRIVER=${MEDIA_STORAGE_DRIVER:-cloudinary}
+      - CLOUDINARY_CLOUD_NAME=${CLOUDINARY_CLOUD_NAME}
+      - CLOUDINARY_API_KEY=${CLOUDINARY_API_KEY}
+      - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET}
+      - CLOUDINARY_FOLDER=${CLOUDINARY_FOLDER:-prasadam_dine}
+      - THROTTLE_TTL=${THROTTLE_TTL:-60}
+      - THROTTLE_LIMIT=${THROTTLE_LIMIT:-100}
+    volumes:
+      - backend_uploads:/app/uploads
+    networks:
+      - prasadam_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4000/api/v1/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+  # ----------------------------------------------------------------------------
+  # Frontend Service (Next.js 16 Standalone)
+  # ----------------------------------------------------------------------------
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+        NEXT_PUBLIC_BACKEND_ORIGIN: ${NEXT_PUBLIC_BACKEND_ORIGIN}
+    image: prasadamdine-frontend:latest
+    container_name: prasadamdine_frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+      - NEXT_PUBLIC_BACKEND_ORIGIN=${NEXT_PUBLIC_BACKEND_ORIGIN}
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - prasadam_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+volumes:
+  backend_uploads:
+    driver: local
+
+networks:
+  prasadam_network:
+    driver: bridge

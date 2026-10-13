@@ -96,7 +96,7 @@ export default function AdminRestaurantsPage() {
   return (
     <DashboardShell>
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#DECDB5] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E8E2D9] pb-4">
         <div>
           <h1 className="text-xl font-black text-[#5E0B15] uppercase tracking-wider">
             Restaurant Approvals & Tenants
@@ -265,7 +265,7 @@ export default function AdminRestaurantsPage() {
               The restaurant public menu will immediately become accessible to dining customers at{' '}
               <code className="bg-[#EDE1CF] px-1 py-0.5">/r/{selectedRest.slug}</code>.
             </p>
-            <div className="flex justify-end gap-3 pt-4 border-t border-[#DECDB5]">
+            <div className="flex justify-end gap-3 pt-4 border-t border-[#E8E2D9]">
               <Button
                 variant="outline"
                 onClick={() => setActionType(null)}
@@ -294,7 +294,7 @@ export default function AdminRestaurantsPage() {
               Public customer menu requests will return 404 and ordering access will be immediately
               disabled.
             </p>
-            <div className="flex justify-end gap-3 pt-4 border-t border-[#DECDB5]">
+            <div className="flex justify-end gap-3 pt-4 border-t border-[#E8E2D9]">
               <Button
                 variant="outline"
                 onClick={() => setActionType(null)}
@@ -327,7 +327,7 @@ export default function AdminRestaurantsPage() {
               onChange={(e) => setNewOwnerId(e.target.value)}
               required
             />
-            <div className="flex justify-end gap-3 pt-4 border-t border-[#DECDB5]">
+            <div className="flex justify-end gap-3 pt-4 border-t border-[#E8E2D9]">
               <Button
                 variant="outline"
                 onClick={() => setActionType(null)}

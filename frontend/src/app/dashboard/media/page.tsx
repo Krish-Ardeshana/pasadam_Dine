@@ -102,7 +102,7 @@ export default function MediaManagementPage() {
   return (
     <DashboardShell>
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#DECDB5] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E8E2D9] pb-4">
         <div>
           <h1 className="text-xl font-black text-[#5E0B15] uppercase tracking-wider">
             Media Library & 3D Assets
@@ -207,7 +207,7 @@ export default function MediaManagementPage() {
                 key={asset._id}
                 className="bg-white rounded-xl border border-[#E8E2D9] shadow-xs hover:shadow-md transition-all flex flex-col justify-between overflow-hidden"
               >
-                <div className="h-40 bg-[#F7F3EC] flex items-center justify-center relative border-b border-[#DECDB5]">
+                <div className="h-40 bg-[#F7F3EC] flex items-center justify-center relative border-b border-[#E8E2D9]">
                   {is3D ? (
                     <div className="text-center p-4">
                       <Box className="w-12 h-12 text-[#5E0B15] mx-auto mb-2" />
@@ -280,7 +280,7 @@ export default function MediaManagementPage() {
             <p className="text-xs text-[#594B42]">
               The file will be wiped from storage and any dish referencing it will lose this media.
             </p>
-            <div className="flex justify-end gap-3 pt-4 border-t border-[#DECDB5]">
+            <div className="flex justify-end gap-3 pt-4 border-t border-[#E8E2D9]">
               <Button
                 variant="outline"
                 onClick={() => setDeletingAsset(null)}

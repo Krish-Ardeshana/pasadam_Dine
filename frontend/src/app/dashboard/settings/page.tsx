@@ -69,7 +69,7 @@ export default function RestaurantSettingsPage() {
   return (
     <DashboardShell>
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#DECDB5] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E8E2D9] pb-4">
         <div>
           <h1 className="text-xl font-black text-[#5E0B15] uppercase tracking-wider">
             Restaurant Profile & Operations
@@ -83,7 +83,7 @@ export default function RestaurantSettingsPage() {
       <form onSubmit={handleSave} className="space-y-6">
         {/* Basic Info */}
         <Card>
-          <h2 className="text-sm font-extrabold text-[#5E0B15] uppercase tracking-wider mb-4 flex items-center gap-2 border-b border-[#DECDB5] pb-2">
+          <h2 className="text-sm font-extrabold text-[#5E0B15] uppercase tracking-wider mb-4 flex items-center gap-2 border-b border-[#E8E2D9] pb-2">
             <Building2 className="w-4 h-4 text-[#90323D]" /> General Information
           </h2>
           <div className="space-y-4">
@@ -99,7 +99,7 @@ export default function RestaurantSettingsPage() {
               </label>
               <textarea
                 rows={3}
-                className="w-full px-3.5 py-2 bg-white rounded-lg border border-[#DCD5C9] text-sm text-[#1C120C] shadow-xs focus:outline-none focus:ring-2 focus:ring-[#90323D]/20 focus:border-[#90323D] transition-all"
+                className="w-full px-3.5 py-2 bg-white rounded-lg border border-[#E8E2D9] text-sm text-[#1C120C] shadow-xs focus:outline-none focus:ring-2 focus:ring-[#90323D]/20 focus:border-[#90323D] transition-all"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
@@ -109,7 +109,7 @@ export default function RestaurantSettingsPage() {
 
         {/* Contact & Location */}
         <Card>
-          <h2 className="text-sm font-extrabold text-[#5E0B15] uppercase tracking-wider mb-4 flex items-center gap-2 border-b border-[#DECDB5] pb-2">
+          <h2 className="text-sm font-extrabold text-[#5E0B15] uppercase tracking-wider mb-4 flex items-center gap-2 border-b border-[#E8E2D9] pb-2">
             <MapPin className="w-4 h-4 text-[#90323D]" /> Contact & Physical Location
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
@@ -126,7 +126,7 @@ export default function RestaurantSettingsPage() {
 
         {/* Dining Configuration */}
         <Card>
-          <h2 className="text-sm font-extrabold text-[#5E0B15] uppercase tracking-wider mb-4 flex items-center gap-2 border-b border-[#DECDB5] pb-2">
+          <h2 className="text-sm font-extrabold text-[#5E0B15] uppercase tracking-wider mb-4 flex items-center gap-2 border-b border-[#E8E2D9] pb-2">
             <Settings className="w-4 h-4 text-[#90323D]" /> Operational Preferences
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

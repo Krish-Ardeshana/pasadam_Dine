@@ -52,7 +52,7 @@ export default function AdminUsersPage() {
   return (
     <DashboardShell>
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#DECDB5] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E8E2D9] pb-4">
         <div>
           <h1 className="text-xl font-black text-[#5E0B15] uppercase tracking-wider">
             Platform Users & Staff

@@ -72,9 +72,9 @@ export default function AdminDashboardPage() {
   return (
     <DashboardShell>
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#DECDB5] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E8E2D9] pb-4">
         <div>
-          <h1 className="text-xl font-black text-[#5E0B15] uppercase tracking-wider">
+          <h1 className="text-xl sm:text-2xl font-black text-[#5E0B15] uppercase tracking-wider">
             Platform Operations Overview
           </h1>
           <p className="text-xs text-[#594B42] uppercase tracking-wider mt-0.5">
@@ -82,7 +82,7 @@ export default function AdminDashboardPage() {
           </p>
         </div>
         <Link href="/admin/restaurants">
-          <Button variant="primary" size="sm" className="uppercase font-bold tracking-wider">
+          <Button variant="primary" size="sm" className="uppercase font-bold tracking-wider rounded-lg shadow-xs">
             Manage Restaurants <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
           </Button>
         </Link>
@@ -152,11 +152,11 @@ export default function AdminDashboardPage() {
       </div>
 
       {/* Pending Approval Priority Queue */}
-      <div className="bg-white border border-[#DECDB5] p-6 space-y-4">
-        <div className="flex items-center justify-between border-b border-[#DECDB5] pb-3">
+      <div className="bg-white rounded-2xl border border-[#E8E2D9] p-6 space-y-4 shadow-xs">
+        <div className="flex items-center justify-between border-b border-[#E8E2D9] pb-3">
           <div className="flex items-center gap-2">
             <Clock className="w-5 h-5 text-[#8C5D0D]" />
-            <h2 className="text-sm font-extrabold uppercase tracking-wider text-[#5E0B15]">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-[#5E0B15]">
               Priority Verification Queue ({pendingApprovals})
             </h2>
           </div>
@@ -169,21 +169,21 @@ export default function AdminDashboardPage() {
         </div>
 
         {isLoading ? (
-          <div className="space-y-2">
-            <Skeleton className="h-12 w-full" />
-            <Skeleton className="h-12 w-full" />
+          <div className="space-y-3 py-2">
+            <Skeleton className="h-12 w-full rounded-xl" />
+            <Skeleton className="h-12 w-full rounded-xl" />
           </div>
         ) : pendingApprovals === 0 ? (
           <div className="py-8 text-center text-xs font-semibold text-[#594B42] uppercase tracking-wider">
             All registered restaurants have been verified and processed.
           </div>
         ) : (
-          <div className="divide-y divide-[#DECDB5]">
+          <div className="divide-y divide-[#F5EFE6]">
             {restaurants
               .filter((r) => r.approvalStatus === RestaurantApprovalStatus.PENDING)
               .slice(0, 5)
               .map((r) => (
-                <div key={r._id} className="py-3 flex items-center justify-between">
+                <div key={r._id} className="py-3.5 flex items-center justify-between">
                   <div>
                     <h3 className="text-xs font-bold text-[#1C120C] uppercase tracking-wider">
                       {r.name}
@@ -193,7 +193,7 @@ export default function AdminDashboardPage() {
                   <div className="flex items-center gap-3">
                     <Badge variant="warning">PENDING APPROVAL</Badge>
                     <Link href={`/admin/restaurants?search=${r.name}`}>
-                      <Button variant="outline" size="sm" className="uppercase font-bold">
+                      <Button variant="outline" size="sm" className="uppercase font-bold rounded-lg">
                         Review
                       </Button>
                     </Link>

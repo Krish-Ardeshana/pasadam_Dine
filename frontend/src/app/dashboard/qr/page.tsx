@@ -118,7 +118,7 @@ export default function QrManagementPage() {
   return (
     <DashboardShell>
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#DECDB5] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E8E2D9] pb-4">
         <div>
           <h1 className="text-xl font-black text-[#5E0B15] uppercase tracking-wider">
             Dine-In QR Codes & Placards
@@ -241,7 +241,7 @@ export default function QrManagementPage() {
             <select
               value={qrType}
               onChange={(e) => setQrType(e.target.value as QrType)}
-              className="w-full px-3 py-2 bg-white border border-[#D6C5A9] text-sm text-[#1C120C] focus:outline-none focus:border-[#5E0B15]"
+              className="w-full px-3 py-2 bg-white rounded-lg border border-[#E8E2D9] text-sm text-[#1C120C] focus:outline-none focus:ring-2 focus:ring-[#90323D]/20 focus:border-[#90323D] transition-all"
             >
               <option value={QrType.RESTAURANT_MENU}>
                 Full Restaurant Menu Stand (/r/{currentRestaurant?.slug})
@@ -260,7 +260,7 @@ export default function QrManagementPage() {
               <select
                 value={dishId}
                 onChange={(e) => setDishId(e.target.value)}
-                className="w-full px-3 py-2 bg-white border border-[#D6C5A9] text-sm text-[#1C120C] focus:outline-none focus:border-[#5E0B15]"
+                className="w-full px-3 py-2 bg-white rounded-lg border border-[#E8E2D9] text-sm text-[#1C120C] focus:outline-none focus:ring-2 focus:ring-[#90323D]/20 focus:border-[#90323D] transition-all"
               >
                 {dishes.map((d) => (
                   <option key={d._id} value={d._id}>
@@ -271,11 +271,11 @@ export default function QrManagementPage() {
             </div>
           )}
 
-          <div className="p-3 bg-[#F7F3EC] border border-[#DECDB5] text-xs text-[#594B42]">
+          <div className="p-3 bg-[#F8F7F4] border border-[#E8E2D9] rounded-xl text-xs text-[#594B42]">
             Target URL will use the production frontend base URL configured in your environment.
           </div>
 
-          <div className="flex justify-end gap-3 pt-4 border-t border-[#DECDB5]">
+          <div className="flex justify-end gap-3 pt-4 border-t border-[#E8E2D9]">
             <Button
               type="button"
               variant="outline"
