@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    /* Prasadam Dine 60:30:10 Brand Color Tokens */
+    --almond: #EDE1CF;          /* 60% Dominant: Backgrounds, large surfaces */
+    --almond-light: #F7F3EC;    /* Soft surface tint */
+    --almond-dark: #DECDB5;     /* Border and divider tone */
+    --cordovan: #90323D;        /* 30% Supporting: Sidebar, navigation, panels */
+    --cordovan-dark: #782732;   /* Active sidebar hover */
+    --cordovan-light: #A8414D;  /* Secondary badge */
+    --cosmos: #5E0B15;          /* 10% Accent: Primary buttons, key indicators */
+    --cosmos-dark: #450810;     /* Primary button hover */
+    --text-primary: #1C120C;    /* High contrast dark text for readability */
+    --text-muted: #594B42;      /* Secondary label text */
+    --surface-white: #FFFFFF;   /* Pure white card backgrounds */
+    --border-color: #D6C5A9;    /* Clean square border tone */
+  }
+
+  body {
+    background-color: var(--almond);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Square 90-degree architectural styling by default */
+  *, ::before, ::after {
+    border-radius: 0px !important;
+  }
+}
+
+/* Custom utility classes matching the Brand Ratio */
+.bg-almond { background-color: var(--almond); }
+.bg-almond-light { background-color: var(--almond-light); }
+.bg-cordovan { background-color: var(--cordovan); }
+.bg-cordovan-dark { background-color: var(--cordovan-dark); }
+.bg-cosmos { background-color: var(--cosmos); }
+.bg-cosmos-dark { background-color: var(--cosmos-dark); }
+
+.text-cordovan { color: var(--cordovan); }
+.text-cosmos { color: var(--cosmos); }
+.text-primary-dark { color: var(--text-primary); }
+.text-muted-brown { color: var(--text-muted); }
+
+.border-almond-dark { border-color: var(--almond-dark); }
+.border-cordovan { border-color: var(--cordovan); }
+.border-cosmos { border-color: var(--cosmos); }
+
+/* Model Viewer Custom Element Dimensions */
+model-viewer {
+  width: 100%;
+  height: 100%;
+  min-height: 380px;
+  background-color: #F7F3EC;
+  --poster-color: transparent;
+}
