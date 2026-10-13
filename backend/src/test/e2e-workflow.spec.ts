@@ -178,11 +178,25 @@ describe('Phase 3 E2E Integration & Security Flows', () => {
       mockAuditService,
     );
 
+    const mockLocalStorageProvider = {
+      uploadFile: vi.fn(),
+      deleteFile: vi.fn(),
+      getLocalFilePath: vi.fn(),
+    } as any;
+
+    const mockCloudinaryProvider = {
+      isAvailable: vi.fn().mockReturnValue(false),
+      uploadFile: vi.fn(),
+      deleteFile: vi.fn(),
+    } as any;
+
     mediaService = new MediaService(
       mockMediaModel,
       mockRestaurantModel,
       mockDishModel,
       mockConfigService,
+      mockLocalStorageProvider,
+      mockCloudinaryProvider,
       mockAuditService,
     );
   });
