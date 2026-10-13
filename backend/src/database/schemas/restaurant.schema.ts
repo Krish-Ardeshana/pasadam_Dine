@@ -57,7 +57,7 @@ export class Restaurant {
   @Prop({ required: true, trim: true })
   name: string;
 
-  @Prop({ required: true, unique: true, lowercase: true, trim: true, index: true })
+  @Prop({ required: true, unique: true, lowercase: true, trim: true })
   slug: string;
 
   @Prop({ default: '' })
@@ -72,7 +72,7 @@ export class Restaurant {
   @Prop({ type: RestaurantContact, default: () => ({}) })
   contactDetails: RestaurantContact;
 
-  @Prop({ type: Types.ObjectId, ref: 'User', required: true, index: true })
+  @Prop({ type: Types.ObjectId, ref: 'User', required: true })
   ownerId: Types.ObjectId;
 
   @Prop({

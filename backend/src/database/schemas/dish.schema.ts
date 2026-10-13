@@ -32,10 +32,10 @@ export class Dish {
   @Prop({ default: '' })
   model3dUrl: string;
 
-  @Prop({ default: true, index: true })
+  @Prop({ default: true })
   isAvailable: boolean;
 
-  @Prop({ default: false, index: true })
+  @Prop({ default: false })
   isPublished: boolean;
 
   @Prop({ type: [String], default: [] })

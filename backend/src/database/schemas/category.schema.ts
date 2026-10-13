@@ -18,7 +18,7 @@ export class Category {
   @Prop({ default: 0 })
   displayOrder: number;
 
-  @Prop({ type: String, enum: Object.values(CategoryStatus), default: CategoryStatus.ACTIVE, index: true })
+  @Prop({ type: String, enum: Object.values(CategoryStatus), default: CategoryStatus.ACTIVE })
   status: CategoryStatus;
 }
 

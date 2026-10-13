@@ -2,48 +2,10 @@ import { NestFactory } from '@nestjs/core';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import net from 'net';
 import { AppModule } from './app.module.js';
-
-async function isPortOpen(port: number, host = '127.0.0.1'): Promise<boolean> {
-  return new Promise((resolve) => {
-    const socket = new net.Socket();
-    socket.setTimeout(800);
-    socket.once('connect', () => {
-      socket.destroy();
-      resolve(true);
-    });
-    socket.once('timeout', () => {
-      socket.destroy();
-      resolve(false);
-    });
-    socket.once('error', () => {
-      resolve(false);
-    });
-    socket.connect(port, host);
-  });
-}
 
 async function bootstrap() {
   const logger = new Logger('Bootstrap');
-
-  // In development, automatically launch in-memory MongoDB if local port 27017 is closed
-  if (process.env.NODE_ENV !== 'production') {
-    const mongoUri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/prasadam_dine';
-    if (mongoUri.includes('127.0.0.1:27017') || mongoUri.includes('localhost:27017')) {
-      const isMongoRunning = await isPortOpen(27017);
-      if (!isMongoRunning) {
-        try {
-          const { MongoMemoryServer } = await import('mongodb-memory-server');
-          await MongoMemoryServer.create({ instance: { port: 27017 } });
-          logger.log('Started local development in-memory MongoDB server on port 27017');
-        } catch (err: any) {
-          logger.warn(`Could not start in-memory MongoDB: ${err.message}`);
-        }
-      }
-    }
-  }
-
   const app = await NestFactory.create(AppModule);
 
   const configService = app.get(ConfigService);
@@ -67,24 +29,8 @@ async function bootstrap() {
   );
 
   // CORS Configuration
-  const configuredOrigins = (process.env.CORS_ORIGINS || frontendBaseUrl)
-    .split(',')
-    .map((origin) => origin.trim())
-    .filter(Boolean);
-
-  const allowedOrigins = Array.from(
-    new Set([...configuredOrigins, 'http://localhost:3000', 'http://localhost:5173']),
-  );
-
   app.enableCors({
-    origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
-      // Allow server-to-server or requests without origin (like mobile apps, health checks, curl)
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error(`Origin ${origin} not permitted by CORS policy`));
-      }
-    },
+    origin: [frontendBaseUrl, 'http://localhost:3000', 'http://localhost:5173'],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
