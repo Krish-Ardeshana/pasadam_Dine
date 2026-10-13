@@ -1,0 +1,47 @@
+export enum Role {
+  SUPER_ADMIN = 'SUPER_ADMIN',
+  RESTAURANT_OWNER = 'RESTAURANT_OWNER',
+  RESTAURANT_MANAGER = 'RESTAURANT_MANAGER',
+  RESTAURANT_STAFF = 'RESTAURANT_STAFF',
+  CUSTOMER = 'CUSTOMER',
+}
+
+export enum UserStatus {
+  ACTIVE = 'ACTIVE',
+  SUSPENDED = 'SUSPENDED',
+  PENDING_VERIFICATION = 'PENDING_VERIFICATION',
+}
+
+export enum RestaurantApprovalStatus {
+  PENDING = 'PENDING',
+  APPROVED = 'APPROVED',
+  REJECTED = 'REJECTED',
+  SUSPENDED = 'SUSPENDED',
+}
+
+export enum CategoryStatus {
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+}
+
+export enum MediaType {
+  IMAGE = 'IMAGE',
+  MODEL_3D = 'MODEL_3D',
+  LOGO = 'LOGO',
+  OTHER = 'OTHER',
+}
+
+export enum StorageProvider {
+  CLOUDINARY = 'CLOUDINARY',
+  LOCAL = 'LOCAL',
+}
+
+export enum QrType {
+  RESTAURANT_MENU = 'RESTAURANT_MENU',
+  DISH_DIRECT = 'DISH_DIRECT',
+}
+
+export enum QrStatus {
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+}
