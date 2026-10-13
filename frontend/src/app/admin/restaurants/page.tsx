@@ -15,9 +15,8 @@ import {
 import { DashboardShell } from '@/components/layout/DashboardShell';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
-import { Badge } from '@/components/ui/Badge';
 import { Table, Thead, Th, Td, Skeleton } from '@/components/ui/Table';
-import { Modal } from '@/components/ui/Card';
+import { Card, Modal, Badge } from '@/components/ui/Card';
 import { useToast } from '@/context/toast-context';
 import { api } from '@/lib/api';
 import { Restaurant, RestaurantApprovalStatus } from '@/lib/types';
