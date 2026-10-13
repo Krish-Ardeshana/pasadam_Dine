@@ -18,7 +18,7 @@ export default function AdminUsersPage() {
 
   const toast = useToast();
 
-  const fetchUsers = async () => {
+  const fetchUsers = React.useCallback(async () => {
     try {
       setIsLoading(true);
       const res = await api.users.list({ limit: 100, search: search || undefined });
@@ -28,11 +28,11 @@ export default function AdminUsersPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [search, toast]);
 
   useEffect(() => {
     fetchUsers();
-  }, [search]);
+  }, [fetchUsers]);
 
   const toggleUserStatus = async (user: User) => {
     const newStatus =

@@ -38,7 +38,7 @@ export default function MediaManagementPage() {
   const [deletingAsset, setDeletingAsset] = useState<MediaAsset | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const fetchMedia = async () => {
+  const fetchMedia = React.useCallback(async () => {
     if (!currentRestaurant?._id) return;
     try {
       setIsLoading(true);
@@ -49,11 +49,11 @@ export default function MediaManagementPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [currentRestaurant, toast]);
 
   useEffect(() => {
     fetchMedia();
-  }, [currentRestaurant]);
+  }, [fetchMedia]);
 
   const handleUpload = async (e: React.FormEvent) => {
     e.preventDefault();

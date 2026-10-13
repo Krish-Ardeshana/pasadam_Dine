@@ -35,7 +35,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const refreshProfile = async () => {
+  const refreshProfile = React.useCallback(async () => {
     try {
       const profile = await api.auth.getMe();
       setUser(profile);
@@ -73,7 +73,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUser(null);
       setCurrentRestaurantState(null);
     }
-  };
+  }, []);
 
   useEffect(() => {
     const initAuth = async () => {
@@ -83,7 +83,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
 
     initAuth();
-  }, []);
+  }, [refreshProfile]);
 
   const login = async (credentials: { email: string; password: string }): Promise<User> => {
     setIsLoading(true);

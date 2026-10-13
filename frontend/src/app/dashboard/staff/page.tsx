@@ -28,7 +28,7 @@ export default function StaffPage() {
   const [role, setRole] = useState<Role>(Role.RESTAURANT_STAFF);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const fetchStaff = async () => {
+  const fetchStaff = React.useCallback(async () => {
     if (!currentRestaurant?._id) return;
     try {
       setIsLoading(true);
@@ -45,11 +45,11 @@ export default function StaffPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [currentRestaurant, toast]);
 
   useEffect(() => {
     fetchStaff();
-  }, [currentRestaurant]);
+  }, [fetchStaff]);
 
   const handleCreateStaff = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -41,7 +41,7 @@ export default function CategoriesPage() {
   const [deletingCategory, setDeletingCategory] = useState<Category | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const fetchCategories = async () => {
+  const fetchCategories = React.useCallback(async () => {
     if (!currentRestaurant?._id) return;
     try {
       setIsLoading(true);
@@ -52,11 +52,11 @@ export default function CategoriesPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [currentRestaurant, toast]);
 
   useEffect(() => {
     fetchCategories();
-  }, [currentRestaurant]);
+  }, [fetchCategories]);
 
   const handleOpenCreate = () => {
     setEditingCategory(null);

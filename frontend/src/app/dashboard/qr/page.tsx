@@ -38,7 +38,7 @@ export default function QrManagementPage() {
   // Print Preview Modal State
   const [printQr, setPrintQr] = useState<QrCode | null>(null);
 
-  const fetchData = async () => {
+  const fetchData = React.useCallback(async () => {
     if (!currentRestaurant?._id) return;
     try {
       setIsLoading(true);
@@ -56,11 +56,11 @@ export default function QrManagementPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [currentRestaurant, toast]);
 
   useEffect(() => {
     fetchData();
-  }, [currentRestaurant]);
+  }, [fetchData]);
 
   const handleGenerate = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -61,6 +61,46 @@ class ApiClient {
     return `${BACKEND_ORIGIN}/${url}`;
   }
 
+  private refreshPromise: Promise<AuthTokens | null> | null = null;
+
+  private async refreshSession(): Promise<AuthTokens | null> {
+    if (this.refreshPromise) {
+      return this.refreshPromise;
+    }
+
+    const refreshToken = this.getRefreshToken();
+    if (!refreshToken) {
+      this.clearTokens();
+      return null;
+    }
+
+    this.refreshPromise = (async () => {
+      try {
+        const refreshRes = await fetch(`${API_BASE_URL}/auth/refresh`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ refreshToken }),
+        });
+
+        if (refreshRes.ok) {
+          const newTokens: AuthTokens = await refreshRes.json();
+          this.setTokens(newTokens);
+          return newTokens;
+        } else {
+          this.clearTokens();
+          return null;
+        }
+      } catch {
+        this.clearTokens();
+        return null;
+      } finally {
+        this.refreshPromise = null;
+      }
+    })();
+
+    return this.refreshPromise;
+  }
+
   private async request<T>(
     endpoint: string,
     options: RequestInit = {},
@@ -88,24 +128,10 @@ class ApiClient {
     });
 
     if (response.status === 401 && retryOnAuth) {
-      const refreshToken = this.getRefreshToken();
-      if (refreshToken) {
-        try {
-          const refreshRes = await fetch(`${API_BASE_URL}/auth/refresh`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ refreshToken }),
-          });
-
-          if (refreshRes.ok) {
-            const newTokens: AuthTokens = await refreshRes.json();
-            this.setTokens(newTokens);
-            headers['Authorization'] = `Bearer ${newTokens.accessToken}`;
-            return this.request<T>(endpoint, { ...options, headers }, false);
-          }
-        } catch {
-          this.clearTokens();
-        }
+      const newTokens = await this.refreshSession();
+      if (newTokens) {
+        headers['Authorization'] = `Bearer ${newTokens.accessToken}`;
+        return this.request<T>(endpoint, { ...options, headers }, false);
       }
       this.clearTokens();
     }

@@ -36,7 +36,7 @@ export default function AdminRestaurantsPage() {
 
   const toast = useToast();
 
-  const fetchRestaurants = async () => {
+  const fetchRestaurants = React.useCallback(async () => {
     try {
       setIsLoading(true);
       const res = await api.restaurants.list({ limit: 100, search: search || undefined });
@@ -46,11 +46,11 @@ export default function AdminRestaurantsPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [search, toast]);
 
   useEffect(() => {
     fetchRestaurants();
-  }, [search]);
+  }, [fetchRestaurants]);
 
   const handleUpdateStatus = async (status: RestaurantApprovalStatus, isActive: boolean) => {
     if (!selectedRest) return;

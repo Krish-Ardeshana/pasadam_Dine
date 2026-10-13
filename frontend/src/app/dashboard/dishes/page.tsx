@@ -59,7 +59,7 @@ export default function DishesPage() {
   const [deletingDish, setDeletingDish] = useState<Dish | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const fetchData = async () => {
+  const fetchData = React.useCallback(async () => {
     if (!currentRestaurant?._id) return;
     try {
       setIsLoading(true);
@@ -78,11 +78,11 @@ export default function DishesPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [currentRestaurant, search, selectedCatId, toast]);
 
   useEffect(() => {
     fetchData();
-  }, [currentRestaurant, search, selectedCatId]);
+  }, [fetchData]);
 
   const handleOpenCreate = () => {
     setEditingDish(null);
