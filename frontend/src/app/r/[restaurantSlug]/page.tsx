@@ -11,7 +11,7 @@ import {
   ChevronRight,
   AlertTriangle,
 } from 'lucide-react';
-import { Badge } from '@/components/ui/Badge';
+import { Badge } from '@/components/ui/Card';
 import { Skeleton } from '@/components/ui/Table';
 import { api } from '@/lib/api';
 import { Dish, PublicMenuResponse } from '@/lib/types';

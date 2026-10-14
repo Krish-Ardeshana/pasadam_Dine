@@ -5,7 +5,7 @@ import { Users, Search, Shield, UserCheck, UserX } from 'lucide-react';
 import { DashboardShell } from '@/components/layout/DashboardShell';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
-import { Badge } from '@/components/ui/Badge';
+import { Badge } from '@/components/ui/Card';
 import { Table, Thead, Th, Td, Skeleton } from '@/components/ui/Table';
 import { useToast } from '@/context/toast-context';
 import { api } from '@/lib/api';

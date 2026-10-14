@@ -10,7 +10,7 @@ import {
   Smartphone,
   AlertTriangle,
 } from 'lucide-react';
-import { Badge } from '@/components/ui/Badge';
+import { Badge } from '@/components/ui/Card';
 import { Skeleton } from '@/components/ui/Table';
 import { ModelViewer } from '@/components/3d/ModelViewer';
 import { api } from '@/lib/api';

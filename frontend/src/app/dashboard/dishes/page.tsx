@@ -20,9 +20,8 @@ import { useToast } from '@/context/toast-context';
 import { DashboardShell } from '@/components/layout/DashboardShell';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
-import { Badge } from '@/components/ui/Badge';
 import { Table, Thead, Th, Td, Skeleton } from '@/components/ui/Table';
-import { Modal } from '@/components/ui/Card';
+import { Card, Modal, Badge } from '@/components/ui/Card';
 import { api } from '@/lib/api';
 import { Category, Dish, MediaType } from '@/lib/types';
 

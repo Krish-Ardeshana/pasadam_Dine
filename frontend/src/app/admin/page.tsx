@@ -15,8 +15,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '@/context/auth-context';
 import { DashboardShell } from '@/components/layout/DashboardShell';
-import { Card } from '@/components/ui/Card';
-import { Badge } from '@/components/ui/Badge';
+import { Card, Badge } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Skeleton } from '@/components/ui/Table';
 import { api } from '@/lib/api';

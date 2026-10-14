@@ -15,9 +15,8 @@ import { useAuth } from '@/context/auth-context';
 import { useToast } from '@/context/toast-context';
 import { DashboardShell } from '@/components/layout/DashboardShell';
 import { Button } from '@/components/ui/Button';
-import { Badge } from '@/components/ui/Badge';
 import { Skeleton } from '@/components/ui/Table';
-import { Modal } from '@/components/ui/Card';
+import { Card, Modal, Badge } from '@/components/ui/Card';
 import { api } from '@/lib/api';
 import { MediaAsset, MediaType, StorageProvider } from '@/lib/types';
 
