@@ -68,13 +68,13 @@ model-viewer {
 
 /* Luxury Royal Dining Font Families */
 .font-luxury {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: var(--font-luxury), 'Playfair Display', Georgia, serif;
 }
 .font-handwriting {
-  font-family: 'Caveat', cursive, sans-serif;
+  font-family: var(--font-handwriting), 'Caveat', cursive, sans-serif;
 }
 .font-sans-clean {
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-sans), 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 }
 
 /* Luxury Emerald & Gold Theme Utilities */
