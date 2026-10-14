@@ -27,18 +27,18 @@ export const Button: React.FC<ButtonProps> = ({
   };
 
   const variantClasses = {
-    // Chocolate Cosmos primary action with crisp white text
+    // Warm Terracotta primary action (Image 1 CTA style)
     primary:
-      'bg-[#5E0B15] text-white border-[#5E0B15] hover:bg-[#480810] active:bg-[#34040A] shadow-sm hover:shadow',
-    // Cordovan secondary action
+      'bg-[#DE6C3A] text-white border-[#DE6C3A] hover:bg-[#C85929] active:bg-[#B24A1E] shadow-sm hover:shadow',
+    // Calming Sage Green secondary action
     secondary:
-      'bg-[#90323D] text-white border-[#90323D] hover:bg-[#782732] active:bg-[#5E0B15] shadow-sm hover:shadow',
+      'bg-[#829582] text-white border-[#829582] hover:bg-[#6C806C] active:bg-[#5F735F] shadow-sm hover:shadow',
     outline:
-      'bg-white text-[#5E0B15] border-[#E8E2D9] hover:bg-[#FAF7F2] hover:border-[#90323D] active:bg-[#EDE1CF]',
+      'bg-[#FAF8F5] text-[#23201C] border-[#E0DACF] hover:bg-[#ECE6DC] hover:border-[#829582] active:bg-[#E0DACF]',
     ghost:
-      'bg-transparent text-[#5E0B15] border-transparent hover:bg-[#FAF7F2] active:bg-[#EDE1CF] shadow-none',
+      'bg-transparent text-[#23201C] border-transparent hover:bg-[#ECE6DC] active:bg-[#E0DACF] shadow-none',
     danger:
-      'bg-[#90323D] text-white border-[#90323D] hover:bg-[#5E0B15] shadow-sm',
+      'bg-[#C24141] text-white border-[#C24141] hover:bg-[#A83232] shadow-sm',
   };
 
   return (

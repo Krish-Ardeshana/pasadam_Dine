@@ -2,27 +2,25 @@
 
 @layer base {
   :root {
-    /* Refined Luxury Enterprise Palette - Crisp, Modern & Professional */
-    --app-bg: #F8F7F4;          /* Modern crisp soft-neutral background (no yellow overload) */
-    --surface-white: #FFFFFF;   /* Pure white cards and panels */
-    --surface-card: #FFFFFF;    /* Clean card surfaces */
-    --surface-subtle: #FAF7F2;  /* Gentle tinted surface for headers and secondary blocks */
+    /* Image 1 Inspired Organic Sage, Warm Linen & Terracotta Palette */
+    --app-bg: #F4F0EA;          /* Warm linen/oatmeal canvas */
+    --surface-white: #FAF8F5;   /* Crisp organic cream card surface */
+    --surface-card: #FAF8F5;    /* Clean card surfaces */
+    --surface-subtle: #ECE6DC;  /* Soft warm tint for secondary panels */
     
-    --almond: #EDE1CF;          /* Sophisticated warm accent for badges & subtle highlights */
-    --almond-light: #FBF9F5;    /* Very soft warm tint */
-    --almond-dark: #DECDB5;     /* Accent border tone */
+    --sage: #829582;            /* Calming Sage Green: Navigation & hero blocks */
+    --sage-dark: #6C806C;       /* Darker sage for headers & borders */
+    --sage-light: #EAF0E9;      /* Soft sage tint for chips & badges */
+    --sage-border: #BCD0BD;     /* Subtle sage border */
     
-    --cordovan: #90323D;        /* Professional Wine/Burgundy: Navigation, brand marks, actions */
-    --cordovan-dark: #782732;   /* Hover state */
-    --cordovan-light: #A8414D;  /* Secondary accent */
+    --terracotta: #DE6C3A;      /* Warm Terracotta / Cinnamon: Primary action buttons */
+    --terracotta-dark: #C85929; /* Primary button hover */
+    --terracotta-light: #FDF2EC;/* Warm terracotta wash */
     
-    --cosmos: #5E0B15;          /* Deep Velvet Crimson: Primary buttons, key emphasis */
-    --cosmos-dark: #450810;     /* Primary button hover */
-    
-    --text-primary: #1C120C;    /* Sharp, high-contrast readable dark typography */
-    --text-muted: #594B42;      /* Refined secondary label text */
-    --border-subtle: #E8E2D9;   /* Clean modern card border */
-    --border-strong: #D6C5A9;   /* Defined divider */
+    --text-primary: #23201C;    /* Espresso charcoal typography */
+    --text-muted: #6D675E;      /* Muted espresso taupe */
+    --border-subtle: #E0DACF;   /* Gentle oatmeal border */
+    --border-strong: #CDC5B7;   /* Defined divider */
   }
 
   body {
@@ -39,22 +37,20 @@
 .bg-app { background-color: var(--app-bg); }
 .bg-surface { background-color: var(--surface-white); }
 .bg-surface-subtle { background-color: var(--surface-subtle); }
-.bg-almond { background-color: var(--almond); }
-.bg-almond-light { background-color: var(--almond-light); }
-.bg-cordovan { background-color: var(--cordovan); }
-.bg-cordovan-dark { background-color: var(--cordovan-dark); }
-.bg-cosmos { background-color: var(--cosmos); }
-.bg-cosmos-dark { background-color: var(--cosmos-dark); }
+.bg-sage { background-color: var(--sage); }
+.bg-sage-dark { background-color: var(--sage-dark); }
+.bg-sage-light { background-color: var(--sage-light); }
+.bg-terracotta { background-color: var(--terracotta); }
+.bg-terracotta-dark { background-color: var(--terracotta-dark); }
 
-.text-cordovan { color: var(--cordovan); }
-.text-cosmos { color: var(--cosmos); }
+.text-sage { color: var(--sage); }
+.text-terracotta { color: var(--terracotta); }
 .text-primary-dark { color: var(--text-primary); }
 .text-muted-brown { color: var(--text-muted); }
 
 .border-subtle { border-color: var(--border-subtle); }
-.border-almond-dark { border-color: var(--almond-dark); }
-.border-cordovan { border-color: var(--cordovan); }
-.border-cosmos { border-color: var(--cosmos); }
+.border-sage { border-color: var(--sage-border); }
+.border-terracotta { border-color: var(--terracotta); }
 
 /* Model Viewer Custom Element Dimensions with Rounded Corners */
 model-viewer {

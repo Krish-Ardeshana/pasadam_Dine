@@ -75,10 +75,10 @@ export default function DashboardOverviewPage() {
   return (
     <DashboardShell>
       {/* Restaurant Status Banner */}
-      <div className="bg-white rounded-2xl border border-[#E8E2D9] p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-xs">
+      <div className="bg-[#FAF8F5] rounded-3xl border border-[#E0DACF] p-6 sm:p-7 flex flex-col md:flex-row md:items-center justify-between gap-5 shadow-xs">
         <div>
-          <div className="flex items-center gap-3 mb-1.5">
-            <h1 className="text-xl sm:text-2xl font-black text-[#5E0B15] uppercase tracking-wider">
+          <div className="flex items-center gap-3 mb-1.5 flex-wrap">
+            <h1 className="text-xl sm:text-2xl font-black text-[#23201C] uppercase tracking-wider">
               {currentRestaurant?.name || 'Selected Dining Venue'}
             </h1>
             {currentRestaurant?.approvalStatus === RestaurantApprovalStatus.APPROVED ? (
@@ -87,7 +87,7 @@ export default function DashboardOverviewPage() {
               <Badge variant="warning">{currentRestaurant?.approvalStatus || 'PENDING'}</Badge>
             )}
           </div>
-          <p className="text-xs text-[#594B42] max-w-xl leading-relaxed">
+          <p className="text-xs text-[#6D675E] max-w-xl leading-relaxed">
             {currentRestaurant?.description || 'Authentic pure dining experience with interactive 3D AR digital menu.'}
           </p>
         </div>
@@ -97,7 +97,7 @@ export default function DashboardOverviewPage() {
             <Link
               href={`/r/${currentRestaurant.slug}`}
               target="_blank"
-              className="inline-flex items-center gap-2 bg-[#5E0B15] text-white px-4 py-2.5 text-xs font-bold uppercase tracking-wider hover:bg-[#480810] transition-colors rounded-lg shadow-xs"
+              className="inline-flex items-center gap-2 bg-[#DE6C3A] text-white px-5 py-2.5 text-xs font-bold uppercase tracking-wider hover:bg-[#C85929] transition-colors rounded-xl shadow-xs"
             >
               <span>View Customer Menu</span>
               <ExternalLink className="w-4 h-4" />
@@ -108,79 +108,79 @@ export default function DashboardOverviewPage() {
 
       {/* KPI Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="border-l-4 border-l-[#5E0B15]">
+        <Card className="border-l-4 border-l-[#829582] bg-[#FAF8F5]">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-bold text-[#594B42] uppercase tracking-wider">
+            <span className="text-xs font-bold text-[#6D675E] uppercase tracking-wider">
               Menu Categories
             </span>
-            <Layers className="w-5 h-5 text-[#5E0B15]" />
+            <Layers className="w-5 h-5 text-[#829582]" />
           </div>
           {isLoading ? (
             <Skeleton className="h-8 w-16" />
           ) : (
-            <div className="text-2xl font-black text-[#1C120C]">{categories.length}</div>
+            <div className="text-2xl font-black text-[#23201C]">{categories.length}</div>
           )}
           <Link
             href="/dashboard/categories"
-            className="text-[11px] font-bold text-[#90323D] hover:text-[#5E0B15] uppercase tracking-wider block mt-2"
+            className="text-[11px] font-bold text-[#DE6C3A] hover:text-[#C85929] uppercase tracking-wider block mt-2"
           >
             Manage Categories →
           </Link>
         </Card>
 
-        <Card className="border-l-4 border-l-[#90323D]">
+        <Card className="border-l-4 border-l-[#DE6C3A] bg-[#FAF8F5]">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-bold text-[#594B42] uppercase tracking-wider">
+            <span className="text-xs font-bold text-[#6D675E] uppercase tracking-wider">
               Total Dishes
             </span>
-            <UtensilsCrossed className="w-5 h-5 text-[#90323D]" />
+            <UtensilsCrossed className="w-5 h-5 text-[#DE6C3A]" />
           </div>
           {isLoading ? (
             <Skeleton className="h-8 w-16" />
           ) : (
-            <div className="text-2xl font-black text-[#1C120C]">
+            <div className="text-2xl font-black text-[#23201C]">
               {dishes.length}{' '}
-              <span className="text-xs font-normal text-[#594B42]">({publishedDishes} published)</span>
+              <span className="text-xs font-normal text-[#6D675E]">({publishedDishes} published)</span>
             </div>
           )}
           <Link
             href="/dashboard/dishes"
-            className="text-[11px] font-bold text-[#90323D] hover:text-[#5E0B15] uppercase tracking-wider block mt-2"
+            className="text-[11px] font-bold text-[#DE6C3A] hover:text-[#C85929] uppercase tracking-wider block mt-2"
           >
             Manage Dishes →
           </Link>
         </Card>
 
-        <Card className="border-l-4 border-l-[#1E562A]">
+        <Card className="border-l-4 border-l-[#5F735F] bg-[#FAF8F5]">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-bold text-[#594B42] uppercase tracking-wider">
+            <span className="text-xs font-bold text-[#6D675E] uppercase tracking-wider">
               3D AR Enabled Dishes
             </span>
-            <Sparkles className="w-5 h-5 text-[#1E562A]" />
+            <Sparkles className="w-5 h-5 text-[#5F735F]" />
           </div>
           {isLoading ? (
             <Skeleton className="h-8 w-16" />
           ) : (
-            <div className="text-2xl font-black text-[#1E562A]">{dishesWith3D}</div>
+            <div className="text-2xl font-black text-[#5F735F]">{dishesWith3D}</div>
           )}
-          <p className="text-[11px] text-[#594B42] mt-2">Interactive GLB/GLTF models active</p>
+          <p className="text-[11px] text-[#6D675E] mt-2">Interactive GLB/GLTF models active</p>
         </Card>
 
-        <Card className="border-l-4 border-l-[#8C5D0D]">
+        <Card className="border-l-4 border-l-[#B57E2F] bg-[#FAF8F5]">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-bold text-[#594B42] uppercase tracking-wider">
+            <span className="text-xs font-bold text-[#6D675E] uppercase tracking-wider">
               Dine-In QR Codes
             </span>
-            <QrCode className="w-5 h-5 text-[#8C5D0D]" />
+            <QrCode className="w-5 h-5 text-[#B57E2F]" />
           </div>
           {isLoading ? (
             <Skeleton className="h-8 w-16" />
           ) : (
-            <div className="text-2xl font-black text-[#8C5D0D]">{qrCodes.length}</div>
+            <div className="text-2xl font-black text-[#B57E2F]">{qrCodes.length}</div>
           )}
           <Link
             href="/dashboard/qr"
-            className="text-[11px] font-bold text-[#90323D] hover:text-[#5E0B15] uppercase tracking-wider block mt-2"
+            className="text-[11px] font-bold text-[#DE6C3A] hover:text-[#C85929] uppercase tracking-wider block mt-2"
           >
             Generate QR Codes →
           </Link>
@@ -190,13 +190,13 @@ export default function DashboardOverviewPage() {
       {/* Quick Actions & Menu Preview */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left 2 Cols: Recent Dishes */}
-        <div className="lg:col-span-2 bg-white rounded-2xl border border-[#E8E2D9] p-6 space-y-4 shadow-xs">
-          <div className="flex items-center justify-between border-b border-[#E8E2D9] pb-3">
-            <h2 className="text-sm font-bold uppercase tracking-wider text-[#5E0B15]">
+        <div className="lg:col-span-2 bg-[#FAF8F5] rounded-3xl border border-[#E0DACF] p-6 space-y-4 shadow-xs">
+          <div className="flex items-center justify-between border-b border-[#E0DACF] pb-3">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-[#23201C]">
               Dishes & AR Food Offerings
             </h2>
             <Link href="/dashboard/dishes">
-              <Button variant="primary" size="sm" className="uppercase font-bold tracking-wider rounded-lg shadow-xs">
+              <Button variant="primary" size="sm" className="uppercase font-bold tracking-wider rounded-xl shadow-xs">
                 <Plus className="w-3.5 h-3.5 mr-1" /> Add Dish
               </Button>
             </Link>
@@ -209,25 +209,25 @@ export default function DashboardOverviewPage() {
               <Skeleton className="h-12 w-full rounded-xl" />
             </div>
           ) : dishes.length === 0 ? (
-            <div className="py-8 text-center text-xs font-semibold text-[#594B42] uppercase tracking-wider">
+            <div className="py-8 text-center text-xs font-semibold text-[#6D675E] uppercase tracking-wider">
               No dishes created yet. Start by creating categories and adding items.
             </div>
           ) : (
-            <div className="divide-y divide-[#F5EFE6]">
+            <div className="divide-y divide-[#ECE6DC]">
               {dishes.slice(0, 5).map((d) => (
-                <div key={d._id} className="py-3 flex items-center justify-between">
+                <div key={d._id} className="py-3.5 flex items-center justify-between">
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className="text-xs font-bold text-[#1C120C] uppercase tracking-wider">
+                      <span className="text-xs font-bold text-[#23201C] uppercase tracking-wider">
                         {d.name}
                       </span>
                       {d.model3dUrl && (
-                        <span className="text-[10px] bg-[#EBF7ED] text-[#1E562A] font-bold px-2 py-0.5 rounded-full border border-[#C3E4C8]">
+                        <span className="text-[10px] bg-[#EAF0E9] text-[#2B522C] font-bold px-2 py-0.5 rounded-full border border-[#BCD0BD]">
                           3D AR
                         </span>
                       )}
                     </div>
-                    <p className="text-[11px] text-[#594B42]">
+                    <p className="text-[11px] text-[#6D675E] mt-0.5">
                       {d.currency} {d.price.toFixed(2)} • {d.isAvailable ? 'Available' : 'Unavailable'}
                     </p>
                   </div>
@@ -245,41 +245,41 @@ export default function DashboardOverviewPage() {
         </div>
 
         {/* Right Col: Operations Quick Links */}
-        <div className="bg-white rounded-2xl border border-[#E8E2D9] p-6 space-y-4 shadow-xs">
-          <h2 className="text-sm font-bold uppercase tracking-wider text-[#5E0B15] border-b border-[#E8E2D9] pb-3">
+        <div className="bg-[#FAF8F5] rounded-3xl border border-[#E0DACF] p-6 space-y-4 shadow-xs">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-[#23201C] border-b border-[#E0DACF] pb-3">
             Quick Operations
           </h2>
           <div className="space-y-2.5">
             <Link
               href="/dashboard/categories"
-              className="flex items-center justify-between p-3.5 bg-[#FAF7F2] rounded-xl border border-[#E8E2D9] hover:border-[#90323D] hover:bg-white text-xs font-bold uppercase tracking-wider text-[#5E0B15] transition-all shadow-xs"
+              className="flex items-center justify-between p-3.5 bg-[#F4F0EA] rounded-xl border border-[#E0DACF] hover:border-[#829582] hover:bg-white text-xs font-bold uppercase tracking-wider text-[#23201C] transition-all shadow-xs"
             >
               <span>Organize Menu Categories</span>
-              <ArrowRight className="w-4 h-4 text-[#90323D]" />
+              <ArrowRight className="w-4 h-4 text-[#DE6C3A]" />
             </Link>
 
             <Link
               href="/dashboard/media"
-              className="flex items-center justify-between p-3.5 bg-[#FAF7F2] rounded-xl border border-[#E8E2D9] hover:border-[#90323D] hover:bg-white text-xs font-bold uppercase tracking-wider text-[#5E0B15] transition-all shadow-xs"
+              className="flex items-center justify-between p-3.5 bg-[#F4F0EA] rounded-xl border border-[#E0DACF] hover:border-[#829582] hover:bg-white text-xs font-bold uppercase tracking-wider text-[#23201C] transition-all shadow-xs"
             >
               <span>Upload 3D Models & Photos</span>
-              <ArrowRight className="w-4 h-4 text-[#90323D]" />
+              <ArrowRight className="w-4 h-4 text-[#DE6C3A]" />
             </Link>
 
             <Link
               href="/dashboard/qr"
-              className="flex items-center justify-between p-3.5 bg-[#FAF7F2] rounded-xl border border-[#E8E2D9] hover:border-[#90323D] hover:bg-white text-xs font-bold uppercase tracking-wider text-[#5E0B15] transition-all shadow-xs"
+              className="flex items-center justify-between p-3.5 bg-[#F4F0EA] rounded-xl border border-[#E0DACF] hover:border-[#829582] hover:bg-white text-xs font-bold uppercase tracking-wider text-[#23201C] transition-all shadow-xs"
             >
               <span>Download Dine-In QR Stand</span>
-              <ArrowRight className="w-4 h-4 text-[#90323D]" />
+              <ArrowRight className="w-4 h-4 text-[#DE6C3A]" />
             </Link>
 
             <Link
               href="/dashboard/staff"
-              className="flex items-center justify-between p-3.5 bg-[#FAF7F2] rounded-xl border border-[#E8E2D9] hover:border-[#90323D] hover:bg-white text-xs font-bold uppercase tracking-wider text-[#5E0B15] transition-all shadow-xs"
+              className="flex items-center justify-between p-3.5 bg-[#F4F0EA] rounded-xl border border-[#E0DACF] hover:border-[#829582] hover:bg-white text-xs font-bold uppercase tracking-wider text-[#23201C] transition-all shadow-xs"
             >
               <span>Manage Staff Team</span>
-              <ArrowRight className="w-4 h-4 text-[#90323D]" />
+              <ArrowRight className="w-4 h-4 text-[#DE6C3A]" />
             </Link>
           </div>
         </div>

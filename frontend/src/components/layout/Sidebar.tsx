@@ -51,18 +51,18 @@ export const Sidebar: React.FC<SidebarProps> = ({ onCloseMobile }) => {
   const navItems = isSuperAdmin && pathname.startsWith('/admin') ? adminNav : restaurantNav;
 
   return (
-    <aside className="w-64 bg-[#90323D] text-white flex flex-col h-full border-r border-[#782732] shrink-0 select-none shadow-sm">
+    <aside className="w-64 bg-[#829582] text-white flex flex-col h-full border-r border-[#6C806C] shrink-0 select-none shadow-sm">
       {/* Brand Header */}
-      <div className="p-5 border-b border-[#782732] bg-[#782732]/70">
+      <div className="p-5 border-b border-[#667966] bg-[#728572]">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 bg-[#5E0B15] text-[#EDE1CF] rounded-xl flex items-center justify-center font-black text-lg border border-white/10 shadow-sm">
+          <div className="w-9 h-9 bg-[#DE6C3A] text-white rounded-xl flex items-center justify-center font-black text-lg border border-white/20 shadow-sm">
             P
           </div>
           <div>
-            <h1 className="text-sm font-extrabold tracking-widest text-[#EDE1CF] uppercase">
+            <h1 className="text-sm font-extrabold tracking-widest text-[#FAF7F2] uppercase">
               PRASADAM_DINE
             </h1>
-            <p className="text-[10px] font-medium tracking-wider text-[#EDE1CF]/70 uppercase">
+            <p className="text-[10px] font-semibold tracking-wider text-[#E8EFE8] uppercase">
               AR Smart Dining System
             </p>
           </div>
@@ -71,8 +71,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ onCloseMobile }) => {
 
       {/* Multi-Restaurant Switcher */}
       {!isSuperAdmin && assignedRestaurants.length > 0 && (
-        <div className="px-4 py-3 bg-[#782732]/50 border-b border-[#782732]">
-          <label className="text-[10px] font-bold tracking-wider text-[#EDE1CF]/80 uppercase block mb-1.5">
+        <div className="px-4 py-3 bg-[#6C806C] border-b border-[#607360]">
+          <label className="text-[10px] font-bold tracking-wider text-[#FAF7F2]/90 uppercase block mb-1.5">
             Active Restaurant
           </label>
           <div className="relative">
@@ -82,15 +82,15 @@ export const Sidebar: React.FC<SidebarProps> = ({ onCloseMobile }) => {
                 const found = assignedRestaurants.find((r) => r._id === e.target.value);
                 if (found) setCurrentRestaurant(found);
               }}
-              className="w-full bg-[#5E0B15] text-white text-xs font-semibold px-3 py-2 rounded-lg border border-white/10 appearance-none cursor-pointer focus:outline-none focus:ring-1 focus:ring-white/30 shadow-xs"
+              className="w-full bg-[#FAF7F2] text-[#23201C] text-xs font-semibold px-3 py-2 rounded-lg border border-[#BCD0BD] appearance-none cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#829582] shadow-xs"
             >
               {assignedRestaurants.map((r) => (
-                <option key={r._id} value={r._id} className="bg-[#5E0B15] text-white">
+                <option key={r._id} value={r._id} className="bg-white text-[#23201C]">
                   {r.name}
                 </option>
               ))}
             </select>
-            <ChevronDown className="w-3.5 h-3.5 text-white/70 absolute right-3 top-3 pointer-events-none" />
+            <ChevronDown className="w-3.5 h-3.5 text-[#23201C]/70 absolute right-3 top-3 pointer-events-none" />
           </div>
         </div>
       )}
@@ -107,13 +107,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ onCloseMobile }) => {
               href={item.href}
               onClick={onCloseMobile}
               className={clsx(
-                'flex items-center gap-3 px-3.5 py-2.5 text-xs font-semibold uppercase tracking-wider rounded-lg transition-all duration-150',
+                'flex items-center gap-3 px-3.5 py-2.5 text-xs font-semibold uppercase tracking-wider rounded-xl transition-all duration-150',
                 isActive
-                  ? 'bg-[#5E0B15] text-white shadow-xs font-bold'
-                  : 'text-white/80 hover:bg-[#782732] hover:text-white',
+                  ? 'bg-[#F4F0EA] text-[#23201C] shadow-xs font-bold'
+                  : 'text-[#F4F0EA]/85 hover:bg-[#728572] hover:text-white',
               )}
             >
-              <Icon className="w-4 h-4 shrink-0" />
+              <Icon className={clsx('w-4 h-4 shrink-0', isActive ? 'text-[#DE6C3A]' : 'text-white/80')} />
               <span>{item.label}</span>
             </Link>
           );
@@ -121,23 +121,23 @@ export const Sidebar: React.FC<SidebarProps> = ({ onCloseMobile }) => {
 
         {/* Super Admin Switch Mode Link */}
         {isSuperAdmin && (
-          <div className="pt-4 mt-4 border-t border-[#782732]/70">
+          <div className="pt-4 mt-4 border-t border-[#6C806C]">
             {pathname.startsWith('/admin') ? (
               <Link
                 href="/dashboard"
                 onClick={onCloseMobile}
-                className="flex items-center gap-3 px-3.5 py-2.5 text-xs font-semibold uppercase tracking-wider rounded-lg text-[#EDE1CF]/90 hover:bg-[#782732] hover:text-white transition-colors"
+                className="flex items-center gap-3 px-3.5 py-2.5 text-xs font-semibold uppercase tracking-wider rounded-xl text-[#FAF7F2] hover:bg-[#728572] hover:text-white transition-colors"
               >
-                <Building2 className="w-4 h-4 shrink-0" />
+                <Building2 className="w-4 h-4 shrink-0 text-[#FAF7F2]" />
                 <span>Go to Restaurant Ops</span>
               </Link>
             ) : (
               <Link
                 href="/admin"
                 onClick={onCloseMobile}
-                className="flex items-center gap-3 px-3.5 py-2.5 text-xs font-semibold uppercase tracking-wider rounded-lg text-[#EDE1CF]/90 hover:bg-[#782732] hover:text-white transition-colors"
+                className="flex items-center gap-3 px-3.5 py-2.5 text-xs font-semibold uppercase tracking-wider rounded-xl text-[#FAF7F2] hover:bg-[#728572] hover:text-white transition-colors"
               >
-                <ShieldCheck className="w-4 h-4 shrink-0" />
+                <ShieldCheck className="w-4 h-4 shrink-0 text-[#FAF7F2]" />
                 <span>Go to Super Admin</span>
               </Link>
             )}
@@ -146,15 +146,15 @@ export const Sidebar: React.FC<SidebarProps> = ({ onCloseMobile }) => {
       </nav>
 
       {/* User Footer Profile & Logout */}
-      <div className="p-4 border-t border-[#782732] bg-[#782732]/70">
+      <div className="p-4 border-t border-[#607360] bg-[#728572]">
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2.5 min-w-0">
-            <div className="w-8 h-8 rounded-full bg-[#5E0B15] border border-white/20 flex items-center justify-center text-xs font-bold text-white shrink-0 shadow-xs">
+            <div className="w-8 h-8 rounded-full bg-[#DE6C3A] border border-white/20 flex items-center justify-center text-xs font-bold text-white shrink-0 shadow-xs">
               {user?.name?.charAt(0).toUpperCase() || 'U'}
             </div>
             <div className="min-w-0">
-              <p className="text-xs font-bold text-white truncate">{user?.name || 'User'}</p>
-              <p className="text-[10px] text-[#EDE1CF]/80 uppercase truncate tracking-wider">
+              <p className="text-xs font-bold text-[#FAF7F2] truncate">{user?.name || 'User'}</p>
+              <p className="text-[10px] text-[#E8EFE8] uppercase truncate tracking-wider">
                 {user?.role?.replace('_', ' ')}
               </p>
             </div>
@@ -162,7 +162,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ onCloseMobile }) => {
           <button
             onClick={() => logout()}
             title="Log Out"
-            className="p-1.5 rounded-lg text-[#EDE1CF]/80 hover:text-white hover:bg-[#5E0B15] transition-colors cursor-pointer"
+            className="p-1.5 rounded-lg text-[#FAF7F2]/80 hover:text-white hover:bg-[#607360] transition-colors cursor-pointer"
           >
             <LogOut className="w-4 h-4" />
           </button>

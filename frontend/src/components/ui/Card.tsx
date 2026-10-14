@@ -16,14 +16,14 @@ export const Card: React.FC<CardProps> = ({
   ...props
 }) => {
   const variantStyles = {
-    white: 'bg-white border border-[#E8E2D9] shadow-xs hover:shadow-sm',
-    almond: 'bg-[#FAF7F2] border border-[#E4DDD2] shadow-xs',
-    bordered: 'bg-white border-2 border-[#5E0B15]/20 shadow-sm',
+    white: 'bg-[#FAF8F5] border border-[#E0DACF] shadow-xs hover:shadow-sm',
+    almond: 'bg-[#ECE6DC] border border-[#E0DACF] shadow-xs',
+    bordered: 'bg-[#FAF8F5] border-2 border-[#829582]/30 shadow-sm',
   };
 
   return (
     <div
-      className={clsx('rounded-xl p-6 transition-all duration-200', variantStyles[variant], className)}
+      className={clsx('rounded-2xl p-6 transition-all duration-200', variantStyles[variant], className)}
       {...props}
     >
       {children}
@@ -46,12 +46,12 @@ export const Badge: React.FC<BadgeProps> = ({
   className,
 }) => {
   const variantStyles = {
-    success: 'bg-[#EBF7ED] text-[#1E562A] border border-[#C3E4C8]',
-    warning: 'bg-[#FEF8E8] text-[#8C5D0D] border border-[#F8E3B6]',
-    danger: 'bg-[#FDF0F1] text-[#90323D] border border-[#F6C6CC]',
-    info: 'bg-[#EFF6FB] text-[#1D5477] border border-[#C5DFF1]',
-    neutral: 'bg-[#F3EFE8] text-[#594B42] border border-[#E2DAD0]',
-    dietary: 'bg-[#5E0B15] text-white border border-[#5E0B15] font-bold shadow-xs',
+    success: 'bg-[#EAF0E9] text-[#2B522C] border border-[#BCD0BD]',
+    warning: 'bg-[#FEF6E9] text-[#9A6216] border border-[#F4DCB5]',
+    danger: 'bg-[#FDECEB] text-[#B83A3A] border border-[#F7CBC9]',
+    info: 'bg-[#EBF2F7] text-[#255C82] border border-[#C6DCED]',
+    neutral: 'bg-[#ECE6DC] text-[#5E584F] border border-[#DDD7CD]',
+    dietary: 'bg-[#DE6C3A] text-white border border-[#DE6C3A] font-bold shadow-xs',
   };
 
   return (
@@ -108,17 +108,17 @@ export const Modal: React.FC<ModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-200">
       <div
         className={clsx(
-          'w-full bg-white rounded-2xl border border-[#E8E2D9] shadow-2xl flex flex-col max-h-[90vh] overflow-hidden',
+          'w-full bg-[#FAF8F5] rounded-2xl border border-[#E0DACF] shadow-2xl flex flex-col max-h-[90vh] overflow-hidden',
           maxWidthClasses[maxWidth],
         )}
       >
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[#E8E2D9] bg-[#FAF7F2]">
-          <h2 className="text-base font-bold text-[#5E0B15] uppercase tracking-wider">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#E0DACF] bg-[#ECE6DC]">
+          <h2 className="text-base font-bold text-[#23201C] uppercase tracking-wider">
             {title}
           </h2>
           <button
             onClick={onClose}
-            className="text-[#594B42] hover:text-[#5E0B15] hover:bg-[#EFE9DF] p-1.5 rounded-lg transition-colors cursor-pointer"
+            className="text-[#6D675E] hover:text-[#23201C] hover:bg-[#E0DACF] p-1.5 rounded-lg transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
