@@ -50,7 +50,11 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor.js
             }).asPromise();
             await testConn.close();
             logger.log('Primary MongoDB Atlas connected successfully.');
-            return { uri: configuredUri };
+            return {
+              uri: configuredUri,
+              serverSelectionTimeoutMS: 8000,
+              connectTimeoutMS: 8000,
+            };
           } catch (err: any) {
             logger.warn(
               `Primary MongoDB Atlas is unreachable (${err.message}). ` +
@@ -58,12 +62,15 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor.js
             );
             return {
               uri: 'mongodb://127.0.0.1:27017/prasadam_dine',
+              serverSelectionTimeoutMS: 5000,
             };
           }
         }
 
         return {
           uri: configuredUri,
+          serverSelectionTimeoutMS: 8000,
+          connectTimeoutMS: 8000,
         };
       },
       inject: [ConfigService],
