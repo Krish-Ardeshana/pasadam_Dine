@@ -28,6 +28,10 @@ export default function QrManagementPage() {
   const [dishes, setDishes] = useState<Dish[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Filters & Tabs
+  const [activeTab, setActiveTab] = useState<'ALL' | 'MENU' | 'DISH'>('ALL');
+  const [searchQuery, setSearchQuery] = useState('');
+
   // Generate Modal State
   const [isGenerateOpen, setIsGenerateOpen] = useState(false);
   const [qrType, setQrType] = useState<QrType>(QrType.RESTAURANT_MENU);
@@ -114,12 +118,33 @@ export default function QrManagementPage() {
     }, 500);
   };
 
+  const filteredQrCodes = qrCodes.filter((qr) => {
+    const isMenu = qr.qrType === QrType.RESTAURANT_MENU;
+    if (activeTab === 'MENU' && !isMenu) return false;
+    if (activeTab === 'DISH' && isMenu) return false;
+
+    if (!searchQuery.trim()) return true;
+    const query = searchQuery.toLowerCase();
+    const dishName =
+      typeof qr.dishId === 'object' && qr.dishId !== null
+        ? (qr.dishId as any).name?.toLowerCase() || ''
+        : '';
+    const restaurantName = currentRestaurant?.name?.toLowerCase() || '';
+    const target = qr.targetUrl?.toLowerCase() || '';
+
+    return (
+      dishName.includes(query) ||
+      restaurantName.includes(query) ||
+      target.includes(query)
+    );
+  });
+
   return (
     <DashboardShell>
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E8E2D9] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#DCD5C9] pb-4">
         <div>
-          <h1 className="text-xl font-black text-[#5E0B15] uppercase tracking-wider">
+          <h1 className="text-xl font-black text-[#5E0B15] uppercase tracking-wider font-luxury">
             Dine-In QR Codes & Placards
           </h1>
           <p className="text-xs text-[#594B42] uppercase tracking-wider mt-0.5">
@@ -135,19 +160,68 @@ export default function QrManagementPage() {
         </Button>
       </div>
 
+      {/* Tabs & Search Bar */}
+      <div className="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between bg-white border border-[#DCD5C9] p-3">
+        {/* Tabs */}
+        <div className="flex items-center gap-1">
+          <button
+            onClick={() => setActiveTab('ALL')}
+            className={`px-3 py-1.5 text-xs font-bold uppercase tracking-wider cursor-pointer transition-colors ${
+              activeTab === 'ALL'
+                ? 'bg-[#5E0B15] text-white'
+                : 'bg-transparent text-[#594B42] hover:bg-[#EDE1CF]'
+            }`}
+          >
+            All QRs ({qrCodes.length})
+          </button>
+          <button
+            onClick={() => setActiveTab('MENU')}
+            className={`px-3 py-1.5 text-xs font-bold uppercase tracking-wider cursor-pointer transition-colors ${
+              activeTab === 'MENU'
+                ? 'bg-[#5E0B15] text-white'
+                : 'bg-transparent text-[#594B42] hover:bg-[#EDE1CF]'
+            }`}
+          >
+            Menu Stands ({qrCodes.filter((q) => q.qrType === QrType.RESTAURANT_MENU).length})
+          </button>
+          <button
+            onClick={() => setActiveTab('DISH')}
+            className={`px-3 py-1.5 text-xs font-bold uppercase tracking-wider cursor-pointer transition-colors ${
+              activeTab === 'DISH'
+                ? 'bg-[#5E0B15] text-white'
+                : 'bg-transparent text-[#594B42] hover:bg-[#EDE1CF]'
+            }`}
+          >
+            Dish 3D AR ({qrCodes.filter((q) => q.qrType === QrType.DISH_DIRECT).length})
+          </button>
+        </div>
+
+        {/* Search */}
+        <div className="w-full md:w-64">
+          <input
+            type="text"
+            placeholder="Search QR codes or URLs..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full px-3 py-1.5 bg-white border border-[#DCD5C9] text-xs text-[#1C120C] focus:outline-none focus:border-[#90323D] placeholder-[#594B42]"
+          />
+        </div>
+      </div>
+
       {/* QR Codes Grid */}
       {isLoading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <Skeleton className="h-64 w-full" />
           <Skeleton className="h-64 w-full" />
+          <Skeleton className="h-64 w-full" />
         </div>
-      ) : qrCodes.length === 0 ? (
-        <div className="bg-white rounded-2xl border border-[#E8E2D9] p-12 text-center text-xs font-bold uppercase text-[#594B42] shadow-xs">
-          No QR codes generated yet. Click &quot;Generate QR Code&quot; to create your table menu stand.
+      ) : filteredQrCodes.length === 0 ? (
+        <div className="bg-white border border-[#DCD5C9] p-12 text-center text-xs font-bold uppercase text-[#594B42]">
+          No QR codes found matching your criteria. Click &quot;Generate QR Code&quot; to create a new stand.
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {qrCodes.map((qr) => {
+          {filteredQrCodes.map((qr) => {
             const isMenu = qr.qrType === QrType.RESTAURANT_MENU;
             const dishName =
               typeof qr.dishId === 'object' && qr.dishId !== null
@@ -157,7 +231,7 @@ export default function QrManagementPage() {
             return (
               <div
                 key={qr._id}
-                className="bg-white rounded-2xl border border-[#E8E2D9] p-6 flex flex-col justify-between shadow-xs hover:shadow-md transition-all"
+                className="bg-white border border-[#DCD5C9] p-6 flex flex-col justify-between hover:border-[#90323D] transition-colors"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
@@ -167,14 +241,14 @@ export default function QrManagementPage() {
                     <button
                       onClick={() => handleRegenerate(qr._id)}
                       title="Regenerate QR Graphic"
-                      className="text-[#594B42] hover:text-[#5E0B15] p-1.5 rounded-lg hover:bg-[#FAF7F2] transition-colors cursor-pointer"
+                      className="text-[#594B42] hover:text-[#5E0B15] p-1 hover:bg-[#EDE1CF] transition-colors cursor-pointer"
                     >
                       <RefreshCw className="w-4 h-4" />
                     </button>
                   </div>
 
                   {/* QR Image Canvas */}
-                  <div className="bg-[#FAF7F2] p-4 rounded-xl border border-[#E8E2D9] flex items-center justify-center mb-4">
+                  <div className="bg-[#FAF7F2] p-4 border border-[#DCD5C9] flex items-center justify-center mb-4">
                     <img
                       src={qr.imageData}
                       alt="Dine-in QR"
@@ -191,13 +265,13 @@ export default function QrManagementPage() {
                   </p>
                 </div>
 
-                <div className="space-y-2 pt-4 border-t border-[#E8E2D9]">
+                <div className="space-y-2 pt-4 border-t border-[#DCD5C9]">
                   <div className="grid grid-cols-2 gap-2">
                     <Button
                       variant="primary"
                       size="sm"
                       onClick={() => downloadQrPng(qr)}
-                      className="uppercase font-bold text-[11px] rounded-lg shadow-xs"
+                      className="uppercase font-bold text-[11px]"
                     >
                       <Download className="w-3.5 h-3.5 mr-1" /> PNG
                     </Button>
@@ -205,7 +279,7 @@ export default function QrManagementPage() {
                       variant="outline"
                       size="sm"
                       onClick={() => handlePrint(qr)}
-                      className="uppercase font-bold text-[11px] rounded-lg shadow-xs"
+                      className="uppercase font-bold text-[11px]"
                     >
                       <Printer className="w-3.5 h-3.5 mr-1" /> Print
                     </Button>
@@ -240,7 +314,7 @@ export default function QrManagementPage() {
             <select
               value={qrType}
               onChange={(e) => setQrType(e.target.value as QrType)}
-              className="w-full px-3 py-2 bg-white rounded-lg border border-[#E8E2D9] text-sm text-[#1C120C] focus:outline-none focus:ring-2 focus:ring-[#90323D]/20 focus:border-[#90323D] transition-all"
+              className="w-full px-3 py-2 bg-white border border-[#DCD5C9] text-sm text-[#1C120C] focus:outline-none focus:border-[#90323D]"
             >
               <option value={QrType.RESTAURANT_MENU}>
                 Full Restaurant Menu Stand (/r/{currentRestaurant?.slug})
@@ -259,7 +333,7 @@ export default function QrManagementPage() {
               <select
                 value={dishId}
                 onChange={(e) => setDishId(e.target.value)}
-                className="w-full px-3 py-2 bg-white rounded-lg border border-[#E8E2D9] text-sm text-[#1C120C] focus:outline-none focus:ring-2 focus:ring-[#90323D]/20 focus:border-[#90323D] transition-all"
+                className="w-full px-3 py-2 bg-white border border-[#DCD5C9] text-sm text-[#1C120C] focus:outline-none focus:border-[#90323D]"
               >
                 {dishes.map((d) => (
                   <option key={d._id} value={d._id}>
@@ -270,11 +344,11 @@ export default function QrManagementPage() {
             </div>
           )}
 
-          <div className="p-3 bg-[#F8F7F4] border border-[#E8E2D9] rounded-xl text-xs text-[#594B42]">
+          <div className="p-3 bg-[#EDE1CF]/60 border border-[#DCD5C9] text-xs text-[#594B42]">
             Target URL will use the production frontend base URL configured in your environment.
           </div>
 
-          <div className="flex justify-end gap-3 pt-4 border-t border-[#E8E2D9]">
+          <div className="flex justify-end gap-3 pt-4 border-t border-[#DCD5C9]">
             <Button
               type="button"
               variant="outline"
@@ -293,13 +367,13 @@ export default function QrManagementPage() {
       {/* Printable Placard Hidden in screen, visible when printing */}
       {printQr && (
         <div className="hidden print:flex fixed inset-0 z-100 bg-white items-center justify-center p-12 flex-col text-center border-8 border-[#5E0B15]">
-          <h1 className="text-3xl font-black text-[#5E0B15] uppercase tracking-widest mb-2">
+          <h1 className="text-3xl font-black text-[#5E0B15] uppercase tracking-widest mb-2 font-luxury">
             PRASADAM DINE
           </h1>
           <p className="text-sm font-semibold tracking-wider uppercase text-[#594B42] mb-6">
             Scan to view digital menu & interactive 3D dishes
           </p>
-          <img src={printQr.imageData} alt="Printable QR" className="w-80 h-80 mx-auto mb-6" />
+          <img src={printQr.imageData} alt="Printable QR" className="w-80 h-80 mx-auto mb-6 border-2 border-[#DCD5C9] p-2" />
           <h2 className="text-2xl font-bold uppercase tracking-wider text-[#1C120C] mb-1">
             {currentRestaurant?.name}
           </h2>

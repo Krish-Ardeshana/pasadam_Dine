@@ -269,72 +269,72 @@ export default function RestaurantOrdersPage() {
     <DashboardShell>
       <div className="space-y-6">
         {/* Page Header */}
-        <div className="flex items-center justify-between pb-2 border-b border-[#BCD0BD]/40">
+        <div className="flex items-center justify-between pb-3 border-b border-[#DCD5C9]">
           <div>
-            <h1 className="text-xl font-extrabold text-[#23201C] uppercase tracking-wide">
+            <h1 className="text-xl font-black text-[#5E0B15] uppercase tracking-wider font-luxury">
               Kitchen & Live Orders
             </h1>
-            <p className="text-xs text-[#594B42]">
+            <p className="text-xs text-[#594B42] uppercase tracking-wider mt-0.5">
               Manage real-time dining requests for {currentRestaurant?.name || 'Restaurant'}
             </p>
           </div>
         </div>
 
         {/* Top Control Bar */}
-        <div className="bg-[#FAF7F2] p-4 rounded-2xl border border-[#BCD0BD]/60 shadow-xs flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="bg-white p-3 border border-[#DCD5C9] flex flex-col md:flex-row items-center justify-between gap-3">
           {/* Status Filter Tabs */}
-          <div className="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto pb-1 md:pb-0">
+          <div className="flex items-center gap-1 overflow-x-auto w-full md:w-auto">
             <button
               onClick={() => setActiveTab('ACTIVE')}
-              className={`px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider rounded-xl cursor-pointer transition-all ${
+              className={`px-3 py-1.5 text-xs font-bold uppercase tracking-wider cursor-pointer transition-colors ${
                 activeTab === 'ACTIVE'
-                  ? 'bg-[#829582] text-white shadow-xs'
-                  : 'bg-white text-[#23201C] hover:bg-[#EFE9DF]'
+                  ? 'bg-[#5E0B15] text-white'
+                  : 'bg-transparent text-[#594B42] hover:bg-[#EDE1CF]'
               }`}
             >
               Active Stream ({orders.filter((o) => o.status !== OrderStatus.SERVED && o.status !== OrderStatus.CANCELLED).length})
             </button>
             <button
               onClick={() => setActiveTab('PENDING')}
-              className={`px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider rounded-xl cursor-pointer transition-all flex items-center gap-1.5 ${
+              className={`px-3 py-1.5 text-xs font-bold uppercase tracking-wider cursor-pointer transition-colors flex items-center gap-1.5 ${
                 activeTab === 'PENDING'
-                  ? 'bg-[#DE6C3A] text-white shadow-xs'
-                  : 'bg-white text-[#23201C] hover:bg-[#EFE9DF]'
+                  ? 'bg-[#90323D] text-white'
+                  : 'bg-transparent text-[#594B42] hover:bg-[#EDE1CF]'
               }`}
             >
               <span>Pending New</span>
               {pendingCount > 0 && (
-                <span className="w-5 h-5 rounded-full bg-white text-[#DE6C3A] font-black text-[10px] flex items-center justify-center">
+                <span className="w-4 h-4 bg-white text-[#90323D] font-black text-[10px] flex items-center justify-center">
                   {pendingCount}
                 </span>
               )}
             </button>
             <button
               onClick={() => setActiveTab('PREPARING')}
-              className={`px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider rounded-xl cursor-pointer transition-all ${
+              className={`px-3 py-1.5 text-xs font-bold uppercase tracking-wider cursor-pointer transition-colors ${
                 activeTab === 'PREPARING'
-                  ? 'bg-[#829582] text-white shadow-xs'
-                  : 'bg-white text-[#23201C] hover:bg-[#EFE9DF]'
+                  ? 'bg-[#5E0B15] text-white'
+                  : 'bg-transparent text-[#594B42] hover:bg-[#EDE1CF]'
               }`}
             >
               Cooking ({preparingCount})
             </button>
             <button
               onClick={() => setActiveTab('READY')}
-              className={`px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider rounded-xl cursor-pointer transition-all ${
+              className={`px-3 py-1.5 text-xs font-bold uppercase tracking-wider cursor-pointer transition-colors ${
                 activeTab === 'READY'
-                  ? 'bg-[#2D5A27] text-white shadow-xs'
-                  : 'bg-white text-[#23201C] hover:bg-[#EFE9DF]'
+                  ? 'bg-[#1E562A] text-white'
+                  : 'bg-transparent text-[#594B42] hover:bg-[#EDE1CF]'
               }`}
             >
               Ready to Serve ({readyCount})
             </button>
             <button
               onClick={() => setActiveTab('ALL')}
-              className={`px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider rounded-xl cursor-pointer transition-all ${
+              className={`px-3 py-1.5 text-xs font-bold uppercase tracking-wider cursor-pointer transition-colors ${
                 activeTab === 'ALL'
-                  ? 'bg-[#829582] text-white shadow-xs'
-                  : 'bg-white text-[#23201C] hover:bg-[#EFE9DF]'
+                  ? 'bg-[#5E0B15] text-white'
+                  : 'bg-transparent text-[#594B42] hover:bg-[#EDE1CF]'
               }`}
             >
               All / History
@@ -342,12 +342,12 @@ export default function RestaurantOrdersPage() {
           </div>
 
           {/* Quick Actions & Live Badge */}
-          <div className="flex items-center gap-3 w-full md:w-auto justify-end">
+          <div className="flex items-center gap-2 w-full md:w-auto justify-end">
             {/* Real-time Indicator */}
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-[#BCD0BD]/60 text-[11px] font-bold">
+            <div className="flex items-center gap-1.5 px-2.5 py-1.5 bg-[#EDE1CF] border border-[#DCD5C9] text-[11px] font-bold">
               <span
-                className={`w-2 h-2 rounded-full ${
-                  isConnectedSse ? 'bg-[#2D5A27] animate-ping' : 'bg-[#DE6C3A]'
+                className={`w-2 h-2 ${
+                  isConnectedSse ? 'bg-[#1E562A] animate-ping' : 'bg-[#90323D]'
                 }`}
               />
               <span className="text-[#594B42] uppercase">
@@ -358,10 +358,10 @@ export default function RestaurantOrdersPage() {
             {/* Audio chime toggle */}
             <button
               onClick={() => setSoundEnabled(!soundEnabled)}
-              className={`p-2 rounded-xl border transition-colors cursor-pointer ${
+              className={`p-1.5 border transition-colors cursor-pointer ${
                 soundEnabled
-                  ? 'bg-[#2D5A27] text-white border-[#2D5A27]'
-                  : 'bg-white text-[#594B42] border-[#BCD0BD]/60 hover:bg-[#EFE9DF]'
+                  ? 'bg-[#5E0B15] text-white border-[#5E0B15]'
+                  : 'bg-white text-[#594B42] border-[#DCD5C9] hover:bg-[#EDE1CF]'
               }`}
               title={soundEnabled ? 'Kitchen alerts sound on' : 'Kitchen alerts sound off'}
             >
@@ -375,7 +375,7 @@ export default function RestaurantOrdersPage() {
                 loadOrders();
               }}
               disabled={isRefreshing}
-              className="p-2 bg-white text-[#594B42] hover:text-[#23201C] border border-[#BCD0BD]/60 rounded-xl transition-colors cursor-pointer"
+              className="p-1.5 bg-white text-[#594B42] hover:text-[#5E0B15] border border-[#DCD5C9] transition-colors cursor-pointer"
             >
               <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin' : ''}`} />
             </button>
@@ -384,25 +384,25 @@ export default function RestaurantOrdersPage() {
 
         {/* Search Bar */}
         <div className="relative">
-          <Search className="w-4 h-4 text-[#9C8B7E] absolute left-3.5 top-3 pointer-events-none" />
+          <Search className="w-4 h-4 text-[#594B42] absolute left-3 top-3 pointer-events-none" />
           <input
             type="text"
             placeholder="FILTER ORDERS BY ORDER #, TABLE, OR CUSTOMER..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 text-xs bg-white rounded-xl border border-[#BCD0BD]/60 focus:outline-none focus:ring-2 focus:ring-[#829582]/30 uppercase placeholder-[#9C8B7E]"
+            className="w-full pl-9 pr-4 py-2 text-xs bg-white border border-[#DCD5C9] focus:outline-none focus:border-[#90323D] uppercase placeholder-[#594B42] text-[#1C120C]"
           />
         </div>
 
         {/* Orders Feed */}
         {isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <Skeleton className="h-64 rounded-2xl" />
-            <Skeleton className="h-64 rounded-2xl" />
-            <Skeleton className="h-64 rounded-2xl" />
+            <Skeleton className="h-64" />
+            <Skeleton className="h-64" />
+            <Skeleton className="h-64" />
           </div>
         ) : error ? (
-          <div className="p-6 rounded-2xl bg-[#FDF0F1] border border-[#F6C6CC] text-[#90323D] flex items-start gap-3">
+          <div className="p-4 bg-[#FDF0F1] border border-[#F6C6CC] text-[#90323D] flex items-start gap-3">
             <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
             <div>
               <h4 className="text-sm font-bold uppercase tracking-wider mb-1">Error Loading Orders</h4>
@@ -410,9 +410,9 @@ export default function RestaurantOrdersPage() {
             </div>
           </div>
         ) : filteredOrders.length === 0 ? (
-          <div className="bg-white rounded-2xl border border-[#BCD0BD]/60 p-12 text-center shadow-xs">
-            <UtensilsCrossed className="w-10 h-10 text-[#BCD0BD] mx-auto mb-3" />
-            <h3 className="text-sm font-bold text-[#23201C] uppercase tracking-wider mb-1">
+          <div className="bg-white border border-[#DCD5C9] p-12 text-center">
+            <UtensilsCrossed className="w-8 h-8 text-[#594B42] mx-auto mb-3" />
+            <h3 className="text-xs font-black text-[#5E0B15] uppercase tracking-wider mb-1">
               No orders found
             </h3>
             <p className="text-xs text-[#594B42] max-w-sm mx-auto">
@@ -437,44 +437,44 @@ export default function RestaurantOrdersPage() {
               return (
                 <div
                   key={order._id}
-                  className={`bg-white rounded-2xl border transition-all duration-200 p-5 flex flex-col justify-between shadow-xs hover:shadow-md ${
+                  className={`bg-white border transition-colors duration-150 p-5 flex flex-col justify-between ${
                     isPending
-                      ? 'border-[#DE6C3A] ring-2 ring-[#DE6C3A]/20 bg-[#FAF7F2]'
+                      ? 'border-2 border-[#90323D]'
                       : isReady
-                        ? 'border-[#2D5A27] ring-1 ring-[#2D5A27]/20'
-                        : 'border-[#BCD0BD]/80'
+                        ? 'border-2 border-[#1E562A]'
+                        : 'border border-[#DCD5C9] hover:border-[#90323D]'
                   }`}
                 >
                   <div className="space-y-4">
                     {/* Order Card Header */}
-                    <div className="flex items-start justify-between gap-2 border-b border-[#EFE9DF] pb-3">
+                    <div className="flex items-start justify-between gap-2 border-b border-[#DCD5C9] pb-3">
                       <div>
                         <div className="flex items-center gap-2 flex-wrap">
-                          <h4 className="text-sm font-black font-mono text-[#23201C] tracking-wide">
+                          <h4 className="text-sm font-black font-mono text-[#5E0B15] tracking-wide">
                             {order.orderNumber}
                           </h4>
                           <Badge variant={getStatusBadgeVariant(order.status) as any} className="text-[10px]">
                             {order.status}
                           </Badge>
                           {order.paymentStatus === OrderPaymentStatus.PAID ? (
-                            <span className="text-[10px] font-extrabold text-[#1E562A] bg-[#EBF7EE] border border-[#C3E6CB] px-2 py-0.5 rounded-full inline-flex items-center gap-1">
+                            <span className="text-[10px] font-bold text-[#1E562A] bg-[#EBF7EE] border border-[#BCE1C7] px-1.5 py-0.5 inline-flex items-center gap-1 uppercase">
                               <ShieldCheck className="w-3 h-3 text-[#1E562A]" /> PAID
                             </span>
                           ) : order.paymentStatus === OrderPaymentStatus.REFUNDED ? (
-                            <span className="text-[10px] font-extrabold text-[#5B21B6] bg-[#F3E8FF] border border-[#DDD6FE] px-2 py-0.5 rounded-full inline-flex items-center gap-1">
-                              <RotateCcw className="w-3 h-3 text-[#5B21B6]" /> REFUNDED
+                            <span className="text-[10px] font-bold text-[#90323D] bg-[#FDF0F1] border border-[#F6C6CC] px-1.5 py-0.5 inline-flex items-center gap-1 uppercase">
+                              <RotateCcw className="w-3 h-3 text-[#90323D]" /> REFUNDED
                             </span>
                           ) : (
-                            <span className="text-[10px] font-extrabold text-[#8C6D1F] bg-[#FFF9E6] border border-[#F3DE9C] px-2 py-0.5 rounded-full">
+                            <span className="text-[10px] font-bold text-[#9A6216] bg-[#FEF7EC] border border-[#F6DEBA] px-1.5 py-0.5 uppercase">
                               UNPAID
                             </span>
                           )}
                         </div>
-                        <p className="text-[11px] text-[#594B42] font-semibold mt-0.5 flex items-center gap-1.5">
+                        <p className="text-[11px] text-[#594B42] font-semibold mt-1 flex items-center gap-1.5">
                           <Clock className="w-3 h-3" />
                           <span>{timeStr}</span>
                           {order.tableNumber && (
-                            <span className="font-bold text-[#DE6C3A] bg-white px-2 py-0.5 rounded-md border border-[#EFE9DF]">
+                            <span className="font-bold text-[#5E0B15] bg-[#EDE1CF] px-1.5 py-0.5 border border-[#DCD5C9]">
                               {order.tableNumber}
                             </span>
                           )}
@@ -483,7 +483,7 @@ export default function RestaurantOrdersPage() {
 
                       <button
                         onClick={() => setSelectedOrder(order)}
-                        className="text-[#594B42] hover:text-[#23201C] p-1 rounded-lg hover:bg-[#EFE9DF] transition-colors"
+                        className="text-[#594B42] hover:text-[#5E0B15] p-1 hover:bg-[#EDE1CF] transition-colors cursor-pointer"
                         title="View Full Order Details"
                       >
                         <FileText className="w-4 h-4" />
@@ -492,9 +492,9 @@ export default function RestaurantOrdersPage() {
 
                     {/* Customer Info if available */}
                     {(order.customerName || order.customerPhone) && (
-                      <div className="text-[11px] bg-[#FAF7F2] p-2 rounded-lg border border-[#EFE9DF] text-[#594B42] flex justify-between">
-                        <span>Customer: <strong>{order.customerName || 'Dine-In Guest'}</strong></span>
-                        {order.customerPhone && <span>{order.customerPhone}</span>}
+                      <div className="text-[11px] bg-[#FAF7F2] p-2 border border-[#DCD5C9] text-[#594B42] flex justify-between">
+                        <span>Customer: <strong className="text-[#1C120C]">{order.customerName || 'Dine-In Guest'}</strong></span>
+                        {order.customerPhone && <span className="font-mono">{order.customerPhone}</span>}
                       </div>
                     )}
 
@@ -502,25 +502,25 @@ export default function RestaurantOrdersPage() {
                     <div className="space-y-2">
                       <div className="text-[11px] font-bold text-[#594B42] uppercase tracking-wider flex justify-between">
                         <span>Items ({order.items.length})</span>
-                        <span className="font-mono">
+                        <span className="font-mono text-[#1C120C]">
                           {order.pricing.currency} {order.pricing.total.toFixed(2)}
                         </span>
                       </div>
 
                       <div className="space-y-1.5 max-h-40 overflow-y-auto pr-1">
                         {order.items.map((item, idx) => (
-                          <div key={idx} className="flex justify-between items-start text-xs">
+                          <div key={idx} className="flex justify-between items-start text-xs border-b border-[#FAF7F2] pb-1">
                             <div>
                               <div className="flex items-center gap-2">
-                                <span className="font-mono font-bold text-[#DE6C3A] bg-[#FAF7F2] px-1.5 py-0.5 rounded-sm text-[11px]">
+                                <span className="font-mono font-bold text-[#5E0B15] bg-[#EDE1CF] px-1.5 py-0.5 text-[11px]">
                                   {item.quantity}x
                                 </span>
-                                <span className="font-bold text-[#23201C] uppercase">
+                                <span className="font-bold text-[#1C120C] uppercase">
                                   {item.name}
                                 </span>
                               </div>
                               {item.instructions && (
-                                <p className="text-[10px] text-[#DE6C3A] italic ml-6">
+                                <p className="text-[10px] text-[#90323D] italic ml-6">
                                   {item.instructions}
                                 </p>
                               )}
@@ -535,27 +535,27 @@ export default function RestaurantOrdersPage() {
 
                     {/* Special order note */}
                     {order.specialInstructions && (
-                      <div className="text-[11px] p-2 bg-[#FDF0F1] border border-[#F6C6CC] rounded-lg text-[#90323D]">
+                      <div className="text-[11px] p-2 bg-[#FDF0F1] border border-[#F6C6CC] text-[#90323D]">
                         <strong>Order Note:</strong> {order.specialInstructions}
                       </div>
                     )}
                   </div>
 
                   {/* Lifecycle Action Buttons */}
-                  <div className="pt-4 border-t border-[#EFE9DF] mt-4">
+                  <div className="pt-4 border-t border-[#DCD5C9] mt-4">
                     {isPending && (
                       <div className="grid grid-cols-2 gap-2">
                         <button
                           type="button"
                           onClick={() => setDeclineOrderId(order._id)}
-                          className="py-2 px-3 text-xs font-bold uppercase rounded-xl border border-[#F6C6CC] bg-white text-[#90323D] hover:bg-[#FDF0F1] transition-colors cursor-pointer"
+                          className="py-2 px-3 text-xs font-bold uppercase border border-[#F6C6CC] bg-white text-[#90323D] hover:bg-[#FDF0F1] transition-colors cursor-pointer"
                         >
                           Decline
                         </button>
                         <button
                           type="button"
                           onClick={() => handleUpdateStatus(order._id, OrderStatus.ACCEPTED)}
-                          className="py-2 px-3 text-xs font-bold uppercase rounded-xl bg-[#DE6C3A] hover:bg-[#C95B2A] text-white shadow-xs transition-colors cursor-pointer"
+                          className="py-2 px-3 text-xs font-bold uppercase bg-[#5E0B15] hover:bg-[#450810] text-white transition-colors cursor-pointer"
                         >
                           Accept Order
                         </button>
@@ -566,7 +566,7 @@ export default function RestaurantOrdersPage() {
                       <button
                         type="button"
                         onClick={() => handleUpdateStatus(order._id, OrderStatus.PREPARING)}
-                        className="w-full py-2.5 px-3 text-xs font-bold uppercase rounded-xl bg-[#829582] hover:bg-[#6C806C] text-white shadow-xs transition-colors cursor-pointer flex items-center justify-center gap-2"
+                        className="w-full py-2 px-3 text-xs font-bold uppercase bg-[#90323D] hover:bg-[#7A2731] text-white transition-colors cursor-pointer flex items-center justify-center gap-2"
                       >
                         <ChefHat className="w-4 h-4" />
                         <span>Start Cooking</span>
@@ -577,7 +577,7 @@ export default function RestaurantOrdersPage() {
                       <button
                         type="button"
                         onClick={() => handleUpdateStatus(order._id, OrderStatus.READY)}
-                        className="w-full py-2.5 px-3 text-xs font-bold uppercase rounded-xl bg-[#2D5A27] hover:bg-[#23471E] text-white shadow-xs transition-colors cursor-pointer flex items-center justify-center gap-2"
+                        className="w-full py-2 px-3 text-xs font-bold uppercase bg-[#1E562A] hover:bg-[#163f1f] text-white transition-colors cursor-pointer flex items-center justify-center gap-2"
                       >
                         <BellRing className="w-4 h-4" />
                         <span>Mark Ready for Pickup/Serve</span>
@@ -588,7 +588,7 @@ export default function RestaurantOrdersPage() {
                       <button
                         type="button"
                         onClick={() => handleUpdateStatus(order._id, OrderStatus.SERVED)}
-                        className="w-full py-2.5 px-3 text-xs font-bold uppercase rounded-xl bg-[#23201C] hover:bg-black text-white shadow-xs transition-colors cursor-pointer flex items-center justify-center gap-2"
+                        className="w-full py-2 px-3 text-xs font-bold uppercase bg-[#1C120C] hover:bg-black text-white transition-colors cursor-pointer flex items-center justify-center gap-2"
                       >
                         <Check className="w-4 h-4" />
                         <span>Mark as Served</span>
@@ -596,7 +596,7 @@ export default function RestaurantOrdersPage() {
                     )}
 
                     {isServed && (
-                      <div className="text-center text-xs text-[#2D5A27] font-bold uppercase py-1">
+                      <div className="text-center text-xs text-[#1E562A] font-bold uppercase py-1">
                         ✓ Order Completed & Served
                       </div>
                     )}
@@ -618,11 +618,11 @@ export default function RestaurantOrdersPage() {
       {declineOrderId && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div
-            className="fixed inset-0 bg-black/50 backdrop-blur-xs"
+            className="fixed inset-0 bg-black/60 backdrop-blur-xs"
             onClick={() => setDeclineOrderId(null)}
           />
-          <div className="relative w-full max-w-md bg-white rounded-2xl border border-[#BCD0BD] p-6 shadow-2xl space-y-4">
-            <h3 className="text-sm font-bold text-[#90323D] uppercase tracking-wider">
+          <div className="relative w-full max-w-md bg-white border-2 border-[#5E0B15] p-6 space-y-4">
+            <h3 className="text-xs font-black text-[#5E0B15] uppercase tracking-wider">
               Decline Dining Order
             </h3>
             <p className="text-xs text-[#594B42]">
@@ -633,13 +633,13 @@ export default function RestaurantOrdersPage() {
               placeholder="Reason for declining order..."
               value={declineReason}
               onChange={(e) => setDeclineReason(e.target.value)}
-              className="w-full p-3 text-xs bg-[#FAF7F2] rounded-xl border border-[#BCD0BD] focus:outline-none focus:ring-2 focus:ring-[#90323D]/30 resize-none"
+              className="w-full p-3 text-xs bg-white border border-[#DCD5C9] focus:outline-none focus:border-[#90323D] resize-none text-[#1C120C]"
             />
-            <div className="flex justify-end gap-2.5 pt-2">
+            <div className="flex justify-end gap-2.5 pt-2 border-t border-[#DCD5C9]">
               <button
                 type="button"
                 onClick={() => setDeclineOrderId(null)}
-                className="px-4 py-2 text-xs font-bold uppercase rounded-xl border border-[#BCD0BD] text-[#594B42] hover:bg-[#FAF7F2] transition-colors"
+                className="px-4 py-1.5 text-xs font-bold uppercase border border-[#DCD5C9] text-[#594B42] hover:bg-[#EDE1CF] transition-colors cursor-pointer"
               >
                 Back
               </button>
@@ -647,7 +647,7 @@ export default function RestaurantOrdersPage() {
                 type="button"
                 onClick={handleConfirmDecline}
                 disabled={isDeclining}
-                className="px-4 py-2 text-xs font-bold uppercase rounded-xl bg-[#90323D] text-white hover:bg-[#722730] transition-colors disabled:opacity-50"
+                className="px-4 py-1.5 text-xs font-bold uppercase bg-[#90323D] text-white hover:bg-[#7A2731] transition-colors disabled:opacity-50 cursor-pointer"
               >
                 {isDeclining ? 'Cancelling...' : 'Confirm Decline'}
               </button>
@@ -660,13 +660,13 @@ export default function RestaurantOrdersPage() {
       {selectedOrder && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div
-            className="fixed inset-0 bg-black/50 backdrop-blur-xs"
+            className="fixed inset-0 bg-black/60 backdrop-blur-xs"
             onClick={() => setSelectedOrder(null)}
           />
-          <div className="relative w-full max-w-lg bg-white rounded-2xl border border-[#BCD0BD] p-6 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between border-b border-[#EFE9DF] pb-3">
+          <div className="relative w-full max-w-lg bg-white border-2 border-[#5E0B15] p-6 space-y-5 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between border-b border-[#DCD5C9] pb-3">
               <div>
-                <h3 className="text-sm font-black font-mono text-[#23201C]">
+                <h3 className="text-sm font-black font-mono text-[#5E0B15]">
                   {selectedOrder.orderNumber}
                 </h3>
                 <p className="text-[11px] text-[#594B42]">
@@ -680,16 +680,16 @@ export default function RestaurantOrdersPage() {
 
             {/* Item Breakdown */}
             <div className="space-y-2">
-              <h4 className="text-xs font-bold uppercase text-[#594B42] tracking-wider">
+              <h4 className="text-xs font-black uppercase text-[#5E0B15] tracking-wider">
                 Item Breakdown
               </h4>
-              <div className="space-y-2 bg-[#FAF7F2] p-3 rounded-xl border border-[#EFE9DF]">
+              <div className="space-y-2 bg-[#FAF7F2] p-3 border border-[#DCD5C9]">
                 {selectedOrder.items.map((i, idx) => (
                   <div key={idx} className="flex justify-between text-xs">
                     <div>
-                      <span className="font-bold text-[#23201C]">{i.quantity}x {i.name}</span>
+                      <span className="font-bold text-[#1C120C]">{i.quantity}x {i.name}</span>
                       {i.instructions && (
-                        <p className="text-[10px] text-[#DE6C3A] italic">Note: {i.instructions}</p>
+                        <p className="text-[10px] text-[#90323D] italic">Note: {i.instructions}</p>
                       )}
                     </div>
                     <span className="font-mono text-[#594B42]">
@@ -702,18 +702,18 @@ export default function RestaurantOrdersPage() {
 
             {/* Status History Timeline */}
             <div className="space-y-2">
-              <h4 className="text-xs font-bold uppercase text-[#594B42] tracking-wider">
+              <h4 className="text-xs font-black uppercase text-[#5E0B15] tracking-wider">
                 Audit Timeline
               </h4>
-              <div className="space-y-2 text-xs bg-[#FAF7F2] p-3 rounded-xl border border-[#EFE9DF]">
+              <div className="space-y-2 text-xs bg-[#FAF7F2] p-3 border border-[#DCD5C9]">
                 {selectedOrder.statusHistory?.map((h, idx) => (
-                  <div key={idx} className="flex items-start justify-between text-[11px] border-b border-white last:border-0 pb-1.5 last:pb-0">
+                  <div key={idx} className="flex items-start justify-between text-[11px] border-b border-[#DCD5C9]/40 last:border-0 pb-1.5 last:pb-0">
                     <div>
-                      <span className="font-bold uppercase text-[#23201C]">{h.status}</span>
+                      <span className="font-bold uppercase text-[#1C120C]">{h.status}</span>
                       {h.reason && <p className="text-[#594B42] italic">{h.reason}</p>}
-                      <p className="text-[10px] text-[#9C8B7E]">By: {h.changedBy}</p>
+                      <p className="text-[10px] text-[#594B42]">By: {h.changedBy}</p>
                     </div>
-                    <span className="text-[10px] text-[#9C8B7E]">
+                    <span className="text-[10px] text-[#594B42] font-mono">
                       {new Date(h.changedAt).toLocaleTimeString()}
                     </span>
                   </div>
@@ -722,17 +722,17 @@ export default function RestaurantOrdersPage() {
             </div>
 
             {/* Payment & Refund Controls */}
-            <div className="space-y-3 bg-[#FAF7F2] p-4 rounded-xl border border-[#EFE9DF]">
+            <div className="space-y-3 bg-[#FAF7F2] p-4 border border-[#DCD5C9]">
               <div className="flex justify-between items-center text-xs">
                 <span className="font-bold text-[#594B42] uppercase tracking-wider">Payment Status</span>
-                <span className="font-extrabold uppercase text-[#23201C] flex items-center gap-1.5">
+                <span className="font-bold uppercase text-[#1C120C] flex items-center gap-1.5">
                   <CreditCard className="w-3.5 h-3.5 text-[#594B42]" />
                   {selectedOrder.paymentStatus} ({selectedOrder.paymentMethod.replace(/_/g, ' ')})
                 </span>
               </div>
 
               {selectedOrder.paymentStatus === OrderPaymentStatus.PAID && (
-                <div className="pt-3 border-t border-[#E8E2D9] space-y-2">
+                <div className="pt-3 border-t border-[#DCD5C9] space-y-2">
                   <p className="text-[11px] text-[#594B42]">
                     Customer payment has been settled. If needed, you may issue a secure refund via Razorpay:
                   </p>
@@ -741,7 +741,7 @@ export default function RestaurantOrdersPage() {
                     placeholder="Reason for refund (optional)..."
                     value={refundReason}
                     onChange={(e) => setRefundReason(e.target.value)}
-                    className="w-full px-3 py-1.5 text-xs bg-white rounded-lg border border-[#BCD0BD] focus:outline-none focus:ring-1 focus:ring-[#90323D]"
+                    className="w-full px-3 py-1.5 text-xs bg-white border border-[#DCD5C9] focus:outline-none focus:border-[#90323D] text-[#1C120C]"
                   />
                   {refundFeedback && (
                     <p className="text-[11px] font-semibold text-[#90323D]">
@@ -752,7 +752,7 @@ export default function RestaurantOrdersPage() {
                     type="button"
                     onClick={handleProcessRefund}
                     disabled={isRefunding}
-                    className="w-full py-2 bg-[#90323D] hover:bg-[#722730] text-white text-xs font-bold uppercase rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                    className="w-full py-1.5 bg-[#90323D] hover:bg-[#7A2731] text-white text-xs font-bold uppercase transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                   >
                     <RotateCcw className="w-3.5 h-3.5" />
                     <span>{isRefunding ? 'Processing Refund...' : 'Issue Razorpay Refund'}</span>
@@ -761,11 +761,11 @@ export default function RestaurantOrdersPage() {
               )}
             </div>
 
-            <div className="flex justify-end pt-2">
+            <div className="flex justify-end pt-2 border-t border-[#DCD5C9]">
               <button
                 type="button"
                 onClick={() => setSelectedOrder(null)}
-                className="px-5 py-2 text-xs font-bold uppercase rounded-xl bg-[#829582] text-white hover:bg-[#6C806C] transition-colors"
+                className="px-5 py-1.5 text-xs font-bold uppercase bg-[#5E0B15] text-white hover:bg-[#450810] transition-colors cursor-pointer"
               >
                 Close
               </button>

@@ -14,6 +14,8 @@ import {
   Search,
   ExternalLink,
   Upload,
+  LayoutGrid,
+  List,
 } from 'lucide-react';
 import { useAuth } from '@/context/auth-context';
 import { useToast } from '@/context/toast-context';
@@ -35,6 +37,9 @@ export default function DishesPage() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [search, setSearch] = useState('');
   const [selectedCatId, setSelectedCatId] = useState('');
+  const [availabilityFilter, setAvailabilityFilter] = useState<'ALL' | 'AVAILABLE' | 'UNAVAILABLE'>('ALL');
+  const [model3dFilter, setModel3dFilter] = useState<'ALL' | 'HAS_3D' | 'NO_3D'>('ALL');
+  const [viewMode, setViewMode] = useState<'TABLE' | 'CARDS'>('TABLE');
   const [isLoading, setIsLoading] = useState(true);
 
   // Modal State
@@ -253,6 +258,14 @@ export default function DishesPage() {
     }
   };
 
+  const filteredDishes = dishes.filter((dish) => {
+    if (availabilityFilter === 'AVAILABLE' && !dish.isAvailable) return false;
+    if (availabilityFilter === 'UNAVAILABLE' && dish.isAvailable) return false;
+    if (model3dFilter === 'HAS_3D' && !dish.model3dUrl) return false;
+    if (model3dFilter === 'NO_3D' && !!dish.model3dUrl) return false;
+    return true;
+  });
+
   return (
     <DashboardShell>
       {/* Header */}
@@ -262,7 +275,7 @@ export default function DishesPage() {
             Dishes & 3D AR Assets
           </h1>
           <p className="text-xs text-[#594B42] uppercase tracking-wider mt-0.5">
-            Manage culinary offerings, pricing, availability, and 3D food models
+            Manage culinary offerings, pricing, availability, and 3D food models ({filteredDishes.length} items)
           </p>
         </div>
         <Button
@@ -276,137 +289,180 @@ export default function DishesPage() {
       </div>
 
       {categories.length === 0 && (
-        <div className="p-4 bg-[#FDF0F1] rounded-xl border border-[#F6C6CC] text-[#90323D] text-xs font-semibold uppercase tracking-wider">
+        <div className="p-4 bg-[#FDF0F1] border border-[#F6C6CC] text-[#90323D] text-xs font-semibold uppercase tracking-wider">
           Notice: You must create at least one Menu Category before adding dishes.
         </div>
       )}
 
-      {/* Filter and Search Bar */}
-      <div className="bg-white rounded-xl border border-[#E8E2D9] p-4 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xs">
-        <div className="w-full sm:w-72">
-          <Input
-            placeholder="SEARCH DISHES..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="uppercase text-xs"
-          />
+      {/* Comprehensive Multi-Filter Bar */}
+      <div className="bg-white border border-[#DCD5C9] p-4 flex flex-wrap items-center justify-between gap-3 shadow-none">
+        <div className="flex flex-wrap items-center gap-3 flex-1 min-w-[280px]">
+          {/* Search Input */}
+          <div className="w-full sm:w-64">
+            <Input
+              placeholder="SEARCH DISHES..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="uppercase text-xs"
+            />
+          </div>
+
+          {/* Category Filter */}
+          <div className="w-full sm:w-48">
+            <select
+              value={selectedCatId}
+              onChange={(e) => setSelectedCatId(e.target.value)}
+              className="w-full px-3 py-2 bg-white border border-[#DCD5C9] text-xs font-semibold uppercase text-[#594B42] focus:outline-none focus:ring-1 focus:ring-[#90323D] focus:border-[#90323D]"
+            >
+              <option value="">All Categories</option>
+              {categories.map((c) => (
+                <option key={c._id} value={c._id}>
+                  {c.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Availability Filter */}
+          <div className="w-full sm:w-40">
+            <select
+              value={availabilityFilter}
+              onChange={(e) => setAvailabilityFilter(e.target.value as any)}
+              className="w-full px-3 py-2 bg-white border border-[#DCD5C9] text-xs font-semibold uppercase text-[#594B42] focus:outline-none focus:ring-1 focus:ring-[#90323D] focus:border-[#90323D]"
+            >
+              <option value="ALL">All Availability</option>
+              <option value="AVAILABLE">In Stock Only</option>
+              <option value="UNAVAILABLE">Sold Out Only</option>
+            </select>
+          </div>
+
+          {/* 3D Model Filter */}
+          <div className="w-full sm:w-44">
+            <select
+              value={model3dFilter}
+              onChange={(e) => setModel3dFilter(e.target.value as any)}
+              className="w-full px-3 py-2 bg-white border border-[#DCD5C9] text-xs font-semibold uppercase text-[#594B42] focus:outline-none focus:ring-1 focus:ring-[#90323D] focus:border-[#90323D]"
+            >
+              <option value="ALL">All 3D Status</option>
+              <option value="HAS_3D">3D Model Ready</option>
+              <option value="NO_3D">No 3D Model (2D Only)</option>
+            </select>
+          </div>
         </div>
 
-        <div className="w-full sm:w-64">
-          <select
-            value={selectedCatId}
-            onChange={(e) => setSelectedCatId(e.target.value)}
-            className="w-full px-3 py-2 bg-white rounded-lg border border-[#DCD5C9] text-xs font-semibold uppercase text-[#594B42] focus:outline-none focus:ring-2 focus:ring-[#90323D]/20 focus:border-[#90323D] shadow-xs"
+        {/* View Mode Switcher */}
+        <div className="flex items-center border border-[#DCD5C9]">
+          <button
+            type="button"
+            onClick={() => setViewMode('TABLE')}
+            className={`p-2 transition-colors cursor-pointer ${
+              viewMode === 'TABLE' ? 'bg-[#5E0B15] text-white' : 'bg-white text-[#594B42] hover:bg-[#F7F3EC]'
+            }`}
+            title="Table View"
           >
-            <option value="">All Categories</option>
-            {categories.map((c) => (
-              <option key={c._id} value={c._id}>
-                {c.name}
-              </option>
-            ))}
-          </select>
+            <List className="w-4 h-4" />
+          </button>
+          <button
+            type="button"
+            onClick={() => setViewMode('CARDS')}
+            className={`p-2 transition-colors cursor-pointer ${
+              viewMode === 'CARDS' ? 'bg-[#5E0B15] text-white' : 'bg-white text-[#594B42] hover:bg-[#F7F3EC]'
+            }`}
+            title="Cards View"
+          >
+            <LayoutGrid className="w-4 h-4" />
+          </button>
         </div>
       </div>
 
-      {/* Dishes Table */}
-      <Table>
-        <Thead>
-          <tr>
-            <Th>Dish Name</Th>
-            <Th>Category</Th>
-            <Th>Price</Th>
-            <Th>3D AR</Th>
-            <Th>Availability</Th>
-            <Th>Publication</Th>
-            <Th className="text-right">Actions</Th>
-          </tr>
-        </Thead>
-        <tbody>
+      {/* Catalog Render: Cards or Table */}
+      {viewMode === 'CARDS' ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {isLoading ? (
-            <tr>
-              <Td colSpan={7}>
-                <div className="space-y-2 py-4">
-                  <Skeleton className="h-8 w-full" />
-                  <Skeleton className="h-8 w-full" />
-                </div>
-              </Td>
-            </tr>
-          ) : dishes.length === 0 ? (
-            <tr>
-              <Td colSpan={7} className="text-center py-10 text-xs font-bold uppercase text-[#594B42]">
-                No dishes found. Click &quot;Add New Dish&quot; to create your first item.
-              </Td>
-            </tr>
+            Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="bg-white border border-[#DCD5C9] p-4 space-y-3">
+                <Skeleton className="h-36 w-full" />
+                <Skeleton className="h-4 w-3/4" />
+                <Skeleton className="h-4 w-1/2" />
+              </div>
+            ))
+          ) : filteredDishes.length === 0 ? (
+            <div className="col-span-full bg-white border border-[#DCD5C9] p-12 text-center text-xs font-bold uppercase text-[#594B42]">
+              No dishes found matching the selected filters.
+            </div>
           ) : (
-            dishes.map((dish) => {
+            filteredDishes.map((dish) => {
               const catName =
                 typeof dish.categoryId === 'object'
                   ? (dish.categoryId as any).name
                   : categories.find((c) => c._id === dish.categoryId)?.name || '—';
 
               return (
-                <tr key={dish._id} className="hover:bg-[#F7F3EC] transition-colors">
-                  <Td className="font-bold text-[#1C120C] uppercase tracking-wider">
-                    <div className="flex items-center gap-2">
-                      <span>{dish.name}</span>
-                      {dish.dietaryFlags?.map((flag) => (
-                        <Badge key={flag} variant="dietary" className="text-[9px] py-0">
-                          {flag}
-                        </Badge>
-                      ))}
+                <div key={dish._id} className="bg-white border border-[#DCD5C9] p-4 flex flex-col justify-between hover:border-[#90323D] transition-colors">
+                  <div>
+                    {/* Thumbnail / Image Frame */}
+                    <div className="relative aspect-video w-full bg-[#FAF7F2] border border-[#DCD5C9] mb-3 overflow-hidden flex items-center justify-center">
+                      {dish.imageUrls?.[0] ? (
+                        <img
+                          src={api.resolveMediaUrl(dish.imageUrls[0])}
+                          alt={dish.name}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <UtensilsCrossed className="w-8 h-8 text-[#DCD5C9]" />
+                      )}
+                      {dish.model3dUrl && (
+                        <span className="absolute top-2 left-2 bg-[#1B4332] text-white text-[9px] font-black uppercase px-2 py-0.5 border border-emerald-400/40">
+                          3D Ready
+                        </span>
+                      )}
                     </div>
-                  </Td>
-                  <Td className="text-xs text-[#594B42] uppercase">{catName}</Td>
-                  <Td className="font-mono text-xs font-bold text-[#5E0B15]">
-                    {dish.currency} {dish.price.toFixed(2)}
-                  </Td>
-                  <Td>
+
+                    <div className="flex items-start justify-between gap-2 mb-1">
+                      <h3 className="font-bold text-sm text-[#1C120C] uppercase tracking-wide">
+                        {dish.name}
+                      </h3>
+                      <span className="font-mono text-sm font-black text-[#5E0B15] shrink-0">
+                        {dish.currency} {dish.price.toFixed(2)}
+                      </span>
+                    </div>
+
+                    <p className="text-[11px] text-[#594B42] uppercase tracking-wider mb-2 font-medium">
+                      Category: {catName}
+                    </p>
+
+                    <div className="flex flex-wrap items-center gap-1.5 mb-3">
+                      <button onClick={() => handleToggleAvailability(dish)} className="cursor-pointer">
+                        {dish.isAvailable ? (
+                          <Badge variant="success">IN STOCK</Badge>
+                        ) : (
+                          <Badge variant="danger">SOLD OUT</Badge>
+                        )}
+                      </button>
+                      <button onClick={() => handleTogglePublish(dish)} className="cursor-pointer">
+                        {dish.isPublished ? (
+                          <Badge variant="success">LIVE MENU</Badge>
+                        ) : (
+                          <Badge variant="neutral">DRAFT</Badge>
+                        )}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="pt-3 border-t border-[#DCD5C9] flex items-center justify-between gap-2">
                     {dish.model3dUrl ? (
                       <button
                         type="button"
                         onClick={() => setPreviewDish(dish)}
-                        className="inline-flex items-center gap-1 text-[11px] font-extrabold text-[#1E562A] bg-[#EAF3EB] hover:bg-[#D9EEDC] border border-[#BBDCBF] px-2.5 py-1 rounded-md uppercase tracking-wider cursor-pointer transition-colors shadow-2xs"
-                        title="Click to view interactive 3D model"
+                        className="inline-flex items-center gap-1 text-[11px] font-bold text-[#1E562A] bg-[#EAF3EB] hover:bg-[#D9EEDC] border border-[#BBDCBF] px-2.5 py-1 uppercase tracking-wider cursor-pointer"
                       >
-                        <Sparkles className="w-3 h-3 text-[#1E562A]" /> 3D GLB
+                        <Sparkles className="w-3 h-3 text-[#1E562A]" /> 3D Preview
                       </button>
                     ) : (
                       <span className="text-[11px] text-[#8A7D70]">2D Only</span>
                     )}
-                  </Td>
-                  <Td>
-                    <button
-                      onClick={() => handleToggleAvailability(dish)}
-                      className="cursor-pointer"
-                    >
-                      {dish.isAvailable ? (
-                        <Badge variant="success">IN STOCK</Badge>
-                      ) : (
-                        <Badge variant="danger">SOLD OUT</Badge>
-                      )}
-                    </button>
-                  </Td>
-                  <Td>
-                    <button onClick={() => handleTogglePublish(dish)} className="cursor-pointer">
-                      {dish.isPublished ? (
-                        <Badge variant="success">LIVE MENU</Badge>
-                      ) : (
-                        <Badge variant="neutral">DRAFT</Badge>
-                      )}
-                    </button>
-                  </Td>
-                  <Td className="text-right">
-                    <div className="flex items-center justify-end gap-2">
-                      {currentRestaurant?.slug && (
-                        <Link
-                          href={`/r/${currentRestaurant.slug}/d/${dish.slug}`}
-                          target="_blank"
-                          className="p-1.5 text-[#594B42] hover:text-[#5E0B15] transition-colors"
-                          title="Preview Public AR Page"
-                        >
-                          <ExternalLink className="w-4 h-4" />
-                        </Link>
-                      )}
+
+                    <div className="flex items-center gap-1.5">
                       <Button
                         variant="outline"
                         size="sm"
@@ -424,13 +480,137 @@ export default function DishesPage() {
                         <Trash2 className="w-3 h-3" />
                       </Button>
                     </div>
-                  </Td>
-                </tr>
+                  </div>
+                </div>
               );
             })
           )}
-        </tbody>
-      </Table>
+        </div>
+      ) : (
+        /* Dishes Table */
+        <Table>
+          <Thead>
+            <tr>
+              <Th>Dish Name</Th>
+              <Th>Category</Th>
+              <Th>Price</Th>
+              <Th>3D AR</Th>
+              <Th>Availability</Th>
+              <Th>Publication</Th>
+              <Th className="text-right">Actions</Th>
+            </tr>
+          </Thead>
+          <tbody>
+            {isLoading ? (
+              <tr>
+                <Td colSpan={7}>
+                  <div className="space-y-2 py-4">
+                    <Skeleton className="h-8 w-full" />
+                    <Skeleton className="h-8 w-full" />
+                  </div>
+                </Td>
+              </tr>
+            ) : filteredDishes.length === 0 ? (
+              <tr>
+                <Td colSpan={7} className="text-center py-10 text-xs font-bold uppercase text-[#594B42]">
+                  No dishes found. Click &quot;Add New Dish&quot; to create your first item.
+                </Td>
+              </tr>
+            ) : (
+              filteredDishes.map((dish) => {
+                const catName =
+                  typeof dish.categoryId === 'object'
+                    ? (dish.categoryId as any).name
+                    : categories.find((c) => c._id === dish.categoryId)?.name || '—';
+
+                return (
+                  <tr key={dish._id} className="hover:bg-[#F7F3EC] transition-colors">
+                    <Td className="font-bold text-[#1C120C] uppercase tracking-wider">
+                      <div className="flex items-center gap-2">
+                        <span>{dish.name}</span>
+                        {dish.dietaryFlags?.map((flag) => (
+                          <Badge key={flag} variant="dietary" className="text-[9px] py-0">
+                            {flag}
+                          </Badge>
+                        ))}
+                      </div>
+                    </Td>
+                    <Td className="text-xs text-[#594B42] uppercase">{catName}</Td>
+                    <Td className="font-mono text-xs font-bold text-[#5E0B15]">
+                      {dish.currency} {dish.price.toFixed(2)}
+                    </Td>
+                    <Td>
+                      {dish.model3dUrl ? (
+                        <button
+                          type="button"
+                          onClick={() => setPreviewDish(dish)}
+                          className="inline-flex items-center gap-1 text-[11px] font-extrabold text-[#1E562A] bg-[#EAF3EB] hover:bg-[#D9EEDC] border border-[#BBDCBF] px-2.5 py-1 uppercase tracking-wider cursor-pointer transition-colors shadow-none"
+                          title="Click to view interactive 3D model"
+                        >
+                          <Sparkles className="w-3 h-3 text-[#1E562A]" /> 3D GLB
+                        </button>
+                      ) : (
+                        <span className="text-[11px] text-[#8A7D70]">2D Only</span>
+                      )}
+                    </Td>
+                    <Td>
+                      <button
+                        onClick={() => handleToggleAvailability(dish)}
+                        className="cursor-pointer"
+                      >
+                        {dish.isAvailable ? (
+                          <Badge variant="success">IN STOCK</Badge>
+                        ) : (
+                          <Badge variant="danger">SOLD OUT</Badge>
+                        )}
+                      </button>
+                    </Td>
+                    <Td>
+                      <button onClick={() => handleTogglePublish(dish)} className="cursor-pointer">
+                        {dish.isPublished ? (
+                          <Badge variant="success">LIVE MENU</Badge>
+                        ) : (
+                          <Badge variant="neutral">DRAFT</Badge>
+                        )}
+                      </button>
+                    </Td>
+                    <Td className="text-right">
+                      <div className="flex items-center justify-end gap-2">
+                        {currentRestaurant?.slug && (
+                          <Link
+                            href={`/r/${currentRestaurant.slug}/d/${dish.slug}`}
+                            target="_blank"
+                            className="p-1.5 text-[#594B42] hover:text-[#5E0B15] transition-colors"
+                            title="Preview Public AR Page"
+                          >
+                            <ExternalLink className="w-4 h-4" />
+                          </Link>
+                        )}
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleOpenEdit(dish)}
+                          className="font-bold text-[11px] uppercase"
+                        >
+                          <Edit2 className="w-3 h-3 mr-1" /> Edit
+                        </Button>
+                        <Button
+                          variant="danger"
+                          size="sm"
+                          onClick={() => setDeletingDish(dish)}
+                          className="font-bold text-[11px] uppercase"
+                        >
+                          <Trash2 className="w-3 h-3" />
+                        </Button>
+                      </div>
+                    </Td>
+                  </tr>
+                );
+              })
+            )}
+          </tbody>
+        </Table>
+      )}
 
       {/* Create / Edit Dish Modal */}
       <Modal

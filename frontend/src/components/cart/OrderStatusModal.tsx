@@ -137,20 +137,20 @@ export const OrderStatusModal: React.FC<OrderStatusModalProps> = ({ restaurantSl
         onClick={() => setIsDismissed(true)}
       />
 
-      <div className="relative w-full max-w-lg bg-[#FAF7F2] rounded-2xl border border-[#E8E2D9] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      <div className="relative w-full max-w-lg bg-white border-2 border-[#5E0B15] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
-        <div className="p-5 bg-white border-b border-[#E8E2D9] flex items-center justify-between">
+        <div className="p-4 bg-[#EDE1CF] border-b border-[#DCD5C9] flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-[#5E0B15] text-white flex items-center justify-center font-mono font-bold shadow-xs">
+            <div className="w-8 h-8 bg-[#5E0B15] text-white flex items-center justify-center font-mono font-bold">
               #
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="text-sm font-black text-[#5E0B15] tracking-wider uppercase">
+                <h3 className="text-sm font-black text-[#5E0B15] tracking-wider uppercase font-luxury">
                   {currentOrder.orderNumber}
                 </h3>
                 {currentOrder.tableNumber && (
-                  <span className="text-[10px] font-bold bg-[#FAF7F2] border border-[#E8E2D9] text-[#594B42] px-2 py-0.5 rounded-full uppercase">
+                  <span className="text-[10px] font-bold bg-white border border-[#DCD5C9] text-[#594B42] px-1.5 py-0.5 uppercase">
                     {currentOrder.tableNumber}
                   </span>
                 )}
@@ -162,7 +162,7 @@ export const OrderStatusModal: React.FC<OrderStatusModalProps> = ({ restaurantSl
             <button
               onClick={handleManualRefresh}
               disabled={isRefreshing}
-              className="p-1.5 text-[#594B42] hover:text-[#1C120C] hover:bg-[#FAF7F2] rounded-lg transition-colors"
+              className="p-1.5 text-[#594B42] hover:text-[#5E0B15] hover:bg-[#DCD5C9] transition-colors cursor-pointer"
               title="Refresh status"
             >
               <RefreshCw
@@ -171,7 +171,7 @@ export const OrderStatusModal: React.FC<OrderStatusModalProps> = ({ restaurantSl
             </button>
             <button
               onClick={() => setIsDismissed(true)}
-              className="p-1.5 text-[#594B42] hover:text-[#1C120C] hover:bg-[#FAF7F2] rounded-lg transition-colors"
+              className="p-1.5 text-[#594B42] hover:text-[#5E0B15] hover:bg-[#DCD5C9] transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -182,10 +182,10 @@ export const OrderStatusModal: React.FC<OrderStatusModalProps> = ({ restaurantSl
         <div className="p-5 overflow-y-auto space-y-6">
           {/* Status Stepper */}
           {isCancelled ? (
-            <div className="p-4 rounded-xl bg-[#FDF0F1] border border-[#F6C6CC] text-[#90323D] flex items-start gap-3">
+            <div className="p-4 bg-[#FDF0F1] border border-[#F6C6CC] text-[#90323D] flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 shrink-0 mt-0.5" />
               <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider mb-1">
+                <h4 className="text-xs font-black uppercase tracking-wider mb-1">
                   Order Cancelled
                 </h4>
                 <p className="text-xs leading-relaxed">
@@ -195,10 +195,10 @@ export const OrderStatusModal: React.FC<OrderStatusModalProps> = ({ restaurantSl
               </div>
             </div>
           ) : (
-            <div className="bg-white rounded-xl border border-[#E8E2D9] p-4 shadow-xs">
+            <div className="bg-[#FAF7F2] border border-[#DCD5C9] p-4">
               <div className="relative flex justify-between items-center">
                 {/* Connecting track */}
-                <div className="absolute top-4 left-4 right-4 h-0.5 bg-[#EFE9DF] z-0" />
+                <div className="absolute top-4 left-4 right-4 h-0.5 bg-[#DCD5C9] z-0" />
                 <div
                   className="absolute top-4 left-4 h-0.5 bg-[#1E562A] z-0 transition-all duration-500"
                   style={{
@@ -217,21 +217,21 @@ export const OrderStatusModal: React.FC<OrderStatusModalProps> = ({ restaurantSl
                       className="relative z-10 flex flex-col items-center gap-1.5"
                     >
                       <div
-                        className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${
+                        className={`w-8 h-8 flex items-center justify-center transition-all ${
                           isDone
-                            ? 'bg-[#1E562A] text-white shadow-xs'
-                            : 'bg-white border-2 border-[#E8E2D9] text-[#9C8B7E]'
-                        } ${isCurrent ? 'ring-4 ring-[#1E562A]/20 scale-110' : ''}`}
+                            ? 'bg-[#1E562A] text-white'
+                            : 'bg-white border-2 border-[#DCD5C9] text-[#594B42]'
+                        } ${isCurrent ? 'ring-2 ring-[#5E0B15]' : ''}`}
                       >
                         <Icon className="w-4 h-4" />
                       </div>
                       <span
                         className={`text-[9px] font-bold uppercase text-center max-w-[65px] leading-tight ${
                           isCurrent
-                            ? 'text-[#1E562A]'
+                            ? 'text-[#5E0B15]'
                             : isDone
                               ? 'text-[#1C120C]'
-                              : 'text-[#9C8B7E]'
+                              : 'text-[#594B42]'
                         }`}
                       >
                         {s.label}
@@ -244,17 +244,17 @@ export const OrderStatusModal: React.FC<OrderStatusModalProps> = ({ restaurantSl
           )}
 
           {/* Itemized Order Details */}
-          <div className="bg-white rounded-xl border border-[#E8E2D9] p-4 space-y-3 shadow-xs">
-            <div className="flex items-center justify-between border-b border-[#F5EFE6] pb-2 text-xs font-bold uppercase text-[#594B42]">
+          <div className="bg-white border border-[#DCD5C9] p-4 space-y-3">
+            <div className="flex items-center justify-between border-b border-[#DCD5C9] pb-2 text-xs font-black uppercase text-[#5E0B15]">
               <span>Items Ordered</span>
-              <span>
+              <span className="font-mono">
                 {currentOrder.pricing.currency} {currentOrder.pricing.total.toFixed(2)}
               </span>
             </div>
 
             <div className="space-y-2 max-h-44 overflow-y-auto pr-1">
               {currentOrder.items.map((item, idx) => (
-                <div key={idx} className="flex justify-between items-start text-xs">
+                <div key={idx} className="flex justify-between items-start text-xs border-b border-[#FAF7F2] pb-1">
                   <div>
                     <div className="flex items-center gap-1.5">
                       <span className="font-mono font-bold text-[#5E0B15]">
@@ -265,7 +265,7 @@ export const OrderStatusModal: React.FC<OrderStatusModalProps> = ({ restaurantSl
                       </span>
                     </div>
                     {item.instructions && (
-                      <p className="text-[10px] text-[#594B42] italic ml-5">
+                      <p className="text-[10px] text-[#90323D] italic ml-5">
                         Note: {item.instructions}
                       </p>
                     )}
@@ -277,16 +277,16 @@ export const OrderStatusModal: React.FC<OrderStatusModalProps> = ({ restaurantSl
               ))}
             </div>
 
-            <div className="pt-2.5 border-t border-[#F5EFE6] flex justify-between items-center text-xs">
+            <div className="pt-2.5 border-t border-[#DCD5C9] flex justify-between items-center text-xs">
               <span className="text-[#594B42] font-medium">Payment Status:</span>
               <div className="flex items-center gap-1.5">
                 {currentOrder.paymentStatus === OrderPaymentStatus.PAID ? (
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-[#EBF7EE] text-[#1E562A] border border-[#C3E6CB]">
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-bold bg-[#EBF7EE] text-[#1E562A] border border-[#BCE1C7] uppercase">
                     <ShieldCheck className="w-3 h-3 text-[#1E562A]" />
                     PAID ({currentOrder.paymentMethod.replace(/_/g, ' ')})
                   </span>
                 ) : (
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-[#FFF9E6] text-[#8C6D1F] border border-[#F3DE9C]">
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-bold bg-[#FEF7EC] text-[#9A6216] border border-[#F6DEBA] uppercase">
                     UNPAID ({currentOrder.paymentMethod.replace(/_/g, ' ')})
                   </span>
                 )}
@@ -296,9 +296,9 @@ export const OrderStatusModal: React.FC<OrderStatusModalProps> = ({ restaurantSl
             {/* Pay Now Button for Unpaid Orders */}
             {currentOrder.paymentStatus !== OrderPaymentStatus.PAID &&
               currentOrder.status !== OrderStatus.CANCELLED && (
-                <div className="pt-3 border-t border-[#F5EFE6]">
+                <div className="pt-3 border-t border-[#DCD5C9]">
                   {payError && (
-                    <div className="mb-2 p-2 rounded-lg bg-[#FDF0F1] border border-[#F6C6CC] text-[#90323D] text-[11px] flex items-center gap-2">
+                    <div className="mb-2 p-2 bg-[#FDF0F1] border border-[#F6C6CC] text-[#90323D] text-[11px] flex items-center gap-2">
                       <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
                       <span>{payError}</span>
                     </div>
@@ -307,16 +307,16 @@ export const OrderStatusModal: React.FC<OrderStatusModalProps> = ({ restaurantSl
                     type="button"
                     onClick={handlePayNow}
                     disabled={isPaying}
-                    className="w-full py-2.5 bg-[#5E0B15] hover:bg-[#450810] text-white text-xs font-black uppercase tracking-wider rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                    className="w-full py-2.5 bg-[#5E0B15] hover:bg-[#450810] text-white text-xs font-black uppercase tracking-wider transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                   >
                     {isPaying ? (
                       <>
-                        <Loader2 className="w-4 h-4 animate-spin text-[#D4AF37]" />
+                        <Loader2 className="w-4 h-4 animate-spin text-white" />
                         <span>Opening Razorpay Checkout...</span>
                       </>
                     ) : (
                       <>
-                        <CreditCard className="w-4 h-4 text-[#D4AF37]" />
+                        <CreditCard className="w-4 h-4 text-white" />
                         <span>
                           Pay Now via Razorpay ({currentOrder.pricing.currency}{' '}
                           {currentOrder.pricing.total.toFixed(2)})
@@ -324,7 +324,7 @@ export const OrderStatusModal: React.FC<OrderStatusModalProps> = ({ restaurantSl
                       </>
                     )}
                   </button>
-                  <p className="text-[10px] text-center text-[#8C7A6B] mt-1.5">
+                  <p className="text-[10px] text-center text-[#594B42] mt-1.5 uppercase font-bold">
                     Test Mode Active • Instant Kitchen Confirmation
                   </p>
                 </div>
@@ -333,19 +333,19 @@ export const OrderStatusModal: React.FC<OrderStatusModalProps> = ({ restaurantSl
         </div>
 
         {/* Footer Actions */}
-        <div className="p-4 bg-white border-t border-[#E8E2D9] flex items-center justify-between gap-3">
+        <div className="p-4 bg-[#EDE1CF] border-t border-[#DCD5C9] flex items-center justify-between gap-3">
           <button
             onClick={() => {
               clearActiveOrder();
               setIsDismissed(true);
             }}
-            className="text-xs text-[#594B42] hover:text-[#90323D] font-bold uppercase underline"
+            className="text-xs text-[#594B42] hover:text-[#90323D] font-bold uppercase underline cursor-pointer"
           >
             Start New Order
           </button>
           <button
             onClick={() => setIsDismissed(true)}
-            className="px-5 py-2.5 bg-[#5E0B15] hover:bg-[#450810] text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-colors shadow-xs"
+            className="px-5 py-2 bg-[#5E0B15] hover:bg-[#450810] text-white text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer"
           >
             Keep Browsing Menu
           </button>

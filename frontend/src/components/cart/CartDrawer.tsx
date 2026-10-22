@@ -114,15 +114,15 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
       />
 
       <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
-        <div className="w-screen max-w-md bg-[#FAF7F2] border-l border-[#E8E2D9] shadow-2xl flex flex-col">
+        <div className="w-screen max-w-md bg-[#EDE1CF] border-l-2 border-[#5E0B15] shadow-2xl flex flex-col">
           {/* Header */}
-          <div className="px-5 py-4 bg-white border-b border-[#E8E2D9] flex items-center justify-between">
+          <div className="px-5 py-4 bg-white border-b border-[#DCD5C9] flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-[#5E0B15] text-white flex items-center justify-center">
+              <div className="w-8 h-8 bg-[#5E0B15] text-white flex items-center justify-center">
                 <ShoppingBag className="w-4 h-4" />
               </div>
               <div>
-                <h2 className="text-sm font-black text-[#5E0B15] uppercase tracking-wider">
+                <h2 className="text-sm font-black text-[#5E0B15] uppercase tracking-wider font-luxury">
                   Dining Cart
                 </h2>
                 <p className="text-[11px] text-[#594B42]">
@@ -132,7 +132,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
             </div>
             <button
               onClick={() => setIsCartOpen(false)}
-              className="p-1.5 rounded-lg text-[#594B42] hover:text-[#1C120C] hover:bg-[#FAF7F2] transition-colors"
+              className="p-1.5 text-[#594B42] hover:text-[#5E0B15] hover:bg-[#EDE1CF] transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -141,7 +141,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
           {/* Body */}
           <div className="flex-1 overflow-y-auto p-5 space-y-5">
             {error && (
-              <div className="p-3.5 rounded-xl bg-[#FDF0F1] border border-[#F6C6CC] text-[#90323D] flex items-start gap-2.5 text-xs">
+              <div className="p-3.5 bg-[#FDF0F1] border border-[#F6C6CC] text-[#90323D] flex items-start gap-2.5 text-xs">
                 <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
                 <span>{error}</span>
               </div>
@@ -149,10 +149,10 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
 
             {items.length === 0 ? (
               <div className="text-center py-16 space-y-3">
-                <div className="w-16 h-16 rounded-full bg-[#EFE9DF] text-[#9C8B7E] flex items-center justify-center mx-auto">
+                <div className="w-16 h-16 bg-[#EDE1CF] border border-[#DCD5C9] text-[#594B42] flex items-center justify-center mx-auto">
                   <UtensilsCrossed className="w-7 h-7" />
                 </div>
-                <h3 className="text-sm font-bold text-[#5E0B15] uppercase tracking-wider">
+                <h3 className="text-xs font-black text-[#5E0B15] uppercase tracking-wider font-luxury">
                   Your cart is empty
                 </h3>
                 <p className="text-xs text-[#594B42] max-w-xs mx-auto">
@@ -167,7 +167,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     <span>Order Items</span>
                     <button
                       onClick={clearCart}
-                      className="text-[#90323D] hover:underline text-[11px]"
+                      className="text-[#90323D] hover:underline text-[11px] cursor-pointer"
                     >
                       Clear All
                     </button>
@@ -176,7 +176,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                   {items.map((item) => (
                     <div
                       key={item.dish._id}
-                      className="bg-white rounded-xl border border-[#E8E2D9] p-3.5 space-y-2 shadow-xs"
+                      className="bg-white border border-[#DCD5C9] p-3.5 space-y-2"
                     >
                       <div className="flex items-start justify-between gap-3">
                         <div className="flex-1">
@@ -189,7 +189,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                         </div>
                         <button
                           onClick={() => removeItem(item.dish._id)}
-                          className="text-[#9C8B7E] hover:text-[#90323D] transition-colors p-1"
+                          className="text-[#594B42] hover:text-[#90323D] transition-colors p-1 cursor-pointer"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
                         </button>
@@ -197,21 +197,21 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
 
                       {/* Quantity & Item Subtotal */}
                       <div className="flex items-center justify-between pt-1">
-                        <div className="flex items-center border border-[#E8E2D9] rounded-lg bg-[#FAF7F2] overflow-hidden">
+                        <div className="flex items-center border border-[#DCD5C9] bg-white overflow-hidden">
                           <button
                             type="button"
                             onClick={() => updateQuantity(item.dish._id, item.quantity - 1)}
-                            className="p-1.5 hover:bg-[#EFE9DF] text-[#594B42] transition-colors"
+                            className="p-1.5 hover:bg-[#EDE1CF] text-[#594B42] transition-colors cursor-pointer"
                           >
                             <Minus className="w-3 h-3" />
                           </button>
-                          <span className="w-8 text-center text-xs font-bold font-mono">
+                          <span className="w-8 text-center text-xs font-bold font-mono text-[#5E0B15]">
                             {item.quantity}
                           </span>
                           <button
                             type="button"
                             onClick={() => updateQuantity(item.dish._id, item.quantity + 1)}
-                            className="p-1.5 hover:bg-[#EFE9DF] text-[#594B42] transition-colors"
+                            className="p-1.5 hover:bg-[#EDE1CF] text-[#594B42] transition-colors cursor-pointer"
                           >
                             <Plus className="w-3 h-3" />
                           </button>
@@ -227,15 +227,15 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                         placeholder="Add note (e.g. less spicy, no cilantro)"
                         value={item.instructions}
                         onChange={(e) => updateInstructions(item.dish._id, e.target.value)}
-                        className="w-full text-[11px] px-2.5 py-1.5 rounded-lg border border-[#E8E2D9] bg-[#FAF7F2] text-[#594B42] placeholder-[#9C8B7E] focus:outline-none focus:ring-1 focus:ring-[#90323D]/30"
+                        className="w-full text-[11px] px-2.5 py-1.5 border border-[#DCD5C9] bg-[#FAF7F2] text-[#1C120C] placeholder-[#594B42] focus:outline-none focus:border-[#90323D]"
                       />
                     </div>
                   ))}
                 </div>
 
                 {/* Dining Details Form */}
-                <div className="bg-white rounded-xl border border-[#E8E2D9] p-4 space-y-3 shadow-xs">
-                  <h4 className="text-xs font-bold text-[#5E0B15] uppercase tracking-wider border-b border-[#F5EFE6] pb-2">
+                <div className="bg-white border border-[#DCD5C9] p-4 space-y-3">
+                  <h4 className="text-xs font-black text-[#5E0B15] uppercase tracking-wider border-b border-[#DCD5C9] pb-2 font-luxury">
                     Dining Context
                   </h4>
 
@@ -243,10 +243,10 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     <button
                       type="button"
                       onClick={() => setOrderType(OrderType.DINE_IN)}
-                      className={`py-2 text-xs font-bold uppercase rounded-lg border transition-all ${
+                      className={`py-2 text-xs font-bold uppercase border transition-colors cursor-pointer ${
                         orderType === OrderType.DINE_IN
                           ? 'bg-[#5E0B15] text-white border-[#5E0B15]'
-                          : 'bg-[#FAF7F2] text-[#594B42] border-[#E8E2D9]'
+                          : 'bg-white text-[#594B42] border-[#DCD5C9] hover:bg-[#EDE1CF]'
                       }`}
                     >
                       Dine In
@@ -254,10 +254,10 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     <button
                       type="button"
                       onClick={() => setOrderType(OrderType.TAKEAWAY)}
-                      className={`py-2 text-xs font-bold uppercase rounded-lg border transition-all ${
+                      className={`py-2 text-xs font-bold uppercase border transition-colors cursor-pointer ${
                         orderType === OrderType.TAKEAWAY
                           ? 'bg-[#5E0B15] text-white border-[#5E0B15]'
-                          : 'bg-[#FAF7F2] text-[#594B42] border-[#E8E2D9]'
+                          : 'bg-white text-[#594B42] border-[#DCD5C9] hover:bg-[#EDE1CF]'
                       }`}
                     >
                       Takeaway
@@ -274,7 +274,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                         placeholder="e.g. Table 4 or Patio 2"
                         value={tableNumber}
                         onChange={(e) => setTableNumber(e.target.value)}
-                        className="w-full px-3 py-1.5 text-xs bg-[#FAF7F2] rounded-lg border border-[#E8E2D9] focus:outline-none focus:ring-1 focus:ring-[#90323D]"
+                        className="w-full px-3 py-1.5 text-xs bg-white border border-[#DCD5C9] focus:outline-none focus:border-[#90323D] text-[#1C120C]"
                       />
                     </div>
                   )}
@@ -289,7 +289,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                         placeholder="Name"
                         value={customerName}
                         onChange={(e) => setCustomerName(e.target.value)}
-                        className="w-full px-3 py-1.5 text-xs bg-[#FAF7F2] rounded-lg border border-[#E8E2D9] focus:outline-none focus:ring-1 focus:ring-[#90323D]"
+                        className="w-full px-3 py-1.5 text-xs bg-white border border-[#DCD5C9] focus:outline-none focus:border-[#90323D] text-[#1C120C]"
                       />
                     </div>
                     <div>
@@ -301,7 +301,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                         placeholder="Phone"
                         value={customerPhone}
                         onChange={(e) => setCustomerPhone(e.target.value)}
-                        className="w-full px-3 py-1.5 text-xs bg-[#FAF7F2] rounded-lg border border-[#E8E2D9] focus:outline-none focus:ring-1 focus:ring-[#90323D]"
+                        className="w-full px-3 py-1.5 text-xs bg-white border border-[#DCD5C9] focus:outline-none focus:border-[#90323D] text-[#1C120C]"
                       />
                     </div>
                   </div>
@@ -315,7 +315,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                       placeholder="Any allergy requests, preparation instructions, etc."
                       value={specialInstructions}
                       onChange={(e) => setSpecialInstructions(e.target.value)}
-                      className="w-full px-3 py-1.5 text-xs bg-[#FAF7F2] rounded-lg border border-[#E8E2D9] focus:outline-none focus:ring-1 focus:ring-[#90323D] resize-none"
+                      className="w-full px-3 py-1.5 text-xs bg-white border border-[#DCD5C9] focus:outline-none focus:border-[#90323D] resize-none text-[#1C120C]"
                     />
                   </div>
                 </div>
@@ -329,50 +329,50 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     <button
                       type="button"
                       onClick={() => setPaymentMethod(OrderPaymentMethod.PAY_AT_TABLE)}
-                      className={`p-3 rounded-xl border text-left flex flex-col justify-between transition-all cursor-pointer ${
+                      className={`p-3 border text-left flex flex-col justify-between transition-colors cursor-pointer ${
                         paymentMethod === OrderPaymentMethod.PAY_AT_TABLE
-                          ? 'border-[#5E0B15] bg-[#5E0B15]/5 shadow-xs'
-                          : 'border-[#E8E2D9] bg-white hover:border-[#D4AF37]'
+                          ? 'border-[#5E0B15] bg-[#EDE1CF]'
+                          : 'border-[#DCD5C9] bg-white hover:border-[#90323D]'
                       }`}
                     >
                       <div className="flex items-center justify-between mb-1">
-                        <Banknote className={`w-4 h-4 ${paymentMethod === OrderPaymentMethod.PAY_AT_TABLE ? 'text-[#5E0B15]' : 'text-[#8C7A6B]'}`} />
-                        <span className={`w-2 h-2 rounded-full ${paymentMethod === OrderPaymentMethod.PAY_AT_TABLE ? 'bg-[#5E0B15]' : 'bg-transparent'}`} />
+                        <Banknote className={`w-4 h-4 ${paymentMethod === OrderPaymentMethod.PAY_AT_TABLE ? 'text-[#5E0B15]' : 'text-[#594B42]'}`} />
+                        <span className={`w-2 h-2 ${paymentMethod === OrderPaymentMethod.PAY_AT_TABLE ? 'bg-[#5E0B15]' : 'bg-transparent'}`} />
                       </div>
                       <div>
-                        <p className="text-xs font-bold text-[#2A2118]">Pay at Counter</p>
-                        <p className="text-[10px] text-[#8C7A6B]">Cash / Card after meal</p>
+                        <p className="text-xs font-bold text-[#1C120C] uppercase">Pay at Counter</p>
+                        <p className="text-[10px] text-[#594B42]">Cash / Card after meal</p>
                       </div>
                     </button>
 
                     <button
                       type="button"
                       onClick={() => setPaymentMethod(OrderPaymentMethod.ONLINE_PENDING)}
-                      className={`p-3 rounded-xl border text-left flex flex-col justify-between transition-all cursor-pointer ${
+                      className={`p-3 border text-left flex flex-col justify-between transition-colors cursor-pointer ${
                         paymentMethod === OrderPaymentMethod.ONLINE_PENDING
-                          ? 'border-[#5E0B15] bg-[#5E0B15]/5 shadow-xs'
-                          : 'border-[#E8E2D9] bg-white hover:border-[#D4AF37]'
+                          ? 'border-[#5E0B15] bg-[#EDE1CF]'
+                          : 'border-[#DCD5C9] bg-white hover:border-[#90323D]'
                       }`}
                     >
                       <div className="flex items-center justify-between mb-1">
-                        <CreditCard className={`w-4 h-4 ${paymentMethod === OrderPaymentMethod.ONLINE_PENDING ? 'text-[#5E0B15]' : 'text-[#8C7A6B]'}`} />
-                        <span className="text-[9px] font-extrabold uppercase px-1 py-0.2 bg-[#D4AF37]/20 text-[#8C6D1F] rounded">
-                          TEST MODE
+                        <CreditCard className={`w-4 h-4 ${paymentMethod === OrderPaymentMethod.ONLINE_PENDING ? 'text-[#5E0B15]' : 'text-[#594B42]'}`} />
+                        <span className="text-[9px] font-extrabold uppercase px-1 py-0.5 bg-[#90323D] text-white">
+                          RAZORPAY
                         </span>
                       </div>
                       <div>
-                        <p className="text-xs font-bold text-[#2A2118]">Pay Online Now</p>
-                        <p className="text-[10px] text-[#8C7A6B]">Razorpay UPI / Cards</p>
+                        <p className="text-xs font-bold text-[#1C120C] uppercase">Pay Online Now</p>
+                        <p className="text-[10px] text-[#594B42]">UPI / Cards / NetBanking</p>
                       </div>
                     </button>
                   </div>
                 </div>
 
                 {/* Price Summary */}
-                <div className="bg-white rounded-xl border border-[#E8E2D9] p-4 space-y-2 shadow-xs text-xs">
+                <div className="bg-white border border-[#DCD5C9] p-4 space-y-2 text-xs">
                   <div className="flex justify-between text-[#594B42]">
                     <span>Items Subtotal</span>
-                    <span className="font-mono font-bold">
+                    <span className="font-mono font-bold text-[#1C120C]">
                       {currency} {subtotal.toFixed(2)}
                     </span>
                   </div>
@@ -382,13 +382,13 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                   </div>
                   <div className="flex justify-between text-[#594B42]">
                     <span>Payment Selection</span>
-                    <span className="font-semibold uppercase text-[11px] text-[#5E0B15]">
+                    <span className="font-bold uppercase text-[11px] text-[#5E0B15]">
                       {paymentMethod === OrderPaymentMethod.ONLINE_PENDING
-                        ? 'Razorpay Test Checkout'
+                        ? 'Razorpay Checkout'
                         : 'Pay at Counter / Table'}
                     </span>
                   </div>
-                  <div className="pt-2 border-t border-[#E8E2D9] flex justify-between items-center text-sm font-black text-[#5E0B15]">
+                  <div className="pt-2 border-t border-[#DCD5C9] flex justify-between items-center text-sm font-black text-[#5E0B15]">
                     <span>Total Amount</span>
                     <span className="font-mono text-base">
                       {currency} {subtotal.toFixed(2)}
@@ -401,12 +401,12 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
 
           {/* Footer Submit */}
           {items.length > 0 && (
-            <div className="p-4 bg-white border-t border-[#E8E2D9]">
+            <div className="p-4 bg-white border-t border-[#DCD5C9]">
               <button
                 type="button"
                 onClick={handlePlaceOrder}
                 disabled={isSubmitting}
-                className="w-full py-3.5 bg-[#5E0B15] hover:bg-[#450810] text-white text-xs font-black uppercase tracking-wider rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                className="w-full py-3.5 bg-[#5E0B15] hover:bg-[#450810] text-white text-xs font-black uppercase tracking-wider transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
               >
                 {isSubmitting ? (
                   <>
@@ -415,7 +415,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                   </>
                 ) : paymentMethod === OrderPaymentMethod.ONLINE_PENDING ? (
                   <>
-                    <ShieldCheck className="w-4 h-4 text-[#D4AF37]" />
+                    <ShieldCheck className="w-4 h-4 text-white" />
                     <span>Pay with Razorpay ({currency} {subtotal.toFixed(2)})</span>
                     <ArrowRight className="w-4 h-4" />
                   </>
