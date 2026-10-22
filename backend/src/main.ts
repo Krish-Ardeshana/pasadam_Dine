@@ -12,8 +12,20 @@ async function bootstrap() {
 
   const configService = app.get(ConfigService);
   const port = configService.get<number>('port') || 4000;
-  const apiPrefix = configService.get<string>('apiPrefix') || 'api/v1';
+  let apiPrefix = configService.get<string>('apiPrefix') || 'api/v1';
+  // Normalize if Render environment variable has 'pi/v1' typo
+  if (apiPrefix === 'pi/v1' || apiPrefix === '/pi/v1' || !apiPrefix) {
+    apiPrefix = 'api/v1';
+  }
   const frontendBaseUrl = configService.get<string>('frontendBaseUrl') || 'http://localhost:3000';
+
+  // Support both /api/v1 and /pi/v1 paths transparently
+  app.use((req: any, _res: any, next: () => void) => {
+    if (req.url && req.url.startsWith('/pi/v1')) {
+      req.url = req.url.replace(/^\/pi\/v1/, '/api/v1');
+    }
+    next();
+  });
 
   // Global API Prefix
   app.setGlobalPrefix(apiPrefix);
@@ -40,6 +52,7 @@ async function bootstrap() {
       'http://127.0.0.1:3000',
       'http://localhost:5173',
       'http://127.0.0.1:5173',
+      'https://pasadam-dine.onrender.com',
     ]),
   );
 
@@ -62,11 +75,21 @@ async function bootstrap() {
         return false;
       });
 
+      // Allow all Vercel deployment preview and production domains
+      const isVercelDomain =
+        normalizedOrigin.endsWith('.vercel.app') ||
+        /\.vercel\.app$/.test(normalizedOrigin) ||
+        normalizedOrigin.includes('vercel.app');
+
+      // Allow Render origins
+      const isRenderDomain =
+        normalizedOrigin.endsWith('.onrender.com') ||
+        normalizedOrigin.includes('onrender.com');
+
       const isLocalDevMatch =
-        process.env.NODE_ENV !== 'production' &&
         /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(normalizedOrigin);
 
-      if (isDirectMatch || isSubdomainMatch || isLocalDevMatch) {
+      if (isDirectMatch || isSubdomainMatch || isVercelDomain || isRenderDomain || isLocalDevMatch) {
         callback(null, true);
       } else {
         logger.warn(`Blocked CORS request from disallowed origin: ${requestOrigin}`);
@@ -75,7 +98,7 @@ async function bootstrap() {
     },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'X-Requested-With'],
   });
 
   // Swagger OpenAPI Documentation

@@ -23,11 +23,39 @@ import {
   AdminOverviewStats,
 } from './types';
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1';
+export const getBackendOrigin = (): string => {
+  if (process.env.NEXT_PUBLIC_BACKEND_ORIGIN) {
+    return process.env.NEXT_PUBLIC_BACKEND_ORIGIN.replace(/\/+$/, '');
+  }
+  if (process.env.NEXT_PUBLIC_API_URL) {
+    try {
+      const parsed = new URL(process.env.NEXT_PUBLIC_API_URL);
+      return parsed.origin;
+    } catch {
+      // ignore
+    }
+  }
+  // In production browser environments, default to live Render backend
+  if (
+    typeof window !== 'undefined' &&
+    window.location.hostname !== 'localhost' &&
+    window.location.hostname !== '127.0.0.1'
+  ) {
+    return 'https://pasadam-dine.onrender.com';
+  }
+  return 'http://localhost:4000';
+};
 
-export const BACKEND_ORIGIN =
-  process.env.NEXT_PUBLIC_BACKEND_ORIGIN || 'http://localhost:4000';
+export const getApiBaseUrl = (): string => {
+  if (process.env.NEXT_PUBLIC_API_URL) {
+    return process.env.NEXT_PUBLIC_API_URL.replace(/\/+$/, '');
+  }
+  const origin = getBackendOrigin();
+  return `${origin}/api/v1`;
+};
+
+export const API_BASE_URL = getApiBaseUrl();
+export const BACKEND_ORIGIN = getBackendOrigin();
 
 class ApiClient {
   private getAccessToken(): string | null {
@@ -64,10 +92,11 @@ class ApiClient {
     if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
       return url;
     }
+    const origin = getBackendOrigin();
     if (url.startsWith('/')) {
-      return `${BACKEND_ORIGIN}${url}`;
+      return `${origin}${url}`;
     }
-    return `${BACKEND_ORIGIN}/${url}`;
+    return `${origin}/${url}`;
   }
 
   private refreshPromise: Promise<AuthTokens | null> | null = null;
@@ -85,7 +114,7 @@ class ApiClient {
 
     this.refreshPromise = (async () => {
       try {
-        const refreshRes = await fetch(`${API_BASE_URL}/auth/refresh`, {
+        const refreshRes = await fetch(`${getApiBaseUrl()}/auth/refresh`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ refreshToken }),
@@ -115,7 +144,9 @@ class ApiClient {
     options: RequestInit = {},
     retryOnAuth = true,
   ): Promise<T> {
-    const url = `${API_BASE_URL}${endpoint}`;
+    const baseUrl = getApiBaseUrl();
+    const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+    const url = endpoint.startsWith('http') ? endpoint : `${baseUrl}${cleanEndpoint}`;
     const headers: Record<string, string> = {
       Accept: 'application/json',
       ...((options.headers as Record<string, string>) || {}),
