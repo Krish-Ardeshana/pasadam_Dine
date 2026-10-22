@@ -51,4 +51,18 @@ export class AuditService {
       .populate('actorId', 'name email role')
       .exec();
   }
+
+  async findAll(limit = 100, restaurantId?: string) {
+    const filter: Record<string, any> = {};
+    if (restaurantId && Types.ObjectId.isValid(restaurantId)) {
+      filter.restaurantId = new Types.ObjectId(restaurantId);
+    }
+    return this.auditLogModel
+      .find(filter)
+      .sort({ createdAt: -1 })
+      .limit(limit)
+      .populate('actorId', 'name email role')
+      .populate('restaurantId', 'name slug')
+      .exec();
+  }
 }

@@ -476,7 +476,7 @@ export default function HomePage() {
 
           {/* Copyright bar */}
           <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#A8A29E] gap-2">
-            <div>© {new Date().getFullYear()} PRASADAM DINE. All rights reserved.</div>
+            <div>© 2026 PRASADAM DINE. All rights reserved.</div>
             <div className="flex items-center gap-3">
               <span>Digital Menus</span>
               <span>•</span>

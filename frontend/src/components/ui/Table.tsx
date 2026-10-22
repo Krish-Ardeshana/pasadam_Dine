@@ -11,8 +11,8 @@ export const Table: React.FC<React.TableHTMLAttributes<HTMLTableElement>> = ({
   children,
   ...props
 }) => (
-  <div className="w-full overflow-x-auto rounded-xl border border-[#E8E2D9] shadow-xs bg-white">
-    <table className={clsx('w-full text-left text-sm border-collapse bg-white', className)} {...props}>
+  <div className="w-full overflow-x-auto rounded-none border border-[#DCD5C9] bg-white shadow-none">
+    <table className={clsx('w-full text-left text-xs border-collapse bg-white', className)} {...props}>
       {children}
     </table>
   </div>
@@ -23,7 +23,7 @@ export const Thead: React.FC<React.HTMLAttributes<HTMLTableSectionElement>> = ({
   children,
   ...props
 }) => (
-  <thead className={clsx('bg-[#FAF7F2] border-b border-[#E8E2D9] text-[#594B42] uppercase text-xs tracking-wider', className)} {...props}>
+  <thead className={clsx('bg-[#EDE1CF] border-b border-[#DCD5C9] text-[#5E0B15] uppercase text-[11px] font-black tracking-wider', className)} {...props}>
     {children}
   </thead>
 );
@@ -33,7 +33,7 @@ export const Th: React.FC<React.ThHTMLAttributes<HTMLTableCellElement>> = ({
   children,
   ...props
 }) => (
-  <th className={clsx('px-4 py-3.5 font-bold text-[#23201C]', className)} {...props}>
+  <th className={clsx('px-4 py-3 font-black text-[#5E0B15]', className)} {...props}>
     {children}
   </th>
 );
@@ -43,7 +43,7 @@ export const Td: React.FC<React.TdHTMLAttributes<HTMLTableCellElement>> = ({
   children,
   ...props
 }) => (
-  <td className={clsx('px-4 py-3.5 border-b border-[#ECE6DC] text-[#23201C]', className)} {...props}>
+  <td className={clsx('px-4 py-3 border-b border-[#DCD5C9] text-[#1C120C] text-xs', className)} {...props}>
     {children}
   </td>
 );
@@ -56,7 +56,7 @@ export const Skeleton: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   ...props
 }) => (
   <div
-    className={clsx('animate-pulse bg-[#E0DACF]/50 rounded-xl', className)}
+    className={clsx('animate-pulse bg-[#EDE1CF]/60 rounded-none', className)}
     {...props}
   />
 );
@@ -84,17 +84,17 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
   return (
     <div
       className={clsx(
-        'w-full py-12 px-6 flex flex-col items-center justify-center text-center bg-[#FAF8F5] rounded-2xl border border-dashed border-[#CDC5B7]',
+        'w-full py-12 px-6 flex flex-col items-center justify-center text-center bg-white rounded-none border border-dashed border-[#DCD5C9]',
         className,
       )}
     >
-      <div className="w-12 h-12 rounded-full bg-[#EAF0E9] border border-[#BCD0BD] flex items-center justify-center mb-3">
-        <Icon className="w-6 h-6 text-[#5F735F]" />
+      <div className="w-12 h-12 rounded-none bg-[#EDE1CF] border border-[#DCD5C9] flex items-center justify-center mb-3">
+        <Icon className="w-6 h-6 text-[#90323D]" />
       </div>
-      <h3 className="text-sm font-bold text-[#23201C] uppercase tracking-wider mb-1">
+      <h3 className="text-xs font-black text-[#5E0B15] uppercase tracking-wider mb-1">
         {title}
       </h3>
-      <p className="text-xs text-[#6D675E] max-w-sm mb-4">{description}</p>
+      <p className="text-xs text-[#594B42] max-w-sm mb-4">{description}</p>
       {actionLabel && onAction && (
         <Button variant="primary" size="sm" onClick={onAction}>
           {actionLabel}

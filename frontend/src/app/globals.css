@@ -2,25 +2,32 @@
 
 @layer base {
   :root {
-    /* Image 1 Inspired Organic Sage, Warm Linen & Terracotta Palette */
-    --app-bg: #F4F0EA;          /* Warm linen/oatmeal canvas */
-    --surface-white: #FAF8F5;   /* Crisp organic cream card surface */
-    --surface-card: #FAF8F5;    /* Clean card surfaces */
-    --surface-subtle: #ECE6DC;  /* Soft warm tint for secondary panels */
+    /* Brand Palette: 60% Almond, 30% Cordovan, 10% Chocolate Cosmos */
+    --color-almond: #EDE1CF;           /* 60% Brand Canvas / Warm Surface Neutral */
+    --color-almond-light: #F7F3EC;     /* Light soft almond */
+    --color-almond-border: #DCD5C9;    /* Almond subtle divider */
     
-    --sage: #829582;            /* Calming Sage Green: Navigation & hero blocks */
-    --sage-dark: #6C806C;       /* Darker sage for headers & borders */
-    --sage-light: #EAF0E9;      /* Soft sage tint for chips & badges */
-    --sage-border: #BCD0BD;     /* Subtle sage border */
+    --color-cordovan: #90323D;         /* 30% Primary Brand Accent & Action */
+    --color-cordovan-dark: #7A2731;    /* Cordovan Hover */
+    --color-cordovan-light: #F9ECEE;   /* Cordovan subtle wash */
     
-    --terracotta: #DE6C3A;      /* Warm Terracotta / Cinnamon: Primary action buttons */
-    --terracotta-dark: #C85929; /* Primary button hover */
-    --terracotta-light: #FDF2EC;/* Warm terracotta wash */
+    --color-chocolate-cosmos: #5E0B15; /* 10% Deep Headlines & Active Nav States */
+    --color-chocolate-dark: #450810;
     
-    --text-primary: #23201C;    /* Espresso charcoal typography */
-    --text-muted: #6D675E;      /* Muted espresso taupe */
-    --border-subtle: #E0DACF;   /* Gentle oatmeal border */
-    --border-strong: #CDC5B7;   /* Defined divider */
+    --app-bg: #F8F5F0;                 /* Warm readable almond background */
+    --surface-white: #FFFFFF;          /* Pure crisp white card surfaces */
+    --surface-card: #FFFFFF;
+    --surface-subtle: #EDE1CF;
+    
+    --text-primary: #1C120C;           /* Readable deep charcoal/espresso */
+    --text-muted: #594B42;             /* Muted espresso taupe */
+    --border-subtle: #DCD5C9;          /* Neutral oatmeal border */
+    --border-strong: #90323D;          /* Cordovan border */
+  }
+
+  /* Strict Square Corners Requirement */
+  *, *::before, *::after {
+    border-radius: 0 !important;
   }
 
   body {
@@ -33,62 +40,33 @@
   }
 }
 
-/* Modern Rounded Utilities & Palette Classes */
-.bg-app { background-color: var(--app-bg); }
-.bg-surface { background-color: var(--surface-white); }
-.bg-surface-subtle { background-color: var(--surface-subtle); }
-.bg-sage { background-color: var(--sage); }
-.bg-sage-dark { background-color: var(--sage-dark); }
-.bg-sage-light { background-color: var(--sage-light); }
-.bg-terracotta { background-color: var(--terracotta); }
-.bg-terracotta-dark { background-color: var(--terracotta-dark); }
+/* Palette Helper Classes */
+.bg-almond { background-color: var(--color-almond); }
+.bg-almond-light { background-color: var(--color-almond-light); }
+.bg-cordovan { background-color: var(--color-cordovan); }
+.bg-cordovan-dark { background-color: var(--color-cordovan-dark); }
+.bg-chocolate { background-color: var(--color-chocolate-cosmos); }
 
-.text-sage { color: var(--sage); }
-.text-terracotta { color: var(--terracotta); }
+.text-cordovan { color: var(--color-cordovan); }
+.text-chocolate { color: var(--color-chocolate-cosmos); }
 .text-primary-dark { color: var(--text-primary); }
-.text-muted-brown { color: var(--text-muted); }
+.text-muted-taupe { color: var(--text-muted); }
 
-.border-subtle { border-color: var(--border-subtle); }
-.border-sage { border-color: var(--sage-border); }
-.border-terracotta { border-color: var(--terracotta); }
+.border-almond { border-color: var(--color-almond-border); }
+.border-cordovan { border-color: var(--color-cordovan); }
+.border-chocolate { border-color: var(--color-chocolate-cosmos); }
 
-/* Model Viewer Custom Element Dimensions with Rounded Corners */
+/* Model Viewer Custom Element Dimensions with Strict Square Corners */
 model-viewer {
   width: 100%;
   height: 100%;
   min-height: 380px;
   background-color: #FAF7F2;
   --poster-color: transparent;
-  border-radius: 1rem;
+  border-radius: 0 !important;
 }
 
-/* Luxury Royal Dining Font Families */
-.font-luxury {
-  font-family: var(--font-luxury), 'Playfair Display', Georgia, serif;
-}
-.font-handwriting {
-  font-family: var(--font-handwriting), 'Caveat', cursive, sans-serif;
-}
+/* Clean Professional Typography Classes */
 .font-sans-clean {
   font-family: var(--font-sans), 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 }
-
-/* Luxury Emerald & Gold Theme Utilities */
-.bg-gold-gradient {
-  background: linear-gradient(135deg, #ECC876 0%, #D4AF37 50%, #B8860B 100%);
-}
-.text-gold-gradient {
-  background: linear-gradient(135deg, #FFF7DC 0%, #E8C170 50%, #D4AF37 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.border-gold-subtle {
-  border-color: rgba(212, 175, 55, 0.2);
-}
-.shadow-gold-glow {
-  box-shadow: 0 4px 25px rgba(212, 175, 55, 0.25);
-}
-.shadow-gold-hover:hover {
-  box-shadow: 0 8px 35px rgba(212, 175, 55, 0.35);
-}
-

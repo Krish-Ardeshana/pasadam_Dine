@@ -107,7 +107,7 @@ export default function AdminRestaurantsPage() {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white rounded-xl border border-[#E8E2D9] p-4 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xs">
+      <div className="bg-white rounded-none border border-[#DCD5C9] p-4 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-none">
         <div className="w-full sm:w-72 relative">
           <Input
             placeholder="SEARCH BY RESTAURANT NAME..."
@@ -123,10 +123,10 @@ export default function AdminRestaurantsPage() {
             <button
               key={st}
               onClick={() => setStatusFilter(st)}
-              className={`px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider rounded-lg border cursor-pointer transition-all ${
+              className={`px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider rounded-none border cursor-pointer transition-colors ${
                 statusFilter === st
-                  ? 'bg-[#5E0B15] text-white border-[#5E0B15] shadow-xs'
-                  : 'bg-white text-[#594B42] border-[#E8E2D9] hover:bg-[#FAF7F2]'
+                  ? 'bg-[#5E0B15] text-[#EDE1CF] border-[#5E0B15]'
+                  : 'bg-white text-[#594B42] border-[#DCD5C9] hover:bg-[#EDE1CF]'
               }`}
             >
               {st}

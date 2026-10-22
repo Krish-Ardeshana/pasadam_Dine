@@ -136,23 +136,36 @@ export default function DashboardOverviewPage() {
     (o) => o.status === OrderStatus.PREPARING || o.status === OrderStatus.ACCEPTED,
   ).length;
   const readyOrServedOrders = orders.filter(
-    (o) =>
-      o.status === OrderStatus.READY ||
-      o.status === OrderStatus.SERVED ||
-      o.status === OrderStatus.DELIVERED,
+    (o) => o.status === OrderStatus.READY || o.status === OrderStatus.SERVED,
   ).length;
 
-  // Real Today's Sales Calculation from paid orders placed today
-  const todayStart = new Date();
-  todayStart.setHours(0, 0, 0, 0);
+  // Real Today's Sales Calculation from paid orders placed today (calculated on client)
+  const [todayRevenue, setTodayRevenue] = useState(0);
+  const [todayPaidCount, setTodayPaidCount] = useState(0);
 
-  const todayPaidOrders = orders.filter((o) => {
-    const orderDate = new Date(o.createdAt);
-    const isPaid = o.paymentStatus === OrderPaymentStatus.PAID;
-    return isPaid && orderDate >= todayStart;
-  });
+  useEffect(() => {
+    if (orders.length === 0) {
+      setTodayRevenue(0);
+      setTodayPaidCount(0);
+      return;
+    }
+    const todayStart = new Date();
+    todayStart.setHours(0, 0, 0, 0);
 
-  const todayRevenue = todayPaidOrders.reduce((sum, o) => sum + (o.totalAmount || 0), 0);
+    const todayPaidOrders = orders.filter((o) => {
+      const orderDate = new Date(o.createdAt);
+      const isPaid = o.paymentStatus === OrderPaymentStatus.PAID;
+      return isPaid && orderDate >= todayStart;
+    });
+
+    const rev = todayPaidOrders.reduce(
+      (sum, o) => sum + (o.pricing?.total || o.totalAmount || 0),
+      0,
+    );
+    setTodayRevenue(rev);
+    setTodayPaidCount(todayPaidOrders.length);
+  }, [orders]);
+
   const currencySymbol = currentRestaurant?.settings?.currency === 'INR' ? '₹' : '$';
 
   return (
@@ -273,8 +286,8 @@ export default function DashboardOverviewPage() {
             </div>
           )}
           <span className="text-[11px] text-[#6D675E] block mt-2">
-            {todayPaidOrders.length > 0
-              ? `From ${todayPaidOrders.length} verified paid orders today`
+            {todayPaidCount > 0
+              ? `From ${todayPaidCount} verified paid orders today`
               : 'No completed sales recorded today'}
           </span>
         </Card>
@@ -424,7 +437,7 @@ export default function DashboardOverviewPage() {
                       <div className="text-right">
                         <div className="font-bold text-[#23201C]">
                           {currencySymbol}
-                          {(ord.totalAmount || 0).toFixed(2)}
+                          {((ord.pricing?.total ?? ord.totalAmount) || 0).toFixed(2)}
                         </div>
                         <span
                           className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${

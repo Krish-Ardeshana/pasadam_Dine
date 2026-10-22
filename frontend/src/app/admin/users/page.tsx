@@ -64,7 +64,7 @@ export default function AdminUsersPage() {
       </div>
 
       {/* Search Bar */}
-      <div className="bg-white rounded-xl border border-[#E8E2D9] p-4 shadow-xs">
+      <div className="bg-white rounded-none border border-[#DCD5C9] p-4 shadow-none">
         <div className="w-full sm:w-80">
           <Input
             placeholder="SEARCH BY NAME OR EMAIL..."

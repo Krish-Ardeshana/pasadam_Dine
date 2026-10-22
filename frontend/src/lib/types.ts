@@ -289,6 +289,7 @@ export interface Order {
   specialInstructions?: string;
   items: OrderItem[];
   pricing: OrderPricing;
+  totalAmount?: number;
   status: OrderStatus;
   paymentStatus: OrderPaymentStatus;
   paymentMethod: OrderPaymentMethod;
@@ -317,4 +318,50 @@ export interface UpdateOrderStatusInput {
   status: OrderStatus;
   reason?: string;
 }
+
+export interface AuditLogItem {
+  _id: string;
+  actorId?: {
+    _id: string;
+    name: string;
+    email: string;
+    role: Role;
+  };
+  restaurantId?: {
+    _id: string;
+    name: string;
+    slug: string;
+  };
+  action: string;
+  entityType: string;
+  entityId: string;
+  safeMetadata?: Record<string, any>;
+  ipAddress?: string;
+  userAgent?: string;
+  createdAt: string;
+}
+
+export interface AdminOverviewStats {
+  restaurants: {
+    total: number;
+    active: number;
+    pending: number;
+    suspended: number;
+  };
+  users: {
+    total: number;
+  };
+  menu: {
+    totalCategories: number;
+    totalDishes: number;
+    dishesWith3d: number;
+    dishesWithout3d: number;
+  };
+  orders: {
+    totalOrders: number;
+    completedOrders: number;
+    totalRevenue: number;
+  };
+}
+
 

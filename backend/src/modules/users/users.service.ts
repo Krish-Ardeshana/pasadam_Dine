@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   NotFoundException,
@@ -7,7 +8,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import bcrypt from 'bcryptjs';
 import { User, UserDocument, Restaurant, RestaurantDocument } from '../../database/schemas/index.js';
-import { UserStatus } from '../../common/enums/index.js';
+import { Role, UserStatus } from '../../common/enums/index.js';
 import { CreateStaffDto, AssignRestaurantDto } from './dto/create-staff.dto.js';
 import { UpdateUserDto } from './dto/update-user.dto.js';
 import { PaginationDto } from '../../common/dto/pagination.dto.js';
@@ -170,14 +171,42 @@ export class UsersService {
   }
 
   async update(id: string, dto: UpdateUserDto) {
+    const existingUser = await this.userModel.findById(id).exec();
+    if (!existingUser) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+
+    // Safety check: Prevent accidental demotion or deactivation of the last active Super Admin
+    if (existingUser.role === Role.SUPER_ADMIN) {
+      const willDemote = dto.role && dto.role !== Role.SUPER_ADMIN;
+      const willDeactivate = dto.accountStatus && dto.accountStatus !== UserStatus.ACTIVE;
+
+      if (willDemote || willDeactivate) {
+        const activeSuperAdminCount = await this.userModel.countDocuments({
+          role: Role.SUPER_ADMIN,
+          accountStatus: UserStatus.ACTIVE,
+        }).exec();
+
+        if (activeSuperAdminCount <= 1) {
+          throw new BadRequestException(
+            'Action rejected: Cannot demote or deactivate the last remaining active Super Admin account.',
+          );
+        }
+      }
+    }
+
     const user = await this.userModel
       .findByIdAndUpdate(id, { $set: dto }, { new: true })
       .select('-passwordHash -refreshTokenHash')
       .exec();
 
-    if (!user) {
-      throw new NotFoundException(`User with ID ${id} not found`);
-    }
+    await this.auditService.log({
+      actorId: id,
+      action: 'UPDATE_USER',
+      entityType: 'User',
+      entityId: id,
+      safeMetadata: { updatedFields: Object.keys(dto) },
+    });
 
     return user;
   }

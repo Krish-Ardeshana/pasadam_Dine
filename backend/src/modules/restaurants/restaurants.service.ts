@@ -6,7 +6,18 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { Restaurant, RestaurantDocument, User, UserDocument } from '../../database/schemas/index.js';
+import {
+  Restaurant,
+  RestaurantDocument,
+  User,
+  UserDocument,
+  Category,
+  CategoryDocument,
+  Dish,
+  DishDocument,
+  Order,
+  OrderDocument,
+} from '../../database/schemas/index.js';
 import { Role, RestaurantApprovalStatus } from '../../common/enums/index.js';
 import { CreateRestaurantDto } from './dto/create-restaurant.dto.js';
 import { UpdateRestaurantDto, UpdateApprovalStatusDto, TransferOwnershipDto } from './dto/update-restaurant.dto.js';
@@ -22,6 +33,12 @@ export class RestaurantsService {
     private readonly restaurantModel: Model<RestaurantDocument>,
     @InjectModel(User.name)
     private readonly userModel: Model<UserDocument>,
+    @InjectModel(Category.name)
+    private readonly categoryModel: Model<CategoryDocument>,
+    @InjectModel(Dish.name)
+    private readonly dishModel: Model<DishDocument>,
+    @InjectModel(Order.name)
+    private readonly orderModel: Model<OrderDocument>,
     private readonly auditService: AuditService,
   ) {}
 
@@ -236,5 +253,87 @@ export class RestaurantsService {
     });
 
     return restaurant;
+  }
+
+  async getAdminOverviewStats(admin: AuthenticatedUser) {
+    if (admin.role !== Role.SUPER_ADMIN) {
+      throw new ForbiddenException('Super Admin privilege required');
+    }
+
+    const [
+      totalRestaurants,
+      activeRestaurants,
+      pendingRestaurants,
+      suspendedRestaurants,
+      totalUsers,
+      totalCategories,
+      totalDishes,
+      dishesWith3d,
+      dishesWithout3d,
+      totalOrders,
+      completedOrders,
+      revenueAgg,
+    ] = await Promise.all([
+      this.restaurantModel.countDocuments().exec(),
+      this.restaurantModel.countDocuments({
+        approvalStatus: RestaurantApprovalStatus.APPROVED,
+        isActive: true,
+      }).exec(),
+      this.restaurantModel.countDocuments({
+        approvalStatus: RestaurantApprovalStatus.PENDING,
+      }).exec(),
+      this.restaurantModel.countDocuments({
+        $or: [
+          { approvalStatus: RestaurantApprovalStatus.SUSPENDED },
+          { approvalStatus: RestaurantApprovalStatus.REJECTED },
+          { isActive: false },
+        ],
+      }).exec(),
+      this.userModel.countDocuments().exec(),
+      this.categoryModel.countDocuments().exec(),
+      this.dishModel.countDocuments().exec(),
+      this.dishModel.countDocuments({
+        model3dUrl: { $exists: true, $ne: '' },
+      }).exec(),
+      this.dishModel.countDocuments({
+        $or: [
+          { model3dUrl: { $exists: false } },
+          { model3dUrl: '' },
+        ],
+      }).exec(),
+      this.orderModel.countDocuments().exec(),
+      this.orderModel.countDocuments({
+        status: { $in: ['COMPLETED', 'SERVED'] },
+      }).exec(),
+      this.orderModel.aggregate([
+        { $match: { paymentStatus: 'PAID' } },
+        { $group: { _id: null, totalRevenue: { $sum: '$totalAmount' } } },
+      ]).exec(),
+    ]);
+
+    const totalRevenue = revenueAgg[0]?.totalRevenue || 0;
+
+    return {
+      restaurants: {
+        total: totalRestaurants,
+        active: activeRestaurants,
+        pending: pendingRestaurants,
+        suspended: suspendedRestaurants,
+      },
+      users: {
+        total: totalUsers,
+      },
+      menu: {
+        totalCategories,
+        totalDishes,
+        dishesWith3d,
+        dishesWithout3d,
+      },
+      orders: {
+        totalOrders,
+        completedOrders,
+        totalRevenue: Math.round(totalRevenue * 100) / 100,
+      },
+    };
   }
 }

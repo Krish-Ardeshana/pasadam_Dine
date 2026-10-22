@@ -16,14 +16,14 @@ export const Card: React.FC<CardProps> = ({
   ...props
 }) => {
   const variantStyles = {
-    white: 'bg-[#FAF8F5] border border-[#E0DACF] shadow-xs hover:shadow-sm',
-    almond: 'bg-[#ECE6DC] border border-[#E0DACF] shadow-xs',
-    bordered: 'bg-[#FAF8F5] border-2 border-[#829582]/30 shadow-sm',
+    white: 'bg-white border border-[#DCD5C9] shadow-none',
+    almond: 'bg-[#EDE1CF] border border-[#DCD5C9] shadow-none',
+    bordered: 'bg-white border-2 border-[#90323D] shadow-none',
   };
 
   return (
     <div
-      className={clsx('rounded-2xl p-6 transition-all duration-200', variantStyles[variant], className)}
+      className={clsx('rounded-none p-6 transition-all duration-150', variantStyles[variant], className)}
       {...props}
     >
       {children}
@@ -46,18 +46,18 @@ export const Badge: React.FC<BadgeProps> = ({
   className,
 }) => {
   const variantStyles = {
-    success: 'bg-[#EAF0E9] text-[#2B522C] border border-[#BCD0BD]',
-    warning: 'bg-[#FEF6E9] text-[#9A6216] border border-[#F4DCB5]',
-    danger: 'bg-[#FDECEB] text-[#B83A3A] border border-[#F7CBC9]',
-    info: 'bg-[#EBF2F7] text-[#255C82] border border-[#C6DCED]',
-    neutral: 'bg-[#ECE6DC] text-[#5E584F] border border-[#DDD7CD]',
-    dietary: 'bg-[#DE6C3A] text-white border border-[#DE6C3A] font-bold shadow-xs',
+    success: 'bg-[#EBF5EE] text-[#1E562A] border border-[#BCE1C7]',
+    warning: 'bg-[#FEF7EC] text-[#9A6216] border border-[#F6DEBA]',
+    danger: 'bg-[#FDF0F1] text-[#90323D] border border-[#F6C6CC]',
+    info: 'bg-[#EEF4F8] text-[#255C82] border border-[#C6DCED]',
+    neutral: 'bg-[#EDE1CF] text-[#594B42] border border-[#DCD5C9]',
+    dietary: 'bg-[#90323D] text-white border border-[#90323D] font-bold',
   };
 
   return (
     <span
       className={clsx(
-        'inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide uppercase',
+        'inline-flex items-center px-2 py-0.5 rounded-none text-[10px] font-bold tracking-wider uppercase border',
         variantStyles[variant],
         className,
       )}
@@ -105,22 +105,22 @@ export const Modal: React.FC<ModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-150">
       <div
         className={clsx(
-          'w-full bg-[#FAF8F5] rounded-2xl border border-[#E0DACF] shadow-2xl flex flex-col max-h-[90vh] overflow-hidden',
+          'w-full bg-white rounded-none border-2 border-[#5E0B15] shadow-2xl flex flex-col max-h-[90vh] overflow-hidden',
           maxWidthClasses[maxWidth],
         )}
       >
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[#E0DACF] bg-[#ECE6DC]">
-          <h2 className="text-base font-bold text-[#23201C] uppercase tracking-wider">
+        <div className="flex items-center justify-between px-6 py-3.5 border-b border-[#DCD5C9] bg-[#EDE1CF]">
+          <h2 className="text-xs font-black text-[#5E0B15] uppercase tracking-wider">
             {title}
           </h2>
           <button
             onClick={onClose}
-            className="text-[#6D675E] hover:text-[#23201C] hover:bg-[#E0DACF] p-1.5 rounded-lg transition-colors cursor-pointer"
+            className="text-[#594B42] hover:text-[#5E0B15] hover:bg-[#DCD5C9] p-1 rounded-none transition-colors cursor-pointer"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
         <div className="p-6 overflow-y-auto">{children}</div>

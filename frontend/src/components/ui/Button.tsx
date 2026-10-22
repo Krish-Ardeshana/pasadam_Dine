@@ -18,27 +18,28 @@ export const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const baseClasses =
-    'inline-flex items-center justify-center font-medium tracking-wide transition-all duration-150 active:scale-[0.98] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed select-none border text-sm rounded-lg shadow-xs';
+    'inline-flex items-center justify-center font-bold tracking-wider uppercase transition-colors duration-150 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed select-none border text-xs rounded-none shadow-none';
 
   const sizeClasses = {
-    sm: 'px-3 py-1.5 text-xs rounded-md',
-    md: 'px-4 py-2 text-sm rounded-lg',
-    lg: 'px-6 py-2.5 text-base rounded-xl',
+    sm: 'px-3 py-1.5 text-[11px]',
+    md: 'px-4 py-2 text-xs',
+    lg: 'px-6 py-2.5 text-sm',
   };
 
   const variantClasses = {
-    // Warm Terracotta primary action (Image 1 CTA style)
+    // 30% Cordovan primary action button
     primary:
-      'bg-[#DE6C3A] text-white border-[#DE6C3A] hover:bg-[#C85929] active:bg-[#B24A1E] shadow-sm hover:shadow',
-    // Calming Sage Green secondary action
+      'bg-[#90323D] text-white border-[#90323D] hover:bg-[#7A2731] hover:border-[#7A2731] active:bg-[#641E26]',
+    // 10% Chocolate Cosmos secondary action button
     secondary:
-      'bg-[#829582] text-white border-[#829582] hover:bg-[#6C806C] active:bg-[#5F735F] shadow-sm hover:shadow',
+      'bg-[#5E0B15] text-white border-[#5E0B15] hover:bg-[#450810] hover:border-[#450810] active:bg-[#32040B]',
+    // 60% Almond neutral outline action button
     outline:
-      'bg-[#FAF8F5] text-[#23201C] border-[#E0DACF] hover:bg-[#ECE6DC] hover:border-[#829582] active:bg-[#E0DACF]',
+      'bg-[#FAF8F5] text-[#1C120C] border-[#DCD5C9] hover:bg-[#EDE1CF] hover:border-[#90323D] active:bg-[#DCD5C9]',
     ghost:
-      'bg-transparent text-[#23201C] border-transparent hover:bg-[#ECE6DC] active:bg-[#E0DACF] shadow-none',
+      'bg-transparent text-[#1C120C] border-transparent hover:bg-[#EDE1CF] active:bg-[#DCD5C9]',
     danger:
-      'bg-[#C24141] text-white border-[#C24141] hover:bg-[#A83232] shadow-sm',
+      'bg-[#90323D] text-white border-[#90323D] hover:bg-[#7A2731]',
   };
 
   return (
@@ -52,7 +53,7 @@ export const Button: React.FC<ButtonProps> = ({
       disabled={disabled || isLoading}
       {...props}
     >
-      {isLoading && <Loader2 className="w-4 h-4 mr-2 animate-spin shrink-0" />}
+      {isLoading && <Loader2 className="w-3.5 h-3.5 mr-2 animate-spin shrink-0" />}
       {children}
     </button>
   );

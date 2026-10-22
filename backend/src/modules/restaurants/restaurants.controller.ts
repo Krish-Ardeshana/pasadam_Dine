@@ -51,6 +51,14 @@ export class RestaurantsController {
     return this.restaurantsService.findAll(user, paginationDto);
   }
 
+  @Get('admin/overview-stats')
+  @Roles(Role.SUPER_ADMIN)
+  @ApiOperation({ summary: 'Get platform-wide overview statistics (Super Admin only)' })
+  @ApiResponse({ status: 200, description: 'Aggregated platform metrics' })
+  async getOverviewStats(@CurrentUser() admin: AuthenticatedUser) {
+    return this.restaurantsService.getAdminOverviewStats(admin);
+  }
+
   @Get(':id')
   @Roles(Role.SUPER_ADMIN, Role.RESTAURANT_OWNER, Role.RESTAURANT_MANAGER, Role.RESTAURANT_STAFF)
   @ApiOperation({ summary: 'Get restaurant administrative profile by ID' })

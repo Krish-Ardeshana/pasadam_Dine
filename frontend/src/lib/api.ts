@@ -19,6 +19,8 @@ import {
   PublicPaymentConfig,
   PaymentOrderResponse,
   VerifyPaymentInput,
+  AuditLogItem,
+  AdminOverviewStats,
 } from './types';
 
 const API_BASE_URL =
@@ -245,6 +247,10 @@ class ApiClient {
         method: 'PATCH',
         body: JSON.stringify({ newOwnerId }),
       });
+    },
+
+    getOverviewStats: (): Promise<AdminOverviewStats> => {
+      return this.request<AdminOverviewStats>('/restaurants/admin/overview-stats');
     },
   };
 
@@ -566,6 +572,18 @@ class ApiClient {
           body: JSON.stringify(input),
         },
       );
+    },
+  };
+
+  // ==========================================================================
+  // AUDIT & ACTIVITY
+  // ==========================================================================
+  audit = {
+    list: (params?: { limit?: number; restaurantId?: string }): Promise<AuditLogItem[]> => {
+      const query = new URLSearchParams();
+      if (params?.limit) query.append('limit', params.limit.toString());
+      if (params?.restaurantId) query.append('restaurantId', params.restaurantId);
+      return this.request<AuditLogItem[]>(`/audit?${query.toString()}`);
     },
   };
 }
