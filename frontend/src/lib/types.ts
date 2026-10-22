@@ -197,3 +197,96 @@ export interface PublicMenuResponse {
   };
   categories: PublicMenuCategory[];
 }
+
+export enum OrderStatus {
+  PENDING = 'PENDING',
+  ACCEPTED = 'ACCEPTED',
+  PREPARING = 'PREPARING',
+  READY = 'READY',
+  SERVED = 'SERVED',
+  CANCELLED = 'CANCELLED',
+}
+
+export enum OrderPaymentStatus {
+  UNPAID = 'UNPAID',
+  PENDING = 'PENDING',
+  PAID = 'PAID',
+  REFUNDED = 'REFUNDED',
+  FAILED = 'FAILED',
+}
+
+export enum OrderType {
+  DINE_IN = 'DINE_IN',
+  TAKEAWAY = 'TAKEAWAY',
+}
+
+export enum OrderPaymentMethod {
+  PAY_AT_TABLE = 'PAY_AT_TABLE',
+  CASH_AT_COUNTER = 'CASH_AT_COUNTER',
+  ONLINE_PENDING = 'ONLINE_PENDING',
+}
+
+export interface OrderItem {
+  dishId: string;
+  name: string;
+  price: number;
+  quantity: number;
+  subtotal: number;
+  instructions?: string;
+}
+
+export interface OrderPricing {
+  subtotal: number;
+  tax: number;
+  serviceFee: number;
+  total: number;
+  currency: string;
+}
+
+export interface OrderStatusHistoryItem {
+  status: OrderStatus;
+  changedAt: string;
+  changedBy: string;
+  reason?: string;
+}
+
+export interface Order {
+  _id: string;
+  restaurantId: string;
+  orderNumber: string;
+  orderType: OrderType;
+  tableNumber?: string;
+  customerName?: string;
+  customerPhone?: string;
+  specialInstructions?: string;
+  items: OrderItem[];
+  pricing: OrderPricing;
+  status: OrderStatus;
+  paymentStatus: OrderPaymentStatus;
+  paymentMethod: OrderPaymentMethod;
+  statusHistory: OrderStatusHistoryItem[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateOrderItemInput {
+  dishId: string;
+  quantity: number;
+  instructions?: string;
+}
+
+export interface CreateOrderInput {
+  orderType?: OrderType;
+  tableNumber?: string;
+  customerName?: string;
+  customerPhone?: string;
+  specialInstructions?: string;
+  paymentMethod?: OrderPaymentMethod;
+  items: CreateOrderItemInput[];
+}
+
+export interface UpdateOrderStatusInput {
+  status: OrderStatus;
+  reason?: string;
+}
+

@@ -12,6 +12,10 @@ import {
   Restaurant,
   RestaurantApprovalStatus,
   User,
+  Order,
+  CreateOrderInput,
+  UpdateOrderStatusInput,
+  OrderStatus,
 } from './types';
 
 const API_BASE_URL =
@@ -449,6 +453,65 @@ class ApiClient {
         method: 'PATCH',
         body: JSON.stringify(payload),
       });
+    },
+  };
+
+  // ==========================================================================
+  // ORDERS & REAL-TIME KDS
+  // ==========================================================================
+  orders = {
+    createPublicOrder: (restaurantSlug: string, input: CreateOrderInput): Promise<Order> => {
+      return this.request<Order>(`/public/restaurants/${restaurantSlug}/orders`, {
+        method: 'POST',
+        body: JSON.stringify(input),
+      });
+    },
+
+    getPublicOrderStatus: (restaurantSlug: string, orderNumber: string): Promise<{ order: Order; restaurant: { name: string; slug: string } }> => {
+      return this.request<{ order: Order; restaurant: { name: string; slug: string } }>(
+        `/public/restaurants/${restaurantSlug}/orders/${orderNumber}`,
+      );
+    },
+
+    listRestaurantOrders: (
+      restaurantId: string,
+      params?: {
+        page?: number;
+        limit?: number;
+        status?: OrderStatus;
+        activeOnly?: boolean;
+        search?: string;
+      },
+    ): Promise<{ data: Order[]; total: number; page: number; limit: number; totalPages: number }> => {
+      const query = new URLSearchParams();
+      if (params?.page) query.append('page', params.page.toString());
+      if (params?.limit) query.append('limit', params.limit.toString());
+      if (params?.status) query.append('status', params.status);
+      if (params?.activeOnly) query.append('activeOnly', 'true');
+      if (params?.search) query.append('search', params.search);
+
+      return this.request<{ data: Order[]; total: number; page: number; limit: number; totalPages: number }>(
+        `/restaurants/${restaurantId}/orders?${query.toString()}`,
+      );
+    },
+
+    getOrderDetail: (restaurantId: string, orderId: string): Promise<Order> => {
+      return this.request<Order>(`/restaurants/${restaurantId}/orders/${orderId}`);
+    },
+
+    updateOrderStatus: (
+      restaurantId: string,
+      orderId: string,
+      input: UpdateOrderStatusInput,
+    ): Promise<Order> => {
+      return this.request<Order>(`/restaurants/${restaurantId}/orders/${orderId}/status`, {
+        method: 'PATCH',
+        body: JSON.stringify(input),
+      });
+    },
+
+    getOrderStreamUrl: (restaurantId: string): string => {
+      return `${API_BASE_URL}/restaurants/${restaurantId}/orders/stream`;
     },
   };
 }

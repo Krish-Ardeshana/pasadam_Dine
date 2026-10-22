@@ -17,6 +17,7 @@ import {
   ChevronDown,
   LogOut,
   ShieldCheck,
+  ShoppingBag,
 } from 'lucide-react';
 import { useAuth } from '@/context/auth-context';
 
@@ -40,6 +41,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ onCloseMobile }) => {
 
   const restaurantNav = [
     { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+    { label: 'Live Orders', href: '/dashboard/orders', icon: ShoppingBag },
     { label: 'Menu Categories', href: '/dashboard/categories', icon: Layers },
     { label: 'Dishes & 3D AR', href: '/dashboard/dishes', icon: UtensilsCrossed },
     { label: 'Media Assets', href: '/dashboard/media', icon: FileImage },

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
 import {
   UtensilsCrossed,
   Sparkles,
@@ -10,21 +10,49 @@ import {
   Phone,
   ChevronRight,
   AlertTriangle,
+  Plus,
+  Minus,
+  ShoppingBag,
+  Clock,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/Card';
 import { Skeleton } from '@/components/ui/Table';
 import { api } from '@/lib/api';
 import { Dish, PublicMenuResponse } from '@/lib/types';
+import { CartProvider, useCart } from '@/context/cart-context';
+import { CartDrawer } from '@/components/cart/CartDrawer';
+import { OrderStatusModal } from '@/components/cart/OrderStatusModal';
 
-function PublicRestaurantMenuContent() {
+function PublicMenuInner() {
   const params = useParams();
+  const searchParams = useSearchParams();
   const restaurantSlug = params.restaurantSlug as string;
+  const tableParam = searchParams.get('table');
 
   const [menuData, setMenuData] = useState<PublicMenuResponse | null>(null);
   const [activeCategory, setActiveCategory] = useState<string>('ALL');
   const [search, setSearch] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [showStatusModal, setShowStatusModal] = useState(false);
+
+  const {
+    items,
+    addItem,
+    updateQuantity,
+    totalItems,
+    subtotal,
+    setIsCartOpen,
+    setTableNumber,
+    activeOrder,
+  } = useCart();
+
+  // If table was passed via query parameter (e.g. table QR code scan), set it in cart
+  useEffect(() => {
+    if (tableParam) {
+      setTableNumber(tableParam.startsWith('Table') ? tableParam : `Table ${tableParam}`);
+    }
+  }, [tableParam, setTableNumber]);
 
   useEffect(() => {
     if (!restaurantSlug) return;
@@ -70,7 +98,6 @@ function PublicRestaurantMenuContent() {
   const restaurant = menuData?.restaurant;
   const categories = menuData?.categories || [];
 
-  // Flatten or filter dishes based on selected category & search query
   let allDishes: Dish[] = [];
   categories.forEach((cat) => {
     allDishes = allDishes.concat(cat.dishes || []);
@@ -90,8 +117,10 @@ function PublicRestaurantMenuContent() {
     return true;
   });
 
+  const currency = restaurant?.settings?.currency || allDishes[0]?.currency || 'USD';
+
   return (
-    <div className="min-h-screen bg-[#F8F7F4] text-[#1C120C]">
+    <div className="min-h-screen bg-[#F8F7F4] text-[#1C120C] pb-24">
       {/* Restaurant Header & Cover */}
       <header className="bg-white border-b border-[#E8E2D9] shadow-xs">
         <div className="max-w-5xl mx-auto px-4 py-8">
@@ -114,6 +143,11 @@ function PublicRestaurantMenuContent() {
                   {restaurant?.name || 'Prasadam Dining Venue'}
                 </h1>
                 <Badge variant="success">OPEN FOR DINING</Badge>
+                {tableParam && (
+                  <span className="text-xs font-black bg-[#5E0B15] text-white px-3 py-1 rounded-full uppercase tracking-wider shadow-xs">
+                    Table {tableParam}
+                  </span>
+                )}
               </div>
 
               <p className="text-xs sm:text-sm text-[#594B42] max-w-2xl mb-4 leading-relaxed">
@@ -142,6 +176,29 @@ function PublicRestaurantMenuContent() {
           </div>
         </div>
       </header>
+
+      {/* Active Order Banner if order exists */}
+      {activeOrder && (
+        <div className="bg-[#5E0B15] text-white py-2.5 px-4 shadow-sm sticky top-0 z-40">
+          <div className="max-w-5xl mx-auto flex items-center justify-between gap-3 text-xs">
+            <div className="flex items-center gap-2">
+              <Clock className="w-4 h-4 text-[#D6C5A9] animate-pulse" />
+              <span>
+                Active Order <strong className="font-mono">#{activeOrder.orderNumber}</strong>:
+              </span>
+              <span className="bg-white/20 px-2 py-0.5 rounded-full font-bold uppercase text-[10px] tracking-wider">
+                {activeOrder.status}
+              </span>
+            </div>
+            <button
+              onClick={() => setShowStatusModal(true)}
+              className="px-3 py-1 bg-white text-[#5E0B15] font-black uppercase text-[11px] rounded-lg hover:bg-[#FAF7F2] transition-colors cursor-pointer"
+            >
+              Track Live Order
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Sticky Category & Search Navigation */}
       <div className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-[#E8E2D9] shadow-xs">
@@ -210,6 +267,9 @@ function PublicRestaurantMenuContent() {
                 ? api.resolveMediaUrl(dish.imageUrls[0])
                 : null;
 
+              const cartItem = items.find((i) => i.dish._id === dish._id);
+              const quantityInCart = cartItem ? cartItem.quantity : 0;
+
               return (
                 <div
                   key={dish._id}
@@ -264,27 +324,52 @@ function PublicRestaurantMenuContent() {
                     </div>
                   </div>
 
-                  {/* Action Link to 3D AR Experience */}
-                  <div className="mt-4 pt-3 border-t border-[#F5EFE6] flex items-center justify-between">
-                    <span className="text-[11px] text-[#594B42] uppercase font-bold">
-                      {dish.isAvailable ? (
-                        <span className="text-[#1E562A] flex items-center gap-1.5">
-                          <span className="w-2 h-2 rounded-full bg-[#1E562A] inline-block" /> In Stock
-                        </span>
-                      ) : (
-                        <span className="text-[#90323D] flex items-center gap-1.5">
-                          <span className="w-2 h-2 rounded-full bg-[#90323D] inline-block" /> Unavailable
-                        </span>
-                      )}
-                    </span>
-
+                  {/* Action Link to 3D AR Experience and Add to Cart */}
+                  <div className="mt-4 pt-3 border-t border-[#F5EFE6] flex items-center justify-between gap-2">
                     <Link
                       href={`/r/${restaurantSlug}/d/${dish.slug}`}
-                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-[#5E0B15] hover:bg-[#450810] text-white text-xs font-bold uppercase tracking-wider rounded-lg transition-colors shadow-xs"
+                      className="inline-flex items-center gap-1 px-3 py-1.5 bg-[#FAF7F2] hover:bg-[#EFE9DF] text-[#594B42] text-xs font-bold uppercase tracking-wider rounded-lg transition-colors border border-[#E8E2D9]"
                     >
-                      <span>{has3D ? 'View in 3D AR' : 'Details'}</span>
+                      <span>{has3D ? '3D AR' : 'Details'}</span>
                       <ChevronRight className="w-3.5 h-3.5" />
                     </Link>
+
+                    {dish.isAvailable ? (
+                      quantityInCart > 0 ? (
+                        <div className="flex items-center border border-[#5E0B15] rounded-lg bg-[#FAF7F2] overflow-hidden">
+                          <button
+                            type="button"
+                            onClick={() => updateQuantity(dish._id, quantityInCart - 1)}
+                            className="p-1.5 hover:bg-[#5E0B15] hover:text-white text-[#5E0B15] transition-colors"
+                          >
+                            <Minus className="w-3.5 h-3.5" />
+                          </button>
+                          <span className="w-8 text-center text-xs font-bold font-mono text-[#5E0B15]">
+                            {quantityInCart}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => updateQuantity(dish._id, quantityInCart + 1)}
+                            className="p-1.5 hover:bg-[#5E0B15] hover:text-white text-[#5E0B15] transition-colors"
+                          >
+                            <Plus className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => addItem(dish, 1)}
+                          className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-[#5E0B15] hover:bg-[#450810] text-white text-xs font-bold uppercase tracking-wider rounded-lg transition-colors shadow-xs cursor-pointer"
+                        >
+                          <Plus className="w-3.5 h-3.5" />
+                          <span>Add</span>
+                        </button>
+                      )
+                    ) : (
+                      <span className="text-[11px] font-bold text-[#90323D] uppercase">
+                        Sold Out
+                      </span>
+                    )}
                   </div>
                 </div>
               );
@@ -292,6 +377,39 @@ function PublicRestaurantMenuContent() {
           </div>
         )}
       </main>
+
+      {/* Floating Cart Trigger Bar */}
+      {totalItems > 0 && (
+        <aside aria-label="Cart summary" className="fixed bottom-4 left-4 right-4 z-40 max-w-xl mx-auto">
+          <button
+            type="button"
+            onClick={() => setIsCartOpen(true)}
+            className="w-full bg-[#5E0B15] hover:bg-[#450810] text-white rounded-2xl p-4 shadow-2xl flex items-center justify-between border border-white/20 transition-all transform hover:scale-[1.01] cursor-pointer"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-white/20 flex items-center justify-center font-bold text-sm">
+                <ShoppingBag className="w-4 h-4" />
+              </div>
+              <div className="text-left">
+                <p className="text-xs font-black uppercase tracking-wider">
+                  {totalItems} {totalItems === 1 ? 'Offering' : 'Offerings'} in Cart
+                </p>
+                <p className="text-[11px] text-[#D6C5A9] font-medium">Tap to review & send to kitchen</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-mono text-base font-black">
+                {currency} {subtotal.toFixed(2)}
+              </span>
+              <ChevronRight className="w-5 h-5" />
+            </div>
+          </button>
+        </aside>
+      )}
+
+      {/* Cart Drawer & Order Status Modal */}
+      <CartDrawer restaurantSlug={restaurantSlug} currency={currency} />
+      {showStatusModal && <OrderStatusModal restaurantSlug={restaurantSlug} />}
 
       {/* Footer */}
       <footer className="border-t border-[#E8E2D9] bg-white py-8 mt-12 text-center text-xs text-[#594B42]">
@@ -308,6 +426,17 @@ function PublicRestaurantMenuContent() {
   );
 }
 
+function PublicMenuContainer() {
+  const params = useParams();
+  const restaurantSlug = params.restaurantSlug as string;
+
+  return (
+    <CartProvider restaurantSlug={restaurantSlug}>
+      <PublicMenuInner />
+    </CartProvider>
+  );
+}
+
 export default function PublicRestaurantMenuPage() {
   return (
     <React.Suspense
@@ -317,7 +446,7 @@ export default function PublicRestaurantMenuPage() {
         </div>
       }
     >
-      <PublicRestaurantMenuContent />
+      <PublicMenuContainer />
     </React.Suspense>
   );
 }

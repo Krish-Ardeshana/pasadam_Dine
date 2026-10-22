@@ -5,3 +5,4 @@ export * from './dish.schema.js';
 export * from './media-asset.schema.js';
 export * from './qr-code.schema.js';
 export * from './audit-log.schema.js';
+export * from './order.schema.js';

@@ -45,3 +45,32 @@ export enum QrStatus {
   ACTIVE = 'ACTIVE',
   INACTIVE = 'INACTIVE',
 }
+
+export enum OrderStatus {
+  PENDING = 'PENDING',
+  ACCEPTED = 'ACCEPTED',
+  PREPARING = 'PREPARING',
+  READY = 'READY',
+  SERVED = 'SERVED',
+  CANCELLED = 'CANCELLED',
+}
+
+export enum OrderPaymentStatus {
+  UNPAID = 'UNPAID',
+  PENDING = 'PENDING',
+  PAID = 'PAID',
+  REFUNDED = 'REFUNDED',
+  FAILED = 'FAILED',
+}
+
+export enum OrderType {
+  DINE_IN = 'DINE_IN',
+  TAKEAWAY = 'TAKEAWAY',
+}
+
+export enum OrderPaymentMethod {
+  PAY_AT_TABLE = 'PAY_AT_TABLE',
+  CASH_AT_COUNTER = 'CASH_AT_COUNTER',
+  ONLINE_PENDING = 'ONLINE_PENDING',
+}
+

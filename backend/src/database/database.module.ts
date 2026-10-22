@@ -15,6 +15,8 @@ import {
   QrCodeSchema,
   AuditLog,
   AuditLogSchema,
+  Order,
+  OrderSchema,
 } from './schemas/index.js';
 
 @Global()
@@ -28,6 +30,7 @@ import {
       { name: MediaAsset.name, schema: MediaAssetSchema },
       { name: QrCode.name, schema: QrCodeSchema },
       { name: AuditLog.name, schema: AuditLogSchema },
+      { name: Order.name, schema: OrderSchema },
     ]),
   ],
   exports: [MongooseModule],
