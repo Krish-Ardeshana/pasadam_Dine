@@ -178,7 +178,7 @@ export default function HomePage() {
               <div className="flex flex-wrap items-center gap-4 mb-10">
                 <Link
                   href="/r/prasadam-divine"
-                  className="inline-flex items-center gap-2.5 bg-[#1B4332] hover:bg-[#143326] text-white text-xs font-bold uppercase tracking-[0.14em] px-7 py-3.5 rounded-lg shadow-sm transition-all"
+                  className="inline-flex items-center gap-2.5 bg-[#1B4332] hover:bg-[#143326] text-white text-xs font-bold uppercase tracking-[0.14em] px-7 py-3.5 rounded-xl shadow-md hover:shadow-lg transition-all hover:scale-102"
                 >
                   <UtensilsCrossed className="w-4 h-4" />
                   <span>Explore Restaurants</span>
@@ -186,11 +186,19 @@ export default function HomePage() {
                 </Link>
 
                 <Link
+                  href="/r/prasadam-divine/d/royal-saffron-badam-halwa"
+                  className="inline-flex items-center gap-2 bg-[#FAF8F5] border border-[#2D6A4F]/40 hover:border-[#1B4332] text-[#1B4332] text-xs font-bold uppercase tracking-[0.14em] px-6 py-3.5 rounded-xl transition-all shadow-xs hover:shadow-sm hover:scale-102"
+                >
+                  <Sparkles className="w-4 h-4 text-[#2D6A4F]" />
+                  <span>Try 3D AR Dish</span>
+                </Link>
+
+                <Link
                   href="/login"
-                  className="inline-flex items-center gap-2 bg-[#FAF8F5] border border-[#D6CEBF] hover:border-[#1B4332] text-[#292524] hover:text-[#1B4332] text-xs font-bold uppercase tracking-[0.14em] px-6 py-3.5 rounded-lg transition-all"
+                  className="inline-flex items-center gap-2 text-[#57534E] hover:text-[#1B4332] text-xs font-bold uppercase tracking-[0.14em] px-4 py-3.5 transition-colors"
                 >
                   <Building2 className="w-4 h-4 text-[#2D6A4F]" />
-                  <span>Restaurant Manager Login</span>
+                  <span>Manager Portal</span>
                 </Link>
               </div>
 
@@ -211,9 +219,9 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Right Photography Frame */}
+            {/* Right Photography Frame with Hover Lift & 3D Badge */}
             <div className="lg:col-span-5">
-              <div className="relative rounded-2xl overflow-hidden border border-[#D6CEBF] bg-[#F7F5EE] shadow-md">
+              <div className="relative rounded-3xl overflow-hidden border border-[#D6CEBF] bg-[#F7F5EE] shadow-lg hover-lift transition-all">
                 <div className="relative aspect-[4/3] w-full">
                   <Image
                     src="/images/hero_thali.jpg"
@@ -223,15 +231,19 @@ export default function HomePage() {
                     className="object-cover object-center"
                     sizes="(max-width: 1024px) 100vw, 40vw"
                   />
+                  <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/60 shadow-sm flex items-center gap-2 text-[11px] font-bold text-[#1B4332]">
+                    <Sparkles className="w-3.5 h-3.5 text-emerald-600 animate-pulse" />
+                    <span>3D AR Ready</span>
+                  </div>
                 </div>
-                <div className="p-4 bg-white border-t border-[#EAE5DC] flex items-center justify-between text-xs text-[#57534E]">
+                <div className="p-4 sm:p-5 bg-white border-t border-[#EAE5DC] flex items-center justify-between text-xs text-[#57534E]">
                   <div className="flex items-center gap-2 font-medium">
-                    <span className="w-2 h-2 rounded-full bg-emerald-600" />
-                    <span>Featured Dining Venue: Prasadam Divine Heritage</span>
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-600 animate-ping" />
+                    <span className="font-semibold text-[#1C1917]">Prasadam Divine Heritage</span>
                   </div>
                   <Link
                     href="/r/prasadam-divine"
-                    className="text-[#1B4332] font-semibold hover:underline inline-flex items-center gap-1"
+                    className="text-[#1B4332] font-bold hover:underline inline-flex items-center gap-1 text-xs"
                   >
                     <span>View Menu</span>
                     <ChevronRight className="w-3.5 h-3.5" />
@@ -262,8 +274,8 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Feature 1 */}
-            <div className="bg-white rounded-xl p-6 border border-[#E7E2D9] shadow-2xs hover:border-[#1B4332]/40 transition-colors">
-              <div className="w-12 h-12 rounded-lg bg-[#EDF5F0] border border-[#C5DEC9] text-[#1B4332] flex items-center justify-center mb-5">
+            <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#E7E2D9] shadow-xs hover-lift transition-all">
+              <div className="w-12 h-12 rounded-xl bg-[#EDF5F0] border border-[#C5DEC9] text-[#1B4332] flex items-center justify-center mb-5 shadow-2xs">
                 <QrCode className="w-6 h-6 stroke-[1.8]" />
               </div>
               <h3 className="font-luxury text-lg font-bold text-[#1C1917] mb-2">QR-Based Digital Menus</h3>
@@ -273,8 +285,8 @@ export default function HomePage() {
             </div>
 
             {/* Feature 2 */}
-            <div className="bg-white rounded-xl p-6 border border-[#E7E2D9] shadow-2xs hover:border-[#1B4332]/40 transition-colors">
-              <div className="w-12 h-12 rounded-lg bg-[#EDF5F0] border border-[#C5DEC9] text-[#1B4332] flex items-center justify-center mb-5">
+            <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#E7E2D9] shadow-xs hover-lift transition-all">
+              <div className="w-12 h-12 rounded-xl bg-[#EDF5F0] border border-[#C5DEC9] text-[#1B4332] flex items-center justify-center mb-5 shadow-2xs">
                 <Box className="w-6 h-6 stroke-[1.8]" />
               </div>
               <h3 className="font-luxury text-lg font-bold text-[#1C1917] mb-2">Dish Images & 3D/AR Previews</h3>
@@ -284,8 +296,8 @@ export default function HomePage() {
             </div>
 
             {/* Feature 3 */}
-            <div className="bg-white rounded-xl p-6 border border-[#E7E2D9] shadow-2xs hover:border-[#1B4332]/40 transition-colors">
-              <div className="w-12 h-12 rounded-lg bg-[#EDF5F0] border border-[#C5DEC9] text-[#1B4332] flex items-center justify-center mb-5">
+            <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#E7E2D9] shadow-xs hover-lift transition-all">
+              <div className="w-12 h-12 rounded-xl bg-[#EDF5F0] border border-[#C5DEC9] text-[#1B4332] flex items-center justify-center mb-5 shadow-2xs">
                 <ShoppingBag className="w-6 h-6 stroke-[1.8]" />
               </div>
               <h3 className="font-luxury text-lg font-bold text-[#1C1917] mb-2">Online Table Ordering</h3>
@@ -295,8 +307,8 @@ export default function HomePage() {
             </div>
 
             {/* Feature 4 */}
-            <div className="bg-white rounded-xl p-6 border border-[#E7E2D9] shadow-2xs hover:border-[#1B4332]/40 transition-colors">
-              <div className="w-12 h-12 rounded-lg bg-[#EDF5F0] border border-[#C5DEC9] text-[#1B4332] flex items-center justify-center mb-5">
+            <div className="bg-white rounded-2xl p-6 sm:p-7 border border-[#E7E2D9] shadow-xs hover-lift transition-all">
+              <div className="w-12 h-12 rounded-xl bg-[#EDF5F0] border border-[#C5DEC9] text-[#1B4332] flex items-center justify-center mb-5 shadow-2xs">
                 <Layers className="w-6 h-6 stroke-[1.8]" />
               </div>
               <h3 className="font-luxury text-lg font-bold text-[#1C1917] mb-2">Menu & Order Operations</h3>

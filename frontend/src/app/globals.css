@@ -2,71 +2,121 @@
 
 @layer base {
   :root {
-    /* Brand Palette: 60% Almond, 30% Cordovan, 10% Chocolate Cosmos */
-    --color-almond: #EDE1CF;           /* 60% Brand Canvas / Warm Surface Neutral */
-    --color-almond-light: #F7F3EC;     /* Light soft almond */
-    --color-almond-border: #DCD5C9;    /* Almond subtle divider */
+    /* Brand Palette: Warm Luxury Hospitality */
+    --color-almond: #EDE1CF;           /* Brand Canvas / Warm Surface Neutral */
+    --color-almond-light: #FBF9F5;     /* Ultra soft warm background */
+    --color-almond-border: #E6DFD5;    /* Almond subtle divider */
     
-    --color-cordovan: #90323D;         /* 30% Primary Brand Accent & Action */
+    --color-emerald-deep: #1B4332;     /* Deep Royal Forest Green */
+    --color-emerald-mid: #2D6A4F;      /* Vibrant Emerald */
+    --color-emerald-light: #EBF7EE;    /* Soft Emerald Pill Wash */
+
+    --color-cordovan: #90323D;         /* Rich Burgundy Accent */
     --color-cordovan-dark: #7A2731;    /* Cordovan Hover */
     --color-cordovan-light: #F9ECEE;   /* Cordovan subtle wash */
     
-    --color-chocolate-cosmos: #5E0B15; /* 10% Deep Headlines & Active Nav States */
+    --color-chocolate-cosmos: #5E0B15; /* Deep Headline Accent */
     --color-chocolate-dark: #450810;
     
-    --app-bg: #F8F5F0;                 /* Warm readable almond background */
+    --app-bg: #FBF9F5;                 /* Warm readable luxury background */
     --surface-white: #FFFFFF;          /* Pure crisp white card surfaces */
     --surface-card: #FFFFFF;
-    --surface-subtle: #EDE1CF;
+    --surface-subtle: #F4EFEB;
     
-    --text-primary: #1C120C;           /* Readable deep charcoal/espresso */
-    --text-muted: #594B42;             /* Muted espresso taupe */
-    --border-subtle: #DCD5C9;          /* Neutral oatmeal border */
-    --border-strong: #90323D;          /* Cordovan border */
+    --text-primary: #1C1917;           /* Modern Charcoal Black */
+    --text-muted: #645D56;             /* Muted Warm Slate */
+    --border-subtle: #E8E2D9;          /* Neutral Soft Border */
+    --border-strong: #D6CEBF;          /* Defined Card Border */
   }
 
-  /* Strict Square Corners Requirement */
-  *, *::before, *::after {
-    border-radius: 0 !important;
+  html {
+    scroll-behavior: smooth;
   }
 
   body {
     background-color: var(--app-bg);
     color: var(--text-primary);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: var(--font-sans), 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     margin: 0;
     padding: 0;
   }
 }
 
-/* Palette Helper Classes */
-.bg-almond { background-color: var(--color-almond); }
-.bg-almond-light { background-color: var(--color-almond-light); }
-.bg-cordovan { background-color: var(--color-cordovan); }
-.bg-cordovan-dark { background-color: var(--color-cordovan-dark); }
-.bg-chocolate { background-color: var(--color-chocolate-cosmos); }
+/* Luxury & Editorial Typography */
+.font-luxury {
+  font-family: var(--font-luxury), 'Playfair Display', Georgia, serif;
+}
 
-.text-cordovan { color: var(--color-cordovan); }
-.text-chocolate { color: var(--color-chocolate-cosmos); }
-.text-primary-dark { color: var(--text-primary); }
-.text-muted-taupe { color: var(--text-muted); }
+.font-sans-clean {
+  font-family: var(--font-sans), 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
 
-.border-almond { border-color: var(--color-almond-border); }
-.border-cordovan { border-color: var(--color-cordovan); }
-.border-chocolate { border-color: var(--color-chocolate-cosmos); }
+/* Glassmorphism & Modern Surface Effects */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(232, 226, 217, 0.8);
+}
 
-/* Model Viewer Custom Element Dimensions with Strict Square Corners */
+.glass-nav {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(232, 226, 217, 0.7);
+}
+
+.glass-dark {
+  background: rgba(27, 67, 50, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* Smooth Micro-Interactions */
+.hover-lift {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 32px -8px rgba(27, 67, 50, 0.12), 0 4px 12px -2px rgba(0, 0, 0, 0.04);
+}
+
+.emerald-glow {
+  box-shadow: 0 12px 28px -6px rgba(27, 67, 50, 0.25);
+}
+
+.gold-glow {
+  box-shadow: 0 12px 28px -6px rgba(180, 130, 40, 0.25);
+}
+
+/* Model Viewer Custom Element Dimensions */
 model-viewer {
   width: 100%;
   height: 100%;
   min-height: 380px;
-  background-color: #FAF7F2;
+  background-color: transparent;
   --poster-color: transparent;
-  border-radius: 0 !important;
+  border-radius: 1rem;
 }
 
-/* Clean Professional Typography Classes */
-.font-sans-clean {
-  font-family: var(--font-sans), 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+/* Sleek Modern Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F4EFEB;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D4CBC0;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1B4332;
 }

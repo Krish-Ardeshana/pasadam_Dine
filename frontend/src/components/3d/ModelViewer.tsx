@@ -225,42 +225,42 @@ export const ModelViewer: React.FC<ModelViewerProps> = ({
 
   // Case 3: Active Realistic 3D Food Experience
   return (
-    <div className={`relative w-full h-[400px] sm:h-[480px] bg-gradient-to-b from-[#FAF7F2] to-[#F2EDE4] rounded-2xl border-2 border-[#5E0B15] overflow-hidden flex flex-col shadow-sm ${className}`}>
+    <div className={`relative w-full h-[420px] sm:h-[500px] bg-gradient-to-b from-[#FAF8F5] via-[#F5EFE6] to-[#ECE5D8] rounded-2xl border border-[#DCD5C9] overflow-hidden flex flex-col shadow-md transition-all ${className}`}>
       {/* Top Left: Authentic Food 3D Badge */}
-      <div className="absolute top-3 left-3 z-10 flex flex-col gap-1">
-        <div className="flex items-center gap-2 bg-[#5E0B15] text-[#EDE1CF] px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-widest shadow-md">
-          <Box className="w-4 h-4 text-[#EDE1CF]" />
+      <div className="absolute top-4 left-4 z-10 flex flex-col gap-1.5 pointer-events-none">
+        <div className="flex items-center gap-2 bg-[#1B4332] text-white px-3.5 py-1.5 rounded-xl text-xs font-bold uppercase tracking-wider shadow-md">
+          <Box className="w-4 h-4 text-emerald-300" />
           <span>Interactive 3D Food View</span>
         </div>
         {modelMeta && (
-          <span className="text-[10px] font-black uppercase tracking-wider text-[#5E0B15] bg-white/90 backdrop-blur-xs px-2.5 py-0.5 rounded-md border border-[#E8E2D9] shadow-xs w-fit">
+          <span className="text-[10px] font-black uppercase tracking-wider text-[#1B4332] bg-white/95 backdrop-blur-md px-3 py-1 rounded-lg border border-[#E8E2D9] shadow-xs w-fit">
             {modelMeta.foodName}
           </span>
         )}
       </div>
 
       {/* Top Right: Reset Camera Control */}
-      <div className="absolute top-3 right-3 z-10 flex items-center gap-2">
+      <div className="absolute top-4 right-4 z-10 flex items-center gap-2">
         <button
           onClick={handleResetCamera}
           title="Reset Camera View"
-          className="flex items-center gap-1.5 bg-white/95 hover:bg-white text-[#594B42] hover:text-[#5E0B15] px-2.5 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider border border-[#E8E2D9] transition-colors shadow-xs cursor-pointer"
+          className="flex items-center gap-1.5 bg-white/95 hover:bg-white text-[#44403C] hover:text-[#1B4332] px-3 py-1.5 rounded-xl text-xs font-bold uppercase tracking-wider border border-[#DCD5C9] hover:border-[#1B4332]/40 transition-all shadow-xs cursor-pointer hover:scale-102"
         >
-          <RotateCcw className="w-3.5 h-3.5 text-[#90323D]" />
+          <RotateCcw className="w-3.5 h-3.5 text-[#2D6A4F]" />
           <span className="hidden sm:inline">Reset Angle</span>
         </button>
       </div>
 
       {/* Bottom Left: Rotation & Zoom Guidance */}
-      <div className="absolute bottom-3 left-3 z-10 flex items-center gap-2 bg-white/95 backdrop-blur-xs rounded-lg border border-[#E8E2D9] text-[#594B42] px-3 py-1.5 text-[11px] font-medium shadow-xs">
-        <RefreshCw className="w-3 h-3 text-[#90323D] animate-spin" style={{ animationDuration: '8s' }} />
+      <div className="absolute bottom-4 left-4 z-10 flex items-center gap-2 bg-white/95 backdrop-blur-md rounded-xl border border-[#DCD5C9] text-[#57534E] px-3.5 py-1.5 text-[11px] font-medium shadow-xs pointer-events-none">
+        <RefreshCw className="w-3.5 h-3.5 text-[#2D6A4F] animate-spin" style={{ animationDuration: '8s' }} />
         <span>Drag to rotate 360° • Pinch / Scroll to zoom</span>
       </div>
 
       {/* Bottom Right: Asset Info Tooltip */}
       {modelMeta && (
-        <div className="absolute bottom-3 right-3 z-10 hidden md:flex items-center gap-1.5 text-[10px] text-[#594B42] bg-white/90 backdrop-blur-xs border border-[#E8E2D9] px-2 py-1 rounded-md shadow-2xs">
-          <CheckCircle2 className="w-3 h-3 text-[#1E562A]" />
+        <div className="absolute bottom-4 right-4 z-10 hidden md:flex items-center gap-1.5 text-[10px] font-semibold text-[#2D6A4F] bg-white/95 backdrop-blur-md border border-[#C5DEC9] px-3 py-1.5 rounded-xl shadow-xs pointer-events-none">
+          <CheckCircle2 className="w-3.5 h-3.5 text-[#1B4332]" />
           <span>Verified Realistic Food Asset ({modelMeta.fileSizeFormatted})</span>
         </div>
       )}

@@ -273,7 +273,7 @@ function PublicMenuInner() {
               return (
                 <div
                   key={dish._id}
-                  className="bg-white rounded-2xl border border-[#E8E2D9] hover:border-[#90323D] transition-all duration-200 p-5 flex flex-col justify-between shadow-xs hover:shadow-md"
+                  className="bg-white rounded-2xl border border-[#E8E2D9] hover:border-[#2D6A4F] transition-all p-5 flex flex-col justify-between shadow-xs hover-lift"
                 >
                   <div className="flex gap-4">
                     {/* Dish Thumbnail */}

@@ -111,27 +111,27 @@ function PublicDishDetailContent() {
               {/* Media Viewer Area */}
               <div className="bg-white rounded-2xl border border-[#E8E2D9] overflow-hidden shadow-sm">
                 {/* Mode Switcher Tabs */}
-                <div className="flex border-b border-[#E8E2D9] bg-[#FAF7F2]">
+                <div className="flex border-b border-[#E8E2D9] bg-[#FAF8F5] p-2 gap-2">
                   <button
                     onClick={() => setActiveTab('3D')}
-                    className={`flex-1 py-3 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 border-r border-[#E8E2D9] cursor-pointer transition-colors ${
+                    className={`flex-1 py-3 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 rounded-xl cursor-pointer transition-all ${
                       activeTab === '3D'
-                        ? 'bg-white text-[#5E0B15] border-b-2 border-b-[#5E0B15] shadow-xs'
-                        : 'text-[#594B42] hover:bg-white/60'
+                        ? 'bg-white text-[#1B4332] shadow-sm border border-[#E8E2D9]'
+                        : 'text-[#57534E] hover:text-[#1B4332] hover:bg-white/60'
                     }`}
                   >
-                    <Sparkles className="w-4 h-4 text-[#90323D]" />
+                    <Sparkles className="w-4 h-4 text-[#2D6A4F]" />
                     <span>Interactive 3D / AR View {has3D ? '' : '(Coming Soon)'}</span>
                   </button>
                   <button
                     onClick={() => setActiveTab('2D')}
-                    className={`flex-1 py-3 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer transition-colors ${
+                    className={`flex-1 py-3 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 rounded-xl cursor-pointer transition-all ${
                       activeTab === '2D'
-                        ? 'bg-white text-[#5E0B15] border-b-2 border-b-[#5E0B15] shadow-xs'
-                        : 'text-[#594B42] hover:bg-white/60'
+                        ? 'bg-white text-[#1B4332] shadow-sm border border-[#E8E2D9]'
+                        : 'text-[#57534E] hover:text-[#1B4332] hover:bg-white/60'
                     }`}
                   >
-                    <UtensilsCrossed className="w-4 h-4 text-[#90323D]" />
+                    <UtensilsCrossed className="w-4 h-4 text-[#2D6A4F]" />
                     <span>High-Res 2D Photography</span>
                   </button>
                 </div>
