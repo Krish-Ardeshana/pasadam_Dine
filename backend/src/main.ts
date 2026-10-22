@@ -4,6 +4,10 @@ import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module.js';
 
+import path from 'path';
+import fs from 'fs';
+import express from 'express';
+
 // Prasadam Dine API Bootstrapper
 
 async function bootstrap() {
@@ -26,6 +30,13 @@ async function bootstrap() {
     }
     next();
   });
+
+  // Serve static 3D models directory
+  const modelsDir = path.resolve(process.cwd(), 'public/models');
+  if (fs.existsSync(modelsDir)) {
+    app.use('/models', express.static(modelsDir));
+    app.use(`/${apiPrefix}/models`, express.static(modelsDir));
+  }
 
   // Global API Prefix
   app.setGlobalPrefix(apiPrefix);

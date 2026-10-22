@@ -66,9 +66,26 @@ export class LocalStorageProvider implements IStorageProvider {
     }
   }
 
-  getFilePath(publicId: string): string | null {
-    const safeRelative = publicId.replace(/\.\./g, '');
+  getFilePath(publicId: string | string[]): string | null {
+    const raw = Array.isArray(publicId) ? publicId.join('/') : String(publicId || '');
+    const safeRelative = raw.replace(/\.\./g, '');
     const filePath = path.join(this.uploadDir, safeRelative);
-    return fs.existsSync(filePath) ? filePath : null;
+    if (fs.existsSync(filePath)) {
+      return filePath;
+    }
+    // Check in public/models
+    const modelBase = path.basename(safeRelative);
+    const modelPath = path.resolve(process.cwd(), 'public/models', modelBase);
+    if (fs.existsSync(modelPath)) {
+      return modelPath;
+    }
+    // If requesting a .glb file that was on ephemeral storage, fallback to golden_enigma.glb
+    if (safeRelative.endsWith('.glb')) {
+      const fallbackGolden = path.resolve(process.cwd(), 'public/models', 'golden_enigma.glb');
+      if (fs.existsSync(fallbackGolden)) {
+        return fallbackGolden;
+      }
+    }
+    return null;
   }
 }

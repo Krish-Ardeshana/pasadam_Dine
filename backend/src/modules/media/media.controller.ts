@@ -100,6 +100,10 @@ export class MediaController {
       throw new NotFoundException('Requested file not found');
     }
 
-    res.sendFile(filePath);
+    res.sendFile(filePath, (err) => {
+      if (err && !res.headersSent) {
+        res.status(404).json({ statusCode: 404, message: 'Requested file not found' });
+      }
+    });
   }
 }

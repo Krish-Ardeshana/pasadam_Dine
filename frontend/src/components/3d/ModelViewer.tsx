@@ -75,9 +75,21 @@ export const ModelViewer: React.FC<ModelViewerProps> = ({
     const viewerElement = viewerRef.current;
     if (!viewerElement) return;
 
+    if (viewerElement.loaded || (viewerElement as any).modelIsVisible) {
+      setIsModelLoaded(true);
+      setLoadError(false);
+    }
+
     const handleLoad = () => {
       setIsModelLoaded(true);
       setLoadError(false);
+    };
+
+    const handleProgress = (event: any) => {
+      if (event?.detail?.totalProgress === 1) {
+        setIsModelLoaded(true);
+        setLoadError(false);
+      }
     };
 
     const handleError = (event: any) => {
@@ -95,11 +107,25 @@ export const ModelViewer: React.FC<ModelViewerProps> = ({
     };
 
     viewerElement.addEventListener('load', handleLoad);
+    viewerElement.addEventListener('progress', handleProgress);
     viewerElement.addEventListener('error', handleError);
     viewerElement.addEventListener('ar-status', handleARStatus);
 
+    // Safety timeout: if model doesn't load within 12 seconds
+    const timer = setTimeout(() => {
+      if (viewerRef.current?.loaded) {
+        setIsModelLoaded(true);
+      } else if (!isModelLoaded) {
+        console.warn(`3D model loading timed out for ${dishName}`);
+        setLoadError(true);
+        setErrorMessage('3D Model loading took too long or asset was unreachable.');
+      }
+    }, 12000);
+
     return () => {
+      clearTimeout(timer);
       viewerElement.removeEventListener('load', handleLoad);
+      viewerElement.removeEventListener('progress', handleProgress);
       viewerElement.removeEventListener('error', handleError);
       viewerElement.removeEventListener('ar-status', handleARStatus);
     };

@@ -89,8 +89,15 @@ class ApiClient {
    */
   public resolveMediaUrl(url?: string): string {
     if (!url) return '';
-    if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+    if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:') || url.startsWith('blob:')) {
       return url;
+    }
+    // Frontend static assets located in public directory
+    if (url.startsWith('/models/') || url.startsWith('/images/') || url.startsWith('/_next/')) {
+      return url;
+    }
+    if (url.startsWith('models/') || url.startsWith('images/')) {
+      return `/${url}`;
     }
     const origin = getBackendOrigin();
     if (url.startsWith('/')) {
