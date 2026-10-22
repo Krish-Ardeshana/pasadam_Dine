@@ -38,7 +38,7 @@ export default function RootLayout({
       lang="en"
       className={`h-full antialiased ${playfair.variable} ${plusJakarta.variable} ${caveat.variable}`}
     >
-      <body className="min-h-full flex flex-col bg-[#0A0E17] text-[#F8FAFC]">
+      <body className="min-h-full flex flex-col bg-[#FBFBF9] text-[#1C1917]">
         <AuthProvider>
           <ToastProvider>{children}</ToastProvider>
         </AuthProvider>
