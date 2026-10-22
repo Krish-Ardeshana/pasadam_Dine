@@ -10,7 +10,7 @@ WORKDIR /app
 
 # Install build dependencies
 COPY package*.json ./
-RUN npm ci
+RUN npm install
 
 # Copy source and config files
 COPY tsconfig*.json nest-cli.json ./
@@ -35,7 +35,7 @@ RUN addgroup -S prasadam && adduser -S prasadam -G prasadam
 
 # Install production dependencies only
 COPY package*.json ./
-RUN npm ci --only=production && npm cache clean --force
+RUN npm install --omit=dev && npm cache clean --force
 
 # Copy compiled build output from builder
 COPY --from=builder --chown=prasadam:prasadam /app/dist ./dist
