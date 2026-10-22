@@ -353,4 +353,38 @@ describe('OrdersService & Tenant Isolation', () => {
       ).rejects.toThrow(NotFoundException);
     });
   });
+
+  describe('getPublicOrderStatus & Public Information Sanitization', () => {
+    it('should return order and minimal restaurant metadata when order exists for the requested restaurant', async () => {
+      const publicOrder = {
+        _id: new Types.ObjectId(),
+        restaurantId: restaurantAId,
+        orderNumber: 'ORD-20261022-X999',
+        status: OrderStatus.PREPARING,
+        items: [{ name: 'Sattvic Thali', quantity: 2, subtotal: 500 }],
+        pricing: { total: 500, currency: 'INR' },
+      };
+
+      mockOrderModel.findOne.mockReturnValue({
+        exec: vi.fn().mockResolvedValue(publicOrder),
+      });
+
+      const result = await ordersService.getPublicOrderStatus('govinda-dining', 'ORD-20261022-X999');
+
+      expect(result.order.orderNumber).toBe('ORD-20261022-X999');
+      expect(result.restaurant.name).toBe('Govinda Dining');
+      expect(result.restaurant.slug).toBe('govinda-dining');
+    });
+
+    it('should reject lookup with NotFoundException if order does not exist or belongs to another restaurant', async () => {
+      mockOrderModel.findOne.mockReturnValue({
+        exec: vi.fn().mockResolvedValue(null),
+      });
+
+      await expect(
+        ordersService.getPublicOrderStatus('govinda-dining', 'ORD-UNKNOWN-0000'),
+      ).rejects.toThrow(NotFoundException);
+    });
+  });
 });
+
