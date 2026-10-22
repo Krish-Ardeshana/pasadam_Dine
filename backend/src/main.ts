@@ -62,7 +62,11 @@ async function bootstrap() {
         return false;
       });
 
-      if (isDirectMatch || isSubdomainMatch || process.env.NODE_ENV !== 'production') {
+      const isLocalDevMatch =
+        process.env.NODE_ENV !== 'production' &&
+        /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(normalizedOrigin);
+
+      if (isDirectMatch || isSubdomainMatch || isLocalDevMatch) {
         callback(null, true);
       } else {
         logger.warn(`Blocked CORS request from disallowed origin: ${requestOrigin}`);

@@ -1,8 +1,9 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
+import mongoose from 'mongoose';
 
 import configuration from './config/configuration.js';
 import { DatabaseModule } from './database/database.module.js';
@@ -34,9 +35,37 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor.js
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => ({
-        uri: configService.get<string>('mongodb.uri'),
-      }),
+      useFactory: async (configService: ConfigService) => {
+        const configuredUri =
+          configService.get<string>('mongodb.uri') || 'mongodb://127.0.0.1:27017/prasadam_dine';
+        const isDev = (configService.get<string>('env') || process.env.NODE_ENV) !== 'production';
+        const logger = new Logger('DatabaseModule');
+
+        if (isDev && configuredUri.includes('mongodb+srv://')) {
+          try {
+            logger.log('Verifying primary MongoDB Atlas connectivity...');
+            const testConn = await mongoose.createConnection(configuredUri, {
+              serverSelectionTimeoutMS: 3000,
+              connectTimeoutMS: 3000,
+            }).asPromise();
+            await testConn.close();
+            logger.log('Primary MongoDB Atlas connected successfully.');
+            return { uri: configuredUri };
+          } catch (err: any) {
+            logger.warn(
+              `Primary MongoDB Atlas is unreachable (${err.message}). ` +
+              `Falling back to local MongoDB (mongodb://127.0.0.1:27017/prasadam_dine) for development.`,
+            );
+            return {
+              uri: 'mongodb://127.0.0.1:27017/prasadam_dine',
+            };
+          }
+        }
+
+        return {
+          uri: configuredUri,
+        };
+      },
       inject: [ConfigService],
     }),
     ThrottlerModule.forRootAsync({
