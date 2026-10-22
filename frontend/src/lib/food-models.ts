@@ -30,6 +30,29 @@ export interface FoodModelMeta {
 
 export const FOOD_MODEL_CATALOG: FoodModelMeta[] = [
   {
+    id: 'the-golden-enigma',
+    foodName: 'The Golden Enigma',
+    category: 'Chef Signature Specials',
+    glbUrl: '/models/golden_enigma.glb',
+    thumbnailUrl: '/images/hero_thali.jpg',
+    description: 'Signature culinary masterpiece with intricate golden presentation and immersive 3D/AR experience.',
+    fileSizeFormatted: '2.51 MB',
+    sizeBytes: 2631592,
+    source: 'Custom 3D Model',
+    license: 'Proprietary / Prasadam Dine',
+    licenseUrl: '#',
+    author: 'Prasadam Dine Culinary Lab',
+    status: 'VERIFIED',
+    scaleConfig: {
+      cameraOrbit: '0deg 60deg 1.2m',
+      fieldOfView: '30deg',
+      exposure: '1.0',
+      shadowIntensity: '1.2',
+      shadowSoftness: '0.6',
+      arScale: 'auto',
+    },
+  },
+  {
     id: 'pizza-margherita',
     foodName: 'Artisan Margherita Pizza',
     category: 'Pizza and Fast Food',
@@ -282,6 +305,8 @@ export function findFoodModelByUrl(url?: string): FoodModelMeta | undefined {
 export function suggestModelForDish(dishName: string, categoryName: string = ''): FoodModelMeta | undefined {
   const text = `${dishName} ${categoryName}`.toLowerCase();
 
+  if (text.includes('golden') || text.includes('enigma'))
+    return FOOD_MODEL_CATALOG.find((m) => m.id === 'the-golden-enigma');
   if (text.includes('pizza')) return FOOD_MODEL_CATALOG.find((m) => m.id === 'pizza-margherita');
   if (text.includes('burger')) return FOOD_MODEL_CATALOG.find((m) => m.id === 'burger-gourmet');
   if (text.includes('biryani') || text.includes('pulao') || text.includes('rice'))
