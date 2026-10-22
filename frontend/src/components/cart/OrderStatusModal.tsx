@@ -11,10 +11,14 @@ import {
   AlertTriangle,
   RefreshCw,
   UtensilsCrossed,
+  CreditCard,
+  Loader2,
+  ShieldCheck,
 } from 'lucide-react';
 import { useCart } from '@/context/cart-context';
 import { api } from '@/lib/api';
-import { Order, OrderStatus } from '@/lib/types';
+import { Order, OrderStatus, OrderPaymentStatus } from '@/lib/types';
+import { launchRazorpayCheckout } from '@/lib/razorpay';
 
 interface OrderStatusModalProps {
   restaurantSlug: string;
@@ -25,6 +29,8 @@ export const OrderStatusModal: React.FC<OrderStatusModalProps> = ({ restaurantSl
   const [currentOrder, setCurrentOrder] = useState<Order | null>(activeOrder);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
+  const [isPaying, setIsPaying] = useState(false);
+  const [payError, setPayError] = useState<string | null>(null);
 
   useEffect(() => {
     setCurrentOrder(activeOrder);
@@ -78,6 +84,28 @@ export const OrderStatusModal: React.FC<OrderStatusModalProps> = ({ restaurantSl
     } finally {
       setIsRefreshing(false);
     }
+  };
+
+  const handlePayNow = async () => {
+    if (!currentOrder) return;
+    setIsPaying(true);
+    setPayError(null);
+
+    await launchRazorpayCheckout({
+      restaurantSlug,
+      orderNumber: currentOrder.orderNumber,
+      customerName: currentOrder.customerName || '',
+      customerPhone: currentOrder.customerPhone || '',
+      onSuccess: (updatedOrder) => {
+        setCurrentOrder(updatedOrder);
+        setActiveOrder(updatedOrder);
+        setIsPaying(false);
+      },
+      onError: (errMsg) => {
+        setPayError(errMsg);
+        setIsPaying(false);
+      },
+    });
   };
 
   if (!currentOrder || isDismissed) return null;
@@ -249,12 +277,58 @@ export const OrderStatusModal: React.FC<OrderStatusModalProps> = ({ restaurantSl
               ))}
             </div>
 
-            <div className="pt-2 border-t border-[#F5EFE6] flex justify-between items-center text-xs text-[#594B42]">
-              <span>Payment Status:</span>
-              <span className="font-bold uppercase text-[#5E0B15]">
-                {currentOrder.paymentStatus} ({currentOrder.paymentMethod.replace(/_/g, ' ')})
-              </span>
+            <div className="pt-2.5 border-t border-[#F5EFE6] flex justify-between items-center text-xs">
+              <span className="text-[#594B42] font-medium">Payment Status:</span>
+              <div className="flex items-center gap-1.5">
+                {currentOrder.paymentStatus === OrderPaymentStatus.PAID ? (
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-[#EBF7EE] text-[#1E562A] border border-[#C3E6CB]">
+                    <ShieldCheck className="w-3 h-3 text-[#1E562A]" />
+                    PAID ({currentOrder.paymentMethod.replace(/_/g, ' ')})
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-[#FFF9E6] text-[#8C6D1F] border border-[#F3DE9C]">
+                    UNPAID ({currentOrder.paymentMethod.replace(/_/g, ' ')})
+                  </span>
+                )}
+              </div>
             </div>
+
+            {/* Pay Now Button for Unpaid Orders */}
+            {currentOrder.paymentStatus !== OrderPaymentStatus.PAID &&
+              currentOrder.status !== OrderStatus.CANCELLED && (
+                <div className="pt-3 border-t border-[#F5EFE6]">
+                  {payError && (
+                    <div className="mb-2 p-2 rounded-lg bg-[#FDF0F1] border border-[#F6C6CC] text-[#90323D] text-[11px] flex items-center gap-2">
+                      <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
+                      <span>{payError}</span>
+                    </div>
+                  )}
+                  <button
+                    type="button"
+                    onClick={handlePayNow}
+                    disabled={isPaying}
+                    className="w-full py-2.5 bg-[#5E0B15] hover:bg-[#450810] text-white text-xs font-black uppercase tracking-wider rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                  >
+                    {isPaying ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin text-[#D4AF37]" />
+                        <span>Opening Razorpay Checkout...</span>
+                      </>
+                    ) : (
+                      <>
+                        <CreditCard className="w-4 h-4 text-[#D4AF37]" />
+                        <span>
+                          Pay Now via Razorpay ({currentOrder.pricing.currency}{' '}
+                          {currentOrder.pricing.total.toFixed(2)})
+                        </span>
+                      </>
+                    )}
+                  </button>
+                  <p className="text-[10px] text-center text-[#8C7A6B] mt-1.5">
+                    Test Mode Active • Instant Kitchen Confirmation
+                  </p>
+                </div>
+              )}
           </div>
         </div>
 

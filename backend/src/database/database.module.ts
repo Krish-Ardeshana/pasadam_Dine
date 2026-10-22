@@ -17,6 +17,10 @@ import {
   AuditLogSchema,
   Order,
   OrderSchema,
+  PaymentTransaction,
+  PaymentTransactionSchema,
+  ProcessedWebhook,
+  ProcessedWebhookSchema,
 } from './schemas/index.js';
 
 @Global()
@@ -31,6 +35,8 @@ import {
       { name: QrCode.name, schema: QrCodeSchema },
       { name: AuditLog.name, schema: AuditLogSchema },
       { name: Order.name, schema: OrderSchema },
+      { name: PaymentTransaction.name, schema: PaymentTransactionSchema },
+      { name: ProcessedWebhook.name, schema: ProcessedWebhookSchema },
     ]),
   ],
   exports: [MongooseModule],

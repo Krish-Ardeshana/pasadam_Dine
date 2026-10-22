@@ -6,3 +6,5 @@ export * from './media-asset.schema.js';
 export * from './qr-code.schema.js';
 export * from './audit-log.schema.js';
 export * from './order.schema.js';
+export * from './payment-transaction.schema.js';
+export * from './processed-webhook.schema.js';

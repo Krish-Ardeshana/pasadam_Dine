@@ -124,6 +124,18 @@ export class Order {
   })
   paymentMethod: OrderPaymentMethod;
 
+  @Prop({ default: '', trim: true, index: true })
+  razorpayOrderId?: string;
+
+  @Prop({ default: '', trim: true, index: true })
+  razorpayPaymentId?: string;
+
+  @Prop({ type: Object, default: {} })
+  paymentDetails?: Record<string, any>;
+
+  @Prop({ type: [Object], default: [] })
+  refundDetails?: Record<string, any>[];
+
   @Prop({ type: [OrderStatusHistoryItemSchema], default: [] })
   statusHistory: OrderStatusHistoryItem[];
 }
@@ -132,3 +144,4 @@ export const OrderSchema = SchemaFactory.createForClass(Order);
 
 OrderSchema.index({ restaurantId: 1, status: 1, createdAt: -1 });
 OrderSchema.index({ restaurantId: 1, createdAt: -1 });
+OrderSchema.index({ razorpayOrderId: 1 }, { sparse: true });

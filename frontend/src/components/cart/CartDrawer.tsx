@@ -8,9 +8,12 @@ import {
   Minus,
   Trash2,
   UtensilsCrossed,
-  ArrowRight,
   AlertCircle,
   Loader2,
+  ArrowRight,
+  CreditCard,
+  Banknote,
+  ShieldCheck,
 } from 'lucide-react';
 import { useCart } from '@/context/cart-context';
 import { api } from '@/lib/api';
@@ -46,6 +49,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   } = useCart();
 
   const [orderType, setOrderType] = useState<OrderType>(OrderType.DINE_IN);
+  const [paymentMethod, setPaymentMethod] = useState<OrderPaymentMethod>(OrderPaymentMethod.PAY_AT_TABLE);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -65,7 +69,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
         customerName: customerName.trim() || undefined,
         customerPhone: customerPhone.trim() || undefined,
         specialInstructions: specialInstructions.trim() || undefined,
-        paymentMethod: OrderPaymentMethod.PAY_AT_TABLE,
+        paymentMethod,
         items: items.map((i) => ({
           dishId: i.dish._id,
           quantity: i.quantity,
@@ -77,6 +81,23 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
       clearCart();
       setIsCartOpen(false);
       setActiveOrder(placedOrder);
+
+      // If user selected online payment, launch Razorpay checkout immediately
+      if (paymentMethod === OrderPaymentMethod.ONLINE_PENDING) {
+        const { launchRazorpayCheckout } = await import('@/lib/razorpay');
+        await launchRazorpayCheckout({
+          restaurantSlug,
+          orderNumber: placedOrder.orderNumber,
+          customerName: customerName.trim(),
+          customerPhone: customerPhone.trim(),
+          onSuccess: (updatedOrder) => {
+            setActiveOrder(updatedOrder);
+          },
+          onError: (errMsg) => {
+            setError(errMsg);
+          },
+        });
+      }
     } catch (err: any) {
       setError(err.message || 'Failed to submit order. Please try again or notify staff.');
     } finally {
@@ -299,6 +320,54 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                   </div>
                 </div>
 
+                {/* Payment Method Selector */}
+                <div className="space-y-2">
+                  <label className="text-[11px] font-bold text-[#594B42] uppercase block">
+                    Choose Payment Method
+                  </label>
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setPaymentMethod(OrderPaymentMethod.PAY_AT_TABLE)}
+                      className={`p-3 rounded-xl border text-left flex flex-col justify-between transition-all cursor-pointer ${
+                        paymentMethod === OrderPaymentMethod.PAY_AT_TABLE
+                          ? 'border-[#5E0B15] bg-[#5E0B15]/5 shadow-xs'
+                          : 'border-[#E8E2D9] bg-white hover:border-[#D4AF37]'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between mb-1">
+                        <Banknote className={`w-4 h-4 ${paymentMethod === OrderPaymentMethod.PAY_AT_TABLE ? 'text-[#5E0B15]' : 'text-[#8C7A6B]'}`} />
+                        <span className={`w-2 h-2 rounded-full ${paymentMethod === OrderPaymentMethod.PAY_AT_TABLE ? 'bg-[#5E0B15]' : 'bg-transparent'}`} />
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold text-[#2A2118]">Pay at Counter</p>
+                        <p className="text-[10px] text-[#8C7A6B]">Cash / Card after meal</p>
+                      </div>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setPaymentMethod(OrderPaymentMethod.ONLINE_PENDING)}
+                      className={`p-3 rounded-xl border text-left flex flex-col justify-between transition-all cursor-pointer ${
+                        paymentMethod === OrderPaymentMethod.ONLINE_PENDING
+                          ? 'border-[#5E0B15] bg-[#5E0B15]/5 shadow-xs'
+                          : 'border-[#E8E2D9] bg-white hover:border-[#D4AF37]'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between mb-1">
+                        <CreditCard className={`w-4 h-4 ${paymentMethod === OrderPaymentMethod.ONLINE_PENDING ? 'text-[#5E0B15]' : 'text-[#8C7A6B]'}`} />
+                        <span className="text-[9px] font-extrabold uppercase px-1 py-0.2 bg-[#D4AF37]/20 text-[#8C6D1F] rounded">
+                          TEST MODE
+                        </span>
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold text-[#2A2118]">Pay Online Now</p>
+                        <p className="text-[10px] text-[#8C7A6B]">Razorpay UPI / Cards</p>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+
                 {/* Price Summary */}
                 <div className="bg-white rounded-xl border border-[#E8E2D9] p-4 space-y-2 shadow-xs text-xs">
                   <div className="flex justify-between text-[#594B42]">
@@ -312,8 +381,12 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     <span className="font-mono">{currency} 0.00</span>
                   </div>
                   <div className="flex justify-between text-[#594B42]">
-                    <span>Payment Method</span>
-                    <span className="font-semibold uppercase text-[11px]">Pay at Table / Counter</span>
+                    <span>Payment Selection</span>
+                    <span className="font-semibold uppercase text-[11px] text-[#5E0B15]">
+                      {paymentMethod === OrderPaymentMethod.ONLINE_PENDING
+                        ? 'Razorpay Test Checkout'
+                        : 'Pay at Counter / Table'}
+                    </span>
                   </div>
                   <div className="pt-2 border-t border-[#E8E2D9] flex justify-between items-center text-sm font-black text-[#5E0B15]">
                     <span>Total Amount</span>
@@ -338,7 +411,13 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 {isSubmitting ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    <span>Transmitting to Kitchen...</span>
+                    <span>Processing Order...</span>
+                  </>
+                ) : paymentMethod === OrderPaymentMethod.ONLINE_PENDING ? (
+                  <>
+                    <ShieldCheck className="w-4 h-4 text-[#D4AF37]" />
+                    <span>Pay with Razorpay ({currency} {subtotal.toFixed(2)})</span>
+                    <ArrowRight className="w-4 h-4" />
                   </>
                 ) : (
                   <>

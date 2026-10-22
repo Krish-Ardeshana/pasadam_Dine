@@ -16,6 +16,9 @@ import {
   CreateOrderInput,
   UpdateOrderStatusInput,
   OrderStatus,
+  PublicPaymentConfig,
+  PaymentOrderResponse,
+  VerifyPaymentInput,
 } from './types';
 
 const API_BASE_URL =
@@ -512,6 +515,57 @@ class ApiClient {
 
     getOrderStreamUrl: (restaurantId: string): string => {
       return `${API_BASE_URL}/restaurants/${restaurantId}/orders/stream`;
+    },
+  };
+
+  // ==========================================================================
+  // PAYMENTS (RAZORPAY TEST MODE & REFUNDS)
+  // ==========================================================================
+  payments = {
+    getPublicConfig: (restaurantSlug: string): Promise<PublicPaymentConfig> => {
+      return this.request<PublicPaymentConfig>(
+        `/public/restaurants/${restaurantSlug}/payments/config`,
+      );
+    },
+
+    createPaymentOrder: (
+      restaurantSlug: string,
+      orderNumber: string,
+    ): Promise<PaymentOrderResponse> => {
+      return this.request<PaymentOrderResponse>(
+        `/public/restaurants/${restaurantSlug}/payments/orders/${orderNumber}/create`,
+        {
+          method: 'POST',
+        },
+      );
+    },
+
+    verifyPayment: (
+      restaurantSlug: string,
+      orderNumber: string,
+      input: VerifyPaymentInput,
+    ): Promise<{ message: string; order: Order }> => {
+      return this.request<{ message: string; order: Order }>(
+        `/public/restaurants/${restaurantSlug}/payments/orders/${orderNumber}/verify`,
+        {
+          method: 'POST',
+          body: JSON.stringify(input),
+        },
+      );
+    },
+
+    refundOrder: (
+      restaurantId: string,
+      orderId: string,
+      input: { amount?: number; reason?: string },
+    ): Promise<{ message: string; order: Order }> => {
+      return this.request<{ message: string; order: Order }>(
+        `/restaurants/${restaurantId}/payments/orders/${orderId}/refund`,
+        {
+          method: 'POST',
+          body: JSON.stringify(input),
+        },
+      );
     },
   };
 }

@@ -224,7 +224,35 @@ export enum OrderPaymentMethod {
   PAY_AT_TABLE = 'PAY_AT_TABLE',
   CASH_AT_COUNTER = 'CASH_AT_COUNTER',
   ONLINE_PENDING = 'ONLINE_PENDING',
+  RAZORPAY = 'RAZORPAY',
 }
+
+export interface PublicPaymentConfig {
+  keyId: string;
+  currency: string;
+  mode: string;
+  gateway: string;
+}
+
+export interface PaymentOrderResponse {
+  orderId: string;
+  razorpayOrderId: string;
+  amount: number;
+  currency: string;
+  keyId: string;
+  orderNumber: string;
+  customer: {
+    name: string;
+    contact: string;
+  };
+}
+
+export interface VerifyPaymentInput {
+  razorpay_order_id: string;
+  razorpay_payment_id: string;
+  razorpay_signature: string;
+}
+
 
 export interface OrderItem {
   dishId: string;

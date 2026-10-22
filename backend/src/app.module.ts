@@ -17,6 +17,7 @@ import { MediaModule } from './modules/media/media.module.js';
 import { QrModule } from './modules/qr/qr.module.js';
 import { PublicMenuModule } from './modules/public-menu/public-menu.module.js';
 import { OrdersModule } from './modules/orders/orders.module.js';
+import { PaymentsModule } from './modules/payments/payments.module.js';
 import { HealthModule } from './modules/health/health.module.js';
 
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard.js';
@@ -60,6 +61,7 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor.js
     QrModule,
     PublicMenuModule,
     OrdersModule,
+    PaymentsModule,
     HealthModule,
   ],
   providers: [

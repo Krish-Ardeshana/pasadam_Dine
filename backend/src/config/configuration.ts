@@ -33,6 +33,13 @@ export interface AppConfig {
     ttl: number;
     limit: number;
   };
+  razorpay: {
+    keyId: string;
+    keySecret: string;
+    webhookSecret: string;
+    gateway: string;
+    mode: 'test' | 'live';
+  };
 }
 
 export default (): AppConfig => ({
@@ -72,5 +79,12 @@ export default (): AppConfig => ({
   throttler: {
     ttl: parseInt(process.env.THROTTLE_TTL || '60', 10),
     limit: parseInt(process.env.THROTTLE_LIMIT || '100', 10),
+  },
+  razorpay: {
+    keyId: process.env.RAZORPAY_KEY_ID || '',
+    keySecret: process.env.RAZORPAY_KEY_SECRET || '',
+    webhookSecret: process.env.RAZORPAY_WEBHOOK_SECRET || '',
+    gateway: process.env.PAYMENT_GATEWAY || 'razorpay',
+    mode: (process.env.PAYMENT_MODE as 'test' | 'live') || 'test',
   },
 });
