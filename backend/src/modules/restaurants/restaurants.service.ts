@@ -18,7 +18,7 @@ import {
   Order,
   OrderDocument,
 } from '../../database/schemas/index.js';
-import { Role, RestaurantApprovalStatus } from '../../common/enums/index.js';
+import { Role, RestaurantApprovalStatus, OrderStatus } from '../../common/enums/index.js';
 import { CreateRestaurantDto } from './dto/create-restaurant.dto.js';
 import { UpdateRestaurantDto, UpdateApprovalStatusDto, TransferOwnershipDto } from './dto/update-restaurant.dto.js';
 import { PaginationDto } from '../../common/dto/pagination.dto.js';
@@ -303,7 +303,7 @@ export class RestaurantsService {
       }).exec(),
       this.orderModel.countDocuments().exec(),
       this.orderModel.countDocuments({
-        status: { $in: ['COMPLETED', 'SERVED'] },
+        status: OrderStatus.SERVED,
       }).exec(),
       this.orderModel.aggregate([
         { $match: { paymentStatus: 'PAID' } },
