@@ -34,7 +34,7 @@ export const FOOD_MODEL_CATALOG: FoodModelMeta[] = [
     foodName: 'The Golden Enigma',
     category: 'Chef Signature Specials',
     glbUrl: '/models/golden_enigma.glb',
-    thumbnailUrl: '/images/hero_thali.jpg',
+    thumbnailUrl: '/images/golden_enigma.png',
     description: 'Signature culinary masterpiece with intricate golden presentation and immersive 3D/AR experience.',
     fileSizeFormatted: '2.51 MB',
     sizeBytes: 2631592,

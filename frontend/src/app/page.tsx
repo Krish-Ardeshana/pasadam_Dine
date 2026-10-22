@@ -221,31 +221,31 @@ export default function HomePage() {
 
             {/* Right Photography Frame with Hover Lift & 3D Badge */}
             <div className="lg:col-span-5">
-              <div className="relative rounded-3xl overflow-hidden border border-[#D6CEBF] bg-[#F7F5EE] shadow-lg hover-lift transition-all">
-                <div className="relative aspect-[4/3] w-full">
+              <div className="relative rounded-3xl overflow-hidden border border-[#D6CEBF] bg-[#120F0D] shadow-xl hover-lift transition-all">
+                <div className="relative aspect-square w-full sm:max-h-[420px] max-h-[360px] flex items-center justify-center p-4">
                   <Image
-                    src="/images/hero_thali.jpg"
-                    alt="Authentic restaurant dining table presentation"
+                    src="/images/golden_enigma.png"
+                    alt="The Golden Enigma — Royal Saffron Almond Halwa"
                     fill
                     priority
-                    className="object-cover object-center"
+                    className="object-contain p-2"
                     sizes="(max-width: 1024px) 100vw, 40vw"
                   />
                   <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/60 shadow-sm flex items-center gap-2 text-[11px] font-bold text-[#1B4332]">
                     <Sparkles className="w-3.5 h-3.5 text-emerald-600 animate-pulse" />
-                    <span>3D AR Ready</span>
+                    <span>3D AR Experience</span>
                   </div>
                 </div>
                 <div className="p-4 sm:p-5 bg-white border-t border-[#EAE5DC] flex items-center justify-between text-xs text-[#57534E]">
                   <div className="flex items-center gap-2 font-medium">
                     <span className="w-2.5 h-2.5 rounded-full bg-emerald-600 animate-ping" />
-                    <span className="font-semibold text-[#1C1917]">Prasadam Divine Heritage</span>
+                    <span className="font-semibold text-[#1C1917]">Signature Dish: The Golden Enigma</span>
                   </div>
                   <Link
-                    href="/r/prasadam-divine"
+                    href="/r/prasadam-divine/d/royal-saffron-badam-halwa"
                     className="text-[#1B4332] font-bold hover:underline inline-flex items-center gap-1 text-xs"
                   >
-                    <span>View Menu</span>
+                    <span>View 3D View</span>
                     <ChevronRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>

@@ -38,6 +38,13 @@ async function bootstrap() {
     app.use(`/${apiPrefix}/models`, express.static(modelsDir));
   }
 
+  // Serve static images directory
+  const imagesDir = path.resolve(process.cwd(), 'public/images');
+  if (fs.existsSync(imagesDir)) {
+    app.use('/images', express.static(imagesDir));
+    app.use(`/${apiPrefix}/images`, express.static(imagesDir));
+  }
+
   // Global API Prefix
   app.setGlobalPrefix(apiPrefix);
 
