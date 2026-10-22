@@ -39,6 +39,11 @@ services:
       - CLOUDINARY_FOLDER=${CLOUDINARY_FOLDER:-prasadam_dine}
       - THROTTLE_TTL=${THROTTLE_TTL:-60}
       - THROTTLE_LIMIT=${THROTTLE_LIMIT:-100}
+      - RAZORPAY_KEY_ID=${RAZORPAY_KEY_ID}
+      - RAZORPAY_KEY_SECRET=${RAZORPAY_KEY_SECRET}
+      - RAZORPAY_WEBHOOK_SECRET=${RAZORPAY_WEBHOOK_SECRET}
+      - PAYMENT_GATEWAY=${PAYMENT_GATEWAY:-razorpay}
+      - PAYMENT_MODE=${PAYMENT_MODE:-test}
     volumes:
       - backend_uploads:/app/uploads
     networks:
