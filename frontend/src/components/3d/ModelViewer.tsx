@@ -37,6 +37,7 @@ export const ModelViewer: React.FC<ModelViewerProps> = ({
   onRetry,
 }) => {
   const viewerRef = useRef<any>(null);
+  const [viewerNode, setViewerNode] = useState<any>(null);
   const [isScriptLoaded, setIsScriptLoaded] = useState(false);
   const [isModelLoaded, setIsModelLoaded] = useState(false);
   const [loadError, setLoadError] = useState(false);
@@ -72,24 +73,24 @@ export const ModelViewer: React.FC<ModelViewerProps> = ({
 
   // Attach event listeners to model-viewer element for load and error events
   useEffect(() => {
-    const viewerElement = viewerRef.current;
-    if (!viewerElement) return;
+    const el = viewerNode || viewerRef.current;
+    if (!el) return;
 
-    if (viewerElement.loaded || (viewerElement as any).modelIsVisible) {
-      setIsModelLoaded(true);
-      setLoadError(false);
-    }
-
-    const handleLoad = () => {
+    const markLoaded = () => {
       setIsModelLoaded(true);
       setLoadError(false);
     };
 
+    if (el.loaded || el.modelIsVisible) {
+      markLoaded();
+    }
+
+    const handleLoad = () => markLoaded();
+    const handleModelVisibility = (e: any) => {
+      if (e?.detail?.visible) markLoaded();
+    };
     const handleProgress = (event: any) => {
-      if (event?.detail?.totalProgress === 1) {
-        setIsModelLoaded(true);
-        setLoadError(false);
-      }
+      if (event?.detail?.totalProgress === 1) markLoaded();
     };
 
     const handleError = (event: any) => {
@@ -106,30 +107,36 @@ export const ModelViewer: React.FC<ModelViewerProps> = ({
       }
     };
 
-    viewerElement.addEventListener('load', handleLoad);
-    viewerElement.addEventListener('progress', handleProgress);
-    viewerElement.addEventListener('error', handleError);
-    viewerElement.addEventListener('ar-status', handleARStatus);
+    el.addEventListener('load', handleLoad);
+    el.addEventListener('model-visibility', handleModelVisibility);
+    el.addEventListener('progress', handleProgress);
+    el.addEventListener('error', handleError);
+    el.addEventListener('ar-status', handleARStatus);
 
-    // Safety timeout: if model doesn't load within 12 seconds
-    const timer = setTimeout(() => {
-      if (viewerRef.current?.loaded) {
-        setIsModelLoaded(true);
-      } else if (!isModelLoaded) {
-        console.warn(`3D model loading timed out for ${dishName}`);
-        setLoadError(true);
-        setErrorMessage('3D Model loading took too long or asset was unreachable.');
+    // Continuous interval check for fast resolution
+    const checkInterval = setInterval(() => {
+      if (el.loaded || el.modelIsVisible) {
+        markLoaded();
+        clearInterval(checkInterval);
       }
-    }, 12000);
+    }, 150);
+
+    // Fallback: dismiss calibrating overlay after 4 seconds max so model is immediately interactive
+    const timer = setTimeout(() => {
+      clearInterval(checkInterval);
+      markLoaded();
+    }, 4000);
 
     return () => {
+      clearInterval(checkInterval);
       clearTimeout(timer);
-      viewerElement.removeEventListener('load', handleLoad);
-      viewerElement.removeEventListener('progress', handleProgress);
-      viewerElement.removeEventListener('error', handleError);
-      viewerElement.removeEventListener('ar-status', handleARStatus);
+      el.removeEventListener('load', handleLoad);
+      el.removeEventListener('model-visibility', handleModelVisibility);
+      el.removeEventListener('progress', handleProgress);
+      el.removeEventListener('error', handleError);
+      el.removeEventListener('ar-status', handleARStatus);
     };
-  }, [viewerRef, retryKey, resolvedModelUrl, dishName]);
+  }, [viewerNode, isScriptLoaded, retryKey, resolvedModelUrl, dishName]);
 
   const handleResetCamera = () => {
     if (viewerRef.current) {
@@ -260,7 +267,7 @@ export const ModelViewer: React.FC<ModelViewerProps> = ({
 
       {/* Loading State Spinner */}
       {(!isScriptLoaded || !isModelLoaded) && (
-        <div className="absolute inset-0 z-5 bg-[#FAF7F2]/95 backdrop-blur-xs flex flex-col items-center justify-center p-6">
+        <div className="absolute inset-0 z-5 bg-[#FAF7F2]/95 backdrop-blur-xs flex flex-col items-center justify-center p-6 pointer-events-none transition-opacity duration-300">
           <div className="w-10 h-10 rounded-full border-3 border-[#5E0B15] border-t-transparent animate-spin mb-3" />
           <p className="text-xs font-bold text-[#5E0B15] uppercase tracking-wider mb-1">
             Calibrating 3D Food Model...
@@ -275,7 +282,12 @@ export const ModelViewer: React.FC<ModelViewerProps> = ({
       {isScriptLoaded && (
         <model-viewer
           key={`${resolvedModelUrl}-${retryKey}`}
-          ref={viewerRef}
+          ref={(el: any) => {
+            viewerRef.current = el;
+            if (el && el !== viewerNode) {
+              setViewerNode(el);
+            }
+          }}
           src={resolvedModelUrl}
           ios-src={resolvedIosSrc}
           poster={resolvedPosterUrl}
@@ -293,7 +305,8 @@ export const ModelViewer: React.FC<ModelViewerProps> = ({
           ar
           ar-modes="webxr scene-viewer quick-look"
           ar-scale={modelMeta?.scaleConfig?.arScale || 'auto'}
-          loading="lazy"
+          loading="eager"
+          reveal="auto"
           className="w-full h-full cursor-grab active:cursor-grabbing"
           style={{ width: '100%', height: '100%', backgroundColor: 'transparent' }}
         >
