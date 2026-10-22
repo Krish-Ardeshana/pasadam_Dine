@@ -112,19 +112,17 @@ function PublicDishDetailContent() {
               <div className="bg-white rounded-2xl border border-[#E8E2D9] overflow-hidden shadow-sm">
                 {/* Mode Switcher Tabs */}
                 <div className="flex border-b border-[#E8E2D9] bg-[#FAF7F2]">
-                  {has3D && (
-                    <button
-                      onClick={() => setActiveTab('3D')}
-                      className={`flex-1 py-3 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 border-r border-[#E8E2D9] cursor-pointer transition-colors ${
-                        activeTab === '3D'
-                          ? 'bg-white text-[#5E0B15] border-b-2 border-b-[#5E0B15] shadow-xs'
-                          : 'text-[#594B42] hover:bg-white/60'
-                      }`}
-                    >
-                      <Sparkles className="w-4 h-4 text-[#90323D]" />
-                      <span>Interactive 3D / AR Food View</span>
-                    </button>
-                  )}
+                  <button
+                    onClick={() => setActiveTab('3D')}
+                    className={`flex-1 py-3 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 border-r border-[#E8E2D9] cursor-pointer transition-colors ${
+                      activeTab === '3D'
+                        ? 'bg-white text-[#5E0B15] border-b-2 border-b-[#5E0B15] shadow-xs'
+                        : 'text-[#594B42] hover:bg-white/60'
+                    }`}
+                  >
+                    <Sparkles className="w-4 h-4 text-[#90323D]" />
+                    <span>Interactive 3D / AR View {has3D ? '' : '(Coming Soon)'}</span>
+                  </button>
                   <button
                     onClick={() => setActiveTab('2D')}
                     className={`flex-1 py-3 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer transition-colors ${
@@ -139,10 +137,10 @@ function PublicDishDetailContent() {
                 </div>
 
                 {/* 3D AR Tab */}
-                {activeTab === '3D' && has3D && (
+                {activeTab === '3D' && (
                   <div className="p-4 sm:p-6 bg-white">
                     <ModelViewer
-                      src={dish.model3dUrl!}
+                      src={dish.model3dUrl || undefined}
                       poster={selectedImage ? api.resolveMediaUrl(selectedImage) : undefined}
                       alt={dish.name}
                       dishName={dish.name}

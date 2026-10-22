@@ -134,7 +134,7 @@ export class BootstrapService implements OnApplicationBootstrap {
         this.logger.log(`Assigned restaurant ${restaurant.name} to owner ${ownerEmail}`);
       }
 
-      // Seed sample category if none exist
+      // Seed sample categories if none exist
       let category = await this.categoryModel.findOne({ restaurantId: restaurant._id }).exec();
       if (!category) {
         category = await this.categoryModel.create({
@@ -158,11 +158,12 @@ export class BootstrapService implements OnApplicationBootstrap {
             categoryId: category._id,
             price: 18.99,
             currency: 'USD',
-            description: 'Grand devotional platter featuring paneer butter masala, yellow dal tadka, jeera rice, butter naan, gulab jamun, and spiced buttermilk.',
+            description: 'Grand devotional platter featuring yellow dal tadka, shahi paneer, jeera rice, butter naan, gulab jamun, and spiced buttermilk.',
             isAvailable: true,
             isPublished: true,
             dietaryFlags: ['Pure Vegetarian', 'Satvik', 'Contains Dairy'],
-            imageUrls: [],
+            imageUrls: ['/images/hero_thali.jpg'],
+            model3dUrl: '/models/dal_curry.glb',
             displayOrder: 1,
           },
           {
@@ -176,11 +177,142 @@ export class BootstrapService implements OnApplicationBootstrap {
             isAvailable: true,
             isPublished: true,
             dietaryFlags: ['Pure Vegetarian', 'Gluten-Free', 'Contains Nuts'],
-            imageUrls: [],
+            imageUrls: ['/images/hero_thali.jpg'],
+            model3dUrl: '/models/halwa_dessert.glb',
             displayOrder: 2,
           },
+          {
+            name: 'Artisan Margherita Pizza',
+            slug: 'artisan-margherita-pizza',
+            restaurantId: restaurant._id,
+            categoryId: category._id,
+            price: 14.50,
+            currency: 'USD',
+            description: 'Crisp wood-fired pizza with bubbling mozzarella, rich san marzano tomato marinara, and fresh garden basil leaves.',
+            isAvailable: true,
+            isPublished: true,
+            dietaryFlags: ['Vegetarian', 'Contains Dairy'],
+            imageUrls: ['/images/hero_thali.jpg'],
+            model3dUrl: '/models/pizza.glb',
+            displayOrder: 3,
+          },
+          {
+            name: 'Gourmet Sesame Veggie Burger',
+            slug: 'gourmet-sesame-veggie-burger',
+            restaurantId: restaurant._id,
+            categoryId: category._id,
+            price: 11.99,
+            currency: 'USD',
+            description: 'Artisan toasted sesame bun layered with melted aged cheddar, crisp lettuce, farm-fresh tomatoes, and savory roasted vegetable patty.',
+            isAvailable: true,
+            isPublished: true,
+            dietaryFlags: ['Vegetarian', 'Contains Dairy'],
+            imageUrls: ['/images/hero_thali.jpg'],
+            model3dUrl: '/models/burger.glb',
+            displayOrder: 4,
+          },
+          {
+            name: 'Hyderabadi Shahi Dum Biryani',
+            slug: 'hyderabadi-shahi-dum-biryani',
+            restaurantId: restaurant._id,
+            categoryId: category._id,
+            price: 15.99,
+            currency: 'USD',
+            description: 'Aromatic long-grain basmati rice slow-cooked in a sealed clay pot with fragrant saffron, caramelized onions, and whole spices.',
+            isAvailable: true,
+            isPublished: true,
+            dietaryFlags: ['Pure Vegetarian', 'Gluten-Free'],
+            imageUrls: ['/images/biryani_ar.jpg'],
+            model3dUrl: '/models/biryani_rice.glb',
+            displayOrder: 5,
+          },
+          {
+            name: 'Spiced Paneer Tikka Platter',
+            slug: 'spiced-paneer-tikka-platter',
+            restaurantId: restaurant._id,
+            categoryId: category._id,
+            price: 12.99,
+            currency: 'USD',
+            description: 'Tandoor-charred cottage cheese cubes marinated in Kashmiri chili and crushed coriander, served with mint chutney and pickled onions.',
+            isAvailable: true,
+            isPublished: true,
+            dietaryFlags: ['Pure Vegetarian', 'Contains Dairy'],
+            imageUrls: ['/images/paneer_butter_masala.jpg'],
+            model3dUrl: '/models/paneer_tikka_platter.glb',
+            displayOrder: 6,
+          },
+          {
+            name: 'Fresh Garden Kachumber Salad',
+            slug: 'fresh-garden-kachumber-salad',
+            restaurantId: restaurant._id,
+            categoryId: category._id,
+            price: 6.50,
+            currency: 'USD',
+            description: 'Crisp diced English cucumbers, vine-ripened tomatoes, and red onions tossed with fresh cilantro, roasted cumin, and cold-pressed lemon.',
+            isAvailable: true,
+            isPublished: true,
+            dietaryFlags: ['Vegan', 'Gluten-Free', 'Satvik'],
+            imageUrls: ['/images/hero_thali.jpg'],
+            model3dUrl: '/models/salad_bowl.glb',
+            displayOrder: 7,
+          },
+          {
+            name: 'Cardamom Spiced Masala Chai',
+            slug: 'cardamom-spiced-masala-chai',
+            restaurantId: restaurant._id,
+            categoryId: category._id,
+            price: 3.99,
+            currency: 'USD',
+            description: 'Steaming hot Assam tea brewed with crushed green cardamom, fresh ginger, cloves, and whole organic milk.',
+            isAvailable: true,
+            isPublished: true,
+            dietaryFlags: ['Vegetarian', 'Contains Dairy'],
+            imageUrls: ['/images/hero_thali.jpg'],
+            model3dUrl: '/models/masala_chai.glb',
+            displayOrder: 8,
+          },
+          {
+            name: 'Belgian Chocolate Truffle Mousse',
+            slug: 'belgian-chocolate-truffle-mousse',
+            restaurantId: restaurant._id,
+            categoryId: category._id,
+            price: 8.50,
+            currency: 'USD',
+            description: 'Silky 70% dark Belgian chocolate mousse layered with delicate chocolate sponge and finished with cocoa dusting.',
+            isAvailable: true,
+            isPublished: true,
+            dietaryFlags: ['Vegetarian', 'Contains Dairy'],
+            imageUrls: ['/images/hero_thali.jpg'],
+            model3dUrl: '/models/chocolate_cake.glb',
+            displayOrder: 9,
+          },
+          {
+            name: 'Pure Himalayan Spring Water',
+            slug: 'pure-himalayan-spring-water',
+            restaurantId: restaurant._id,
+            categoryId: category._id,
+            price: 2.50,
+            currency: 'USD',
+            description: 'Naturally filtered artisan spring water sourced directly from high-altitude Himalayan aquifers.',
+            isAvailable: true,
+            isPublished: true,
+            dietaryFlags: ['Vegan', 'Gluten-Free'],
+            imageUrls: ['/images/hero_thali.jpg'],
+            model3dUrl: '/models/water_bottle.glb',
+            displayOrder: 10,
+          },
         ]);
-        this.logger.log('Demo Dishes created with complete pricing and dietary specs');
+        this.logger.log('Demo Dishes created with verified food-specific 3D AR models');
+      } else {
+        // Safe migration: attach verified realistic 3D models to existing demo dishes if model3dUrl is empty
+        await this.dishModel.updateOne(
+          { restaurantId: restaurant._id, slug: 'maharaja-devotional-thali', $or: [{ model3dUrl: '' }, { model3dUrl: null }] },
+          { $set: { model3dUrl: '/models/dal_curry.glb' } }
+        ).exec();
+        await this.dishModel.updateOne(
+          { restaurantId: restaurant._id, slug: 'royal-saffron-badam-halwa', $or: [{ model3dUrl: '' }, { model3dUrl: null }] },
+          { $set: { model3dUrl: '/models/halwa_dessert.glb' } }
+        ).exec();
       }
     } catch (error) {
       this.logger.error(`Error provisioning demo restaurant: ${(error as any).message}`);

@@ -24,6 +24,8 @@ import { Table, Thead, Th, Td, Skeleton } from '@/components/ui/Table';
 import { Card, Modal, Badge } from '@/components/ui/Card';
 import { api } from '@/lib/api';
 import { Category, Dish, MediaType } from '@/lib/types';
+import { ModelViewer } from '@/components/3d/ModelViewer';
+import { FOOD_MODEL_CATALOG, findFoodModelByUrl } from '@/lib/food-models';
 
 export default function DishesPage() {
   const { currentRestaurant } = useAuth();
@@ -53,6 +55,8 @@ export default function DishesPage() {
   // Upload helpers
   const [isUploadingImage, setIsUploadingImage] = useState(false);
   const [isUploading3D, setIsUploading3D] = useState(false);
+  const [show3DPreview, setShow3DPreview] = useState(false);
+  const [previewDish, setPreviewDish] = useState<Dish | null>(null);
 
   // Delete State
   const [deletingDish, setDeletingDish] = useState<Dish | null>(null);
@@ -93,6 +97,7 @@ export default function DishesPage() {
     setDietaryFlags(['VEG']);
     setImageUrls([]);
     setModel3dUrl('');
+    setShow3DPreview(false);
     setIsAvailable(true);
     setIsPublished(true);
     setIsModalOpen(true);
@@ -110,6 +115,7 @@ export default function DishesPage() {
     setDietaryFlags(dish.dietaryFlags || []);
     setImageUrls(dish.imageUrls || []);
     setModel3dUrl(dish.model3dUrl || '');
+    setShow3DPreview(!!dish.model3dUrl);
     setIsAvailable(dish.isAvailable);
     setIsPublished(dish.isPublished);
     setIsModalOpen(true);
@@ -140,6 +146,16 @@ export default function DishesPage() {
     const file = e.target.files?.[0];
     if (!file || !currentRestaurant?._id) return;
 
+    const ext = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
+    if (!['.glb', '.gltf'].includes(ext)) {
+      toast.error('Invalid 3D file format. Only .glb and .gltf files are supported.');
+      return;
+    }
+    if (file.size > 15 * 1024 * 1024) {
+      toast.error('File exceeds maximum 3D model limit of 15MB.');
+      return;
+    }
+
     setIsUploading3D(true);
     try {
       const asset = await api.media.upload(
@@ -149,7 +165,8 @@ export default function DishesPage() {
         editingDish?._id,
       );
       setModel3dUrl(asset.fileUrl);
-      toast.success('3D AR GLB model uploaded successfully');
+      setShow3DPreview(true);
+      toast.success('3D AR GLB model uploaded and verified successfully');
     } catch (err: any) {
       toast.error(err.message || '3D Model upload failed');
     } finally {
@@ -345,11 +362,16 @@ export default function DishesPage() {
                   </Td>
                   <Td>
                     {dish.model3dUrl ? (
-                      <span className="inline-flex items-center gap-1 text-[11px] font-extrabold text-[#1E562A] bg-[#EAF3EB] border border-[#BBDCBF] px-2 py-0.5 uppercase">
+                      <button
+                        type="button"
+                        onClick={() => setPreviewDish(dish)}
+                        className="inline-flex items-center gap-1 text-[11px] font-extrabold text-[#1E562A] bg-[#EAF3EB] hover:bg-[#D9EEDC] border border-[#BBDCBF] px-2.5 py-1 rounded-md uppercase tracking-wider cursor-pointer transition-colors shadow-2xs"
+                        title="Click to view interactive 3D model"
+                      >
                         <Sparkles className="w-3 h-3 text-[#1E562A]" /> 3D GLB
-                      </span>
+                      </button>
                     ) : (
-                      <span className="text-[11px] text-[#594B42]">2D Only</span>
+                      <span className="text-[11px] text-[#8A7D70]">2D Only</span>
                     )}
                   </Td>
                   <Td>
@@ -505,25 +527,98 @@ export default function DishesPage() {
                 )}
               </div>
 
-              {/* 3D Model Upload */}
-              <div>
-                <label className="text-[11px] font-bold uppercase text-[#594B42] block mb-1">
-                  3D AR Food Model (.GLB / .GLTF)
-                </label>
-                <div className="flex items-center gap-2">
-                  <input
-                    type="file"
-                    accept=".glb,.gltf"
-                    onChange={handleModelUpload}
-                    disabled={isUploading3D}
-                    className="text-xs text-[#594B42] file:mr-2 file:py-1.5 file:px-3 file:rounded-md file:border file:border-[#90323D] file:bg-[#90323D] file:text-white file:text-xs file:font-bold file:uppercase cursor-pointer"
-                  />
-                  {isUploading3D && <span className="text-xs text-[#90323D] animate-pulse">Uploading 3D...</span>}
+              {/* 3D Food Model Management */}
+              <div className="bg-[#FAF7F2] p-4 rounded-xl border border-[#E8E2D9]">
+                <div className="flex items-center justify-between mb-2">
+                  <label className="text-[11px] font-bold uppercase text-[#5E0B15] flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5 text-[#90323D]" />
+                    <span>3D AR Food Model (.GLB / .GLTF)</span>
+                  </label>
+                  {model3dUrl && (
+                    <button
+                      type="button"
+                      onClick={() => setShow3DPreview(!show3DPreview)}
+                      className="text-[10px] font-bold uppercase tracking-wider text-[#90323D] hover:underline flex items-center gap-1 cursor-pointer"
+                    >
+                      <Eye className="w-3 h-3" />
+                      <span>{show3DPreview ? 'Hide 3D View' : 'Preview 3D Model'}</span>
+                    </button>
+                  )}
                 </div>
+
+                {/* Catalog Preset Quick Picker */}
+                <div className="mb-3">
+                  <label className="text-[10px] font-bold uppercase text-[#594B42] block mb-1">
+                    Select From Realistic Food Model Library
+                  </label>
+                  <select
+                    value={model3dUrl}
+                    onChange={(e) => {
+                      setModel3dUrl(e.target.value);
+                      if (e.target.value) setShow3DPreview(true);
+                    }}
+                    className="w-full text-xs bg-white border border-[#E8E2D9] rounded-lg px-3 py-2 text-[#1C120C] focus:outline-hidden focus:border-[#90323D]"
+                  >
+                    <option value="">-- No 3D Model Assigned (2D Only) --</option>
+                    {FOOD_MODEL_CATALOG.map((m) => (
+                      <option key={m.id} value={m.glbUrl}>
+                        {m.foodName} ({m.category} — {m.fileSizeFormatted})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Custom File Upload Option */}
+                <div>
+                  <label className="text-[10px] font-bold uppercase text-[#594B42] block mb-1">
+                    Or Upload Custom Dish Model (.GLB / .GLTF — Max 15MB)
+                  </label>
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="file"
+                      accept=".glb,.gltf"
+                      onChange={handleModelUpload}
+                      disabled={isUploading3D}
+                      className="text-xs text-[#594B42] file:mr-2 file:py-1.5 file:px-3 file:rounded-md file:border file:border-[#90323D] file:bg-[#90323D] file:text-white file:text-xs file:font-bold file:uppercase cursor-pointer"
+                    />
+                    {isUploading3D && <span className="text-xs text-[#90323D] animate-pulse">Uploading 3D...</span>}
+                    {model3dUrl && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setModel3dUrl('');
+                          setShow3DPreview(false);
+                        }}
+                        className="text-[11px] font-bold text-red-600 hover:text-red-800 uppercase px-2.5 py-1.5 rounded-md border border-red-200 bg-red-50 cursor-pointer"
+                      >
+                        Remove Model
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                {/* Active Model Details & Live Interactive Preview */}
                 {model3dUrl && (
-                  <p className="text-[10px] text-[#1E562A] mt-1 font-bold truncate">
-                    ✓ 3D Model: {model3dUrl}
-                  </p>
+                  <div className="mt-3 pt-3 border-t border-[#E8E2D9]">
+                    <div className="flex items-center justify-between text-[11px] font-bold text-[#1E562A] mb-2">
+                      <span className="truncate max-w-[280px]">✓ Active: {model3dUrl}</span>
+                      {findFoodModelByUrl(model3dUrl) && (
+                        <span className="bg-[#EBF7ED] border border-[#C3E4C8] px-2 py-0.5 rounded-full text-[9px] uppercase">
+                          {findFoodModelByUrl(model3dUrl)?.license}
+                        </span>
+                      )}
+                    </div>
+                    {show3DPreview && (
+                      <div className="w-full h-64 rounded-xl overflow-hidden border border-[#D6C5A9] shadow-xs">
+                        <ModelViewer
+                          src={model3dUrl}
+                          poster={imageUrls[0]}
+                          alt={name || 'Dish Model'}
+                          dishName={name || 'Dish'}
+                        />
+                      </div>
+                    )}
+                  </div>
                 )}
               </div>
             </div>
@@ -592,6 +687,32 @@ export default function DishesPage() {
               </Button>
               <Button variant="danger" isLoading={isDeleting} onClick={handleDelete}>
                 Confirm Delete
+              </Button>
+            </div>
+          </div>
+        )}
+      </Modal>
+
+      {/* 3D Model Interactive Inspection Modal */}
+      <Modal
+        isOpen={!!previewDish}
+        onClose={() => setPreviewDish(null)}
+        title={`3D AR Food Model — ${previewDish?.name || ''}`}
+      >
+        {previewDish && (
+          <div className="space-y-4">
+            <div className="w-full h-80 rounded-2xl overflow-hidden border border-[#E8E2D9]">
+              <ModelViewer
+                src={previewDish.model3dUrl}
+                poster={previewDish.imageUrls?.[0]}
+                alt={previewDish.name}
+                dishName={previewDish.name}
+              />
+            </div>
+            <div className="flex items-center justify-between text-xs text-[#594B42]">
+              <span className="font-mono text-[11px] truncate max-w-xs">{previewDish.model3dUrl}</span>
+              <Button variant="outline" size="sm" onClick={() => setPreviewDish(null)}>
+                Close Preview
               </Button>
             </div>
           </div>

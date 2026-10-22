@@ -85,6 +85,14 @@ export class MediaService {
           `Invalid 3D model file extension: ${ext}. Only .glb and .gltf files are supported.`,
         );
       }
+      if (ext === '.glb' && file.buffer && file.buffer.length >= 4) {
+        const magic = file.buffer.subarray(0, 4).toString('utf8');
+        if (magic !== 'glTF') {
+          throw new BadRequestException(
+            'Invalid 3D model binary: .glb file does not contain a valid glTF binary header',
+          );
+        }
+      }
       resourceType = 'raw';
     }
 
