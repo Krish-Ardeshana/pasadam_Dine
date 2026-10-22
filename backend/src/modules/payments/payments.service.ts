@@ -211,9 +211,17 @@ export class PaymentsService {
       throw new NotFoundException(`Order '${orderNumber}' not found`);
     }
 
-    // Verify gateway order ID matches our stored attempt
-    if (order.razorpayOrderId && order.razorpayOrderId !== dto.razorpayOrderId) {
-      throw new BadRequestException('Mismatched gateway order ID for this order record');
+    // Verify gateway order ID matches our stored attempt or a recorded transaction for this order
+    const isDirectMatch = !order.razorpayOrderId || order.razorpayOrderId === dto.razorpayOrderId;
+    if (!isDirectMatch) {
+      const priorTx = await this.transactionModel.findOne({
+        orderId: order._id,
+        gatewayOrderId: dto.razorpayOrderId,
+      }).exec();
+
+      if (!priorTx) {
+        throw new BadRequestException('Mismatched gateway order ID for this order record');
+      }
     }
 
     // Idempotent return if already marked PAID
@@ -446,7 +454,26 @@ export class PaymentsService {
       throw new BadRequestException('No payment transaction identifier available for refund');
     }
 
-    const refundAmount = dto.amount ? Number(dto.amount.toFixed(2)) : order.pricing.total;
+    const alreadyRefunded = (order.refundDetails || []).reduce(
+      (sum, r) => sum + (r.amount || 0),
+      0,
+    );
+    const maxRefundable = Number((order.pricing.total - alreadyRefunded).toFixed(2));
+    if (maxRefundable <= 0) {
+      throw new BadRequestException('Order has already been fully refunded');
+    }
+
+    const refundAmount = dto.amount ? Number(dto.amount.toFixed(2)) : maxRefundable;
+    if (refundAmount <= 0) {
+      throw new BadRequestException('Refund amount must be greater than zero');
+    }
+
+    if (refundAmount > maxRefundable) {
+      throw new BadRequestException(
+        `Refund amount ${refundAmount} exceeds max refundable balance of ${maxRefundable}`,
+      );
+    }
+
     const refundAmountSubunits = Math.round(refundAmount * 100);
 
     let refundId = `rfnd_test_${Date.now()}`;
@@ -478,8 +505,9 @@ export class PaymentsService {
     order.refundDetails = order.refundDetails || [];
     order.refundDetails.push(refundEntry);
 
-    // If fully refunded, mark payment status as REFUNDED
-    if (refundAmount >= order.pricing.total) {
+    // If cumulative refunded amount matches or exceeds total, mark as REFUNDED
+    const totalRefunded = alreadyRefunded + refundAmount;
+    if (totalRefunded >= order.pricing.total - 0.001) {
       order.paymentStatus = OrderPaymentStatus.REFUNDED;
     }
 

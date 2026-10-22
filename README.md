@@ -27,8 +27,10 @@ Prasadam_Dine/
 - **Media Uploads**: Cloudinary streaming upload with safe local file storage fallback for development
 - **QR Code Engine**: Dine-in restaurant menu QR (`/r/{slug}`) and dish-specific QR (`/r/{slug}/d/{slug}`)
 - **Public Menu APIs**: Safe, unauthenticated read-only APIs for customer menu browsing and 3D AR dish viewing
+- **Online Dining Ordering & Real-Time KDS**: Complete table order placement, server-sent events (SSE) live kitchen stream, and status tracking
+- **Secure Razorpay Test Checkout & Refunds**: Server-authoritative pricing in subunits (paise), cryptographic HMAC-SHA256 signature verification, idempotent webhook processing, and tenant-scoped refunds
 - **Swagger / OpenAPI**: Live interactive documentation at `/api/docs`
-- **Testing**: 47 unit, integration, and E2E tests verifying tenant isolation, auth, media, and QR logic
+- **Testing**: 81 automated unit, integration, and E2E tests verifying tenant isolation, auth, media, QR, orders, and payments
 
 ---
 
@@ -53,6 +55,8 @@ Server endpoints:
 ---
 
 ## Documentation Links
+- [Production Deployment & Operations Guide](docs/production-deployment-guide.md)
 - [Architecture & Database Schemas](docs/architecture.md)
 - [API Endpoint Specification](docs/api-specification.md)
 - [Security & Tenant Isolation Whitepaper](docs/security-and-tenant-isolation.md)
+

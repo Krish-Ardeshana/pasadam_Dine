@@ -274,6 +274,10 @@ describe('PaymentsService — Secure Razorpay Test Mode & Idempotency', () => {
     it('should reject verification if gateway order ID does not match local order record', async () => {
       sampleOrder.razorpayOrderId = 'order_test_CORRECT';
 
+      mockTransactionModel.findOne = vi.fn().mockReturnValue({
+        exec: vi.fn().mockResolvedValue(null),
+      });
+
       const verificationDto = {
         razorpayOrderId: 'order_test_WRONG',
         razorpayPaymentId: 'pay_test_123456',
@@ -283,6 +287,39 @@ describe('PaymentsService — Secure Razorpay Test Mode & Idempotency', () => {
       await expect(
         paymentsService.verifyPayment('sattvic-bhojan', 'ORD-20261022-P001', verificationDto),
       ).rejects.toThrow(/mismatched gateway order id/i);
+    });
+
+    it('should accept verification if gateway order ID matches a prior recorded transaction for this order', async () => {
+      sampleOrder.razorpayOrderId = 'order_test_LATEST';
+      const rzpOrderId = 'order_test_PRIOR';
+      const rzpPaymentId = 'pay_test_PRIOR_999';
+
+      mockTransactionModel.findOne = vi.fn().mockReturnValue({
+        exec: vi.fn().mockResolvedValue({
+          orderId: sampleOrder._id,
+          gatewayOrderId: rzpOrderId,
+        }),
+      });
+
+      const validSignature = crypto
+        .createHmac('sha256', testKeySecret)
+        .update(`${rzpOrderId}|${rzpPaymentId}`)
+        .digest('hex');
+
+      const verificationDto = {
+        razorpayOrderId: rzpOrderId,
+        razorpayPaymentId: rzpPaymentId,
+        razorpaySignature: validSignature,
+      };
+
+      const result = await paymentsService.verifyPayment(
+        'sattvic-bhojan',
+        'ORD-20261022-P001',
+        verificationDto,
+      );
+
+      expect(result.verified).toBe(true);
+      expect(sampleOrder.paymentStatus).toBe(OrderPaymentStatus.PAID);
     });
   });
 
@@ -367,6 +404,53 @@ describe('PaymentsService — Secure Razorpay Test Mode & Idempotency', () => {
         'ORDER_STATUS_CHANGED',
         sampleOrder,
       );
+    });
+
+    it('should correctly handle incremental partial refunds and transition to REFUNDED when balance reaches 0', async () => {
+      sampleOrder.paymentStatus = OrderPaymentStatus.PAID;
+      sampleOrder.razorpayPaymentId = 'pay_test_capture_123';
+      sampleOrder.pricing.total = 450.0;
+      sampleOrder.refundDetails = [];
+
+      // 1. Partial refund of 200
+      const res1 = await paymentsService.processRefund(
+        userOwner as any,
+        restaurantId.toString(),
+        sampleOrder._id.toString(),
+        { amount: 200, reason: 'Item unavailable' },
+      );
+      expect(res1.amount).toBe(200);
+      expect(sampleOrder.paymentStatus).toBe(OrderPaymentStatus.PAID); // Still partially paid
+
+      // 2. Second refund of remaining 250
+      const res2 = await paymentsService.processRefund(
+        userOwner as any,
+        restaurantId.toString(),
+        sampleOrder._id.toString(),
+        { amount: 250, reason: 'Full goodwill refund' },
+      );
+      expect(res2.amount).toBe(250);
+      expect(sampleOrder.paymentStatus).toBe(OrderPaymentStatus.REFUNDED); // Now fully refunded
+      expect(sampleOrder.refundDetails).toHaveLength(2);
+    });
+
+    it('should reject refund exceeding remaining refundable balance', async () => {
+      sampleOrder.paymentStatus = OrderPaymentStatus.PAID;
+      sampleOrder.razorpayPaymentId = 'pay_test_capture_123';
+      sampleOrder.pricing.total = 450.0;
+      sampleOrder.refundDetails = [
+        { amount: 300, refundId: 'rfnd_prior', createdAt: new Date() },
+      ];
+
+      // Max refundable is 150. Trying to refund 200 must fail
+      await expect(
+        paymentsService.processRefund(
+          userOwner as any,
+          restaurantId.toString(),
+          sampleOrder._id.toString(),
+          { amount: 200 },
+        ),
+      ).rejects.toThrow(/exceeds max refundable balance/i);
     });
 
     it('should reject refund if order is unpaid', async () => {

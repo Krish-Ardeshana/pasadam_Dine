@@ -69,6 +69,11 @@ PRASADAM DINE is a multi-tenant restaurant dining platform engineered with:
 | `CLOUDINARY_FOLDER` | Root cloud asset folder path | NO | `prasadam_dine/production` |
 | `THROTTLE_TTL` | Sliding rate limit window (seconds) | NO | `60` |
 | `THROTTLE_LIMIT` | Maximum requests per IP per window | NO | `120` |
+| `RAZORPAY_KEY_ID` | Razorpay Key ID (`rzp_test_...` or `rzp_live_...`) | YES | `rzp_test_abc123xyz` |
+| `RAZORPAY_KEY_SECRET` | Razorpay Key Secret | YES | *(Secret from Razorpay Dashboard)* |
+| `RAZORPAY_WEBHOOK_SECRET` | Razorpay Webhook HMAC secret | YES | *(Secret configured in Webhook dashboard)* |
+| `PAYMENT_GATEWAY` | Payment gateway provider (`razorpay`) | NO | `razorpay` |
+| `PAYMENT_MODE` | Gateway operational mode (`test` or `live`) | YES | `test` (DO NOT set `live` without approval) |
 
 ### Frontend Configuration (`frontend/.env` or Vercel Environment)
 
@@ -300,3 +305,46 @@ server {
    ```
 3. Trigger a redeploy on the backend service.
 4. Now, all QR codes generated will point to `https://prasadam-dine.vercel.app/r/<slug>`, and all browser API requests will pass CORS without origin errors.
+
+---
+
+## 6. Razorpay Webhook Configuration & Payment Operations
+
+### Webhook Endpoint Setup
+1. Log in to the [Razorpay Dashboard](https://dashboard.razorpay.com/) (Settings -> Webhooks).
+2. Click **Add New Webhook**.
+3. **Webhook URL**: `https://<your-backend-domain>/api/v1/public/payments/webhook`
+4. **Secret**: Enter a strong cryptographically random string (e.g. 32-character hex) and save it as `RAZORPAY_WEBHOOK_SECRET` in your backend environment variables.
+5. **Active Events**:
+   - `payment.captured`
+   - `payment.failed`
+   - `refund.processed`
+6. Click **Save Webhook**.
+
+> **Security Guardrails**:
+> - Webhook verification is executed using raw HTTP request bytes via `crypto.timingSafeEqual` to eliminate timing side-channel attacks.
+> - Webhooks are deduplicated against the `ProcessedWebhook` MongoDB collection; retransmitted webhook deliveries are acknowledged with `status: "already_processed"` without mutating database state.
+> - **LIVE MODE RESTRICTION**: Never change `PAYMENT_MODE` to `live` without formal operator sign-off and validated HTTPS routing.
+
+---
+
+## 7. Database Backups, PITR & Disaster Recovery
+
+### Automated Backups (MongoDB Atlas)
+1. In MongoDB Atlas, verify that **Continuous Cloud Backups** (PITR) are enabled for the cluster.
+2. Ensure daily automated snapshots are retained for 7 to 30 days.
+3. For regional disaster recovery, configure multi-region replica sets across at least two cloud availability zones.
+
+### Manual Backup (CLI mongodump)
+```bash
+# Dump production database snapshot
+mongodump --uri="mongodb+srv://<user>:<password>@cluster.mongodb.net/prasadam_dine" --out="./backup_$(date +%Y%m%d_%H%M%S)" --gzip
+
+# Restore from snapshot
+mongorestore --uri="mongodb+srv://<user>:<password>@cluster.mongodb.net/prasadam_dine" --nsInclude="prasadam_dine.*" --drop ./backup_xxx/prasadam_dine --gzip
+```
+
+### Logging & Secret Hygiene
+- All logging within `PaymentsService`, `OrdersService`, and `LoggingInterceptor` is strictly sanitized.
+- Razorpay API secrets, webhook secrets, full card numbers, and authorization headers are stripped and never recorded in persistent logs.
+
