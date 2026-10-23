@@ -313,6 +313,39 @@ export class BootstrapService implements OnApplicationBootstrap {
           { restaurantId: restaurant._id, slug: 'royal-saffron-badam-halwa', $or: [{ model3dUrl: '' }, { model3dUrl: null }] },
           { $set: { model3dUrl: '/models/halwa_dessert.glb' } }
         ).exec();
+
+        // Ensure Special Gujarati Thali is provisioned with 3D AR model
+        const gujaratiThali = await this.dishModel.findOne({ restaurantId: restaurant._id, slug: 'special-gujarati-thali' }).exec();
+        if (!gujaratiThali) {
+          await this.dishModel.create({
+            name: 'Special Gujarati Thali',
+            slug: 'special-gujarati-thali',
+            restaurantId: restaurant._id,
+            categoryId: category._id,
+            price: 16.99,
+            currency: 'USD',
+            description: 'Authentic Kathiyawadi Gujarati Thali feast featuring Ringna No Oro, Gujarati Dal, Kadhi, Phulka Roti, Bajra No Rotlo, Khaman Dhokla, Shrikhand, and Chhas.',
+            isAvailable: true,
+            isPublished: true,
+            dietaryFlags: ['Pure Vegetarian', 'Satvik', 'Gujarati Special'],
+            imageUrls: ['/images/gujarati_thali.jpg', '/images/hero_thali.jpg'],
+            model3dUrl: '/models/gujarati_thali.glb',
+            displayOrder: 0,
+          });
+          this.logger.log('Special Gujarati Thali created with 3D model');
+        } else {
+          await this.dishModel.updateOne(
+            { _id: gujaratiThali._id },
+            {
+              $set: {
+                model3dUrl: '/models/gujarati_thali.glb',
+                imageUrls: ['/images/gujarati_thali.jpg', '/images/hero_thali.jpg'],
+                isAvailable: true,
+                isPublished: true,
+              },
+            }
+          ).exec();
+        }
       }
     } catch (error) {
       this.logger.error(`Error provisioning demo restaurant: ${(error as any).message}`);

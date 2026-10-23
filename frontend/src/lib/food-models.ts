@@ -53,6 +53,29 @@ export const FOOD_MODEL_CATALOG: FoodModelMeta[] = [
     },
   },
   {
+    id: 'gujarati-thali',
+    foodName: 'Special Gujarati Thali',
+    category: 'Traditional Thalis & Curries',
+    glbUrl: '/models/gujarati_thali.glb',
+    thumbnailUrl: '/images/gujarati_thali.jpg',
+    description: 'Authentic Kathiyawadi Gujarati Thali feast featuring Ringna No Oro, Gujarati Dal, Kadhi, Phulka Roti, Bajra No Rotlo, Khaman Dhokla, Shrikhand, and Chhas.',
+    fileSizeFormatted: '2.22 MB',
+    sizeBytes: 2330796,
+    source: 'Custom 3D Model',
+    license: 'Proprietary / AR_DINE',
+    licenseUrl: '#',
+    author: 'AR_DINE Culinary Lab',
+    status: 'VERIFIED',
+    scaleConfig: {
+      cameraOrbit: '0deg 60deg 1.2m',
+      fieldOfView: '32deg',
+      exposure: '1.0',
+      shadowIntensity: '1.2',
+      shadowSoftness: '0.6',
+      arScale: 'auto',
+    },
+  },
+  {
     id: 'pizza-margherita',
     foodName: 'Artisan Margherita Pizza',
     category: 'Pizza and Fast Food',
@@ -307,6 +330,8 @@ export function suggestModelForDish(dishName: string, categoryName: string = '')
 
   if (text.includes('golden') || text.includes('enigma'))
     return FOOD_MODEL_CATALOG.find((m) => m.id === 'the-golden-enigma');
+  if (text.includes('gujarati'))
+    return FOOD_MODEL_CATALOG.find((m) => m.id === 'gujarati-thali');
   if (text.includes('pizza')) return FOOD_MODEL_CATALOG.find((m) => m.id === 'pizza-margherita');
   if (text.includes('burger')) return FOOD_MODEL_CATALOG.find((m) => m.id === 'burger-gourmet');
   if (text.includes('biryani') || text.includes('pulao') || text.includes('rice'))
