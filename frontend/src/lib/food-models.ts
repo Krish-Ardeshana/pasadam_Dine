@@ -1,5 +1,5 @@
 /**
- * PRASADAM DINE — Real Food 3D Model Library & Catalog
+ * AR_DINE — Real Food 3D Model Library & Catalog
  * Centralized registry of realistic, food-specific 3D models with license and display configuration.
  */
 
@@ -39,9 +39,9 @@ export const FOOD_MODEL_CATALOG: FoodModelMeta[] = [
     fileSizeFormatted: '2.51 MB',
     sizeBytes: 2631592,
     source: 'Custom 3D Model',
-    license: 'Proprietary / Prasadam Dine',
+    license: 'Proprietary / AR_DINE',
     licenseUrl: '#',
-    author: 'Prasadam Dine Culinary Lab',
+    author: 'AR_DINE Culinary Lab',
     status: 'VERIFIED',
     scaleConfig: {
       cameraOrbit: '0deg 60deg 1.2m',

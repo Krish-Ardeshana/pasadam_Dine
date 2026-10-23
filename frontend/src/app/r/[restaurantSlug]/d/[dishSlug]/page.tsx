@@ -93,7 +93,7 @@ function PublicDishDetailContent() {
           </Link>
 
           <span className="text-[11px] font-bold uppercase tracking-wider text-[#92400E] bg-[#FEF3C7] px-3 py-1 rounded-full border border-[#F59E0B]/30 shadow-2xs">
-            PRASADAM DINE 3D AR
+            AR_DINE 3D AR
           </span>
         </div>
       </header>

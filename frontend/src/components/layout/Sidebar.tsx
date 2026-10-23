@@ -60,12 +60,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ onCloseMobile }) => {
       {/* Brand Header */}
       <div className="p-5 border-b border-[#8B1226]/50 bg-[#4A030D]/70 backdrop-blur-xs">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-[#FBBF24] to-[#E69500] text-[#5E0513] rounded-xl flex items-center justify-center font-black text-xl shadow-md">
-            P
+          <div className="w-10 h-10 bg-gradient-to-br from-[#FBBF24] to-[#E69500] text-[#5E0513] rounded-xl flex items-center justify-center font-black text-sm tracking-tighter shadow-md">
+            AR
           </div>
           <div>
             <h1 className="text-sm font-black tracking-widest text-[#FFFDF9] uppercase">
-              PRASADAM DINE
+              AR_DINE
             </h1>
             <p className="text-[10px] font-bold tracking-wider text-[#FDE68A] uppercase">
               Restaurant Ops & AR

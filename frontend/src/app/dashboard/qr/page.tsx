@@ -104,7 +104,7 @@ export default function QrManagementPage() {
   const downloadQrPng = (qr: QrCode) => {
     const link = document.createElement('a');
     link.href = qr.imageData;
-    link.download = `prasadam-qr-${qr.qrType.toLowerCase()}-${qr._id}.png`;
+    link.download = `ar-dine-qr-${qr.qrType.toLowerCase()}-${qr._id}.png`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -368,7 +368,7 @@ export default function QrManagementPage() {
       {printQr && (
         <div className="hidden print:flex fixed inset-0 z-100 bg-white items-center justify-center p-12 flex-col text-center border-8 border-[#5E0B15]">
           <h1 className="text-3xl font-black text-[#5E0B15] uppercase tracking-widest mb-2 font-luxury">
-            PRASADAM DINE
+            AR_DINE
           </h1>
           <p className="text-sm font-semibold tracking-wider uppercase text-[#594B42] mb-6">
             Scan to view digital menu & interactive 3D dishes

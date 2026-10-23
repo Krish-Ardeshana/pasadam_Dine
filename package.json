@@ -1,7 +1,7 @@
 {
-  "name": "prasadam-dine-monorepo",
+  "name": "ar-dine-monorepo",
   "version": "1.0.0",
-  "description": "PRASADAM DINE - AR Smart Restaurant Management System",
+  "description": "AR_DINE - AR Smart Restaurant Management System",
   "private": true,
   "type": "module",
   "scripts": {
@@ -26,6 +26,6 @@
     "mongodb",
     "razorpay"
   ],
-  "author": "Prasadam Dine Team",
+  "author": "AR_DINE Team",
   "license": "UNLICENSED"
 }

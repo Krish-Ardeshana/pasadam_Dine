@@ -32,7 +32,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-1 text-center sm:text-left">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[#FBBF24] shadow-xs" />
-            <span className="font-semibold tracking-wide">PRASADAM DINE — AR-Enabled Restaurant Dining & Management Platform</span>
+            <span className="font-semibold tracking-wide">AR_DINE — AR-Enabled Restaurant Dining & Management Platform</span>
           </div>
           <div className="flex items-center gap-4 text-[11px] text-[#FEF3C7]">
             <Link href="/r/prasadam-divine" className="hover:text-white underline underline-offset-2 transition-colors">
@@ -53,12 +53,12 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           {/* Brand Identity */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#8B1226] to-[#680514] text-[#FDE68A] flex items-center justify-center font-luxury font-black text-xl shadow-sm group-hover:scale-102 transition-transform">
-              P
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#8B1226] to-[#680514] text-[#FDE68A] flex items-center justify-center font-luxury font-black text-sm tracking-tighter shadow-sm group-hover:scale-102 transition-transform">
+              AR
             </div>
             <div className="flex flex-col">
               <span className="font-luxury font-bold tracking-[0.16em] text-[#7A0C1E] text-lg leading-tight">
-                PRASADAM DINE
+                AR_DINE
               </span>
               <span className="text-[10px] font-bold tracking-[0.2em] text-[#B45309] uppercase">
                 Digital Menus & Restaurant Ops
@@ -167,7 +167,7 @@ export default function HomePage() {
 
               {/* Informative Subtitle */}
               <p className="text-base sm:text-lg text-[#6E5D53] leading-relaxed max-w-2xl mb-8">
-                PRASADAM DINE is a multi-tenant restaurant platform providing contactless QR-based menus,
+                AR_DINE is a multi-tenant restaurant platform providing contactless QR-based menus,
                 interactive 3D and Augmented Reality food previews, live order dispatch, and comprehensive back-office management.
               </p>
 
@@ -327,7 +327,7 @@ export default function HomePage() {
               Step-by-Step Flow
             </span>
             <h2 className="font-luxury text-3xl sm:text-4xl font-bold text-[#1C120C] mt-2 mb-4">
-              How PRASADAM DINE Operates
+              How AR_DINE Operates
             </h2>
             <p className="text-sm text-[#6E5D53] leading-relaxed">
               A straightforward process connecting customer table discovery to restaurant kitchen management.
@@ -422,11 +422,11 @@ export default function HomePage() {
             {/* Brand column */}
             <div className="md:col-span-2">
               <div className="flex items-center gap-2.5 mb-3">
-                <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#8B1226] to-[#680514] text-[#FDE68A] flex items-center justify-center font-luxury font-bold text-sm shadow-xs">
-                  P
+                <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#8B1226] to-[#680514] text-[#FDE68A] flex items-center justify-center font-luxury font-bold text-xs shadow-xs">
+                  AR
                 </div>
                 <span className="font-luxury font-bold tracking-[0.16em] text-[#7A0C1E] text-base">
-                  PRASADAM DINE
+                  AR_DINE
                 </span>
               </div>
               <p className="text-xs text-[#8C7A6F] max-w-sm leading-relaxed mb-4">
@@ -485,7 +485,7 @@ export default function HomePage() {
 
           {/* Copyright bar */}
           <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#A89D95] gap-2">
-            <div>© 2026 PRASADAM DINE. All rights reserved.</div>
+            <div>© 2026 AR_DINE. All rights reserved.</div>
             <div className="flex items-center gap-3 font-semibold text-[#8C7A6F]">
               <span>Digital Menus</span>
               <span>•</span>

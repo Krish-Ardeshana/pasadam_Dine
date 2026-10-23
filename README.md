@@ -1,4 +1,4 @@
-# PRASADAM DINE — Multi-Restaurant Dining Platform
+# AR_DINE — Multi-Restaurant Dining Platform
 
 Centralized platform supporting multi-restaurant dining operations with 3D Augmented Reality (AR) digital menus, QR codes, and role-based staff management.
 

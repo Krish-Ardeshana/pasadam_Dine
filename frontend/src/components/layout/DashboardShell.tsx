@@ -57,10 +57,10 @@ export const Header: React.FC<{ onToggleMobile: () => void }> = ({ onToggleMobil
         <div className="h-4 w-px bg-[#E8DEC9] hidden sm:block" />
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#8B1226] to-[#680514] text-[#FDE68A] font-black text-xs flex items-center justify-center shadow-xs">
-            PD
+            AR
           </div>
           <span className="text-xs font-black text-[#7A0C1E] uppercase tracking-wider hidden sm:inline">
-            PRASADAM DINE
+            AR_DINE
           </span>
         </div>
       </div>

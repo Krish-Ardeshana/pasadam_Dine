@@ -53,7 +53,7 @@ export interface LaunchCheckoutOptions {
 export async function launchRazorpayCheckout({
   restaurantSlug,
   orderNumber,
-  restaurantName = 'Prasadam Dine',
+  restaurantName = 'AR_DINE',
   customerName = '',
   customerPhone = '',
   customerEmail = '',
@@ -84,7 +84,7 @@ export async function launchRazorpayCheckout({
         email: customerEmail || '',
       },
       theme: {
-        color: '#5E0B15', // Prasadam Brand Burgundy
+        color: '#7A0C1E', // AR_DINE Brand Maroon
       },
       modal: {
         ondismiss: () => {

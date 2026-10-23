@@ -18,7 +18,7 @@ export class HealthController {
 
     return {
       status: isDbConnected ? 'ok' : 'degraded',
-      service: 'prasadam_dine_backend',
+      service: 'ar_dine_backend',
       version: '1.0.0',
       timestamp: new Date().toISOString(),
       uptime: process.uptime(),

@@ -23,7 +23,7 @@ const caveat = Caveat({
 });
 
 export const metadata: Metadata = {
-  title: 'PRASADAM DINE — AR Smart Restaurant Platform',
+  title: 'AR_DINE — AR Smart Restaurant Platform',
   description:
     'Multi-restaurant dining operations, interactive 3D AR menu visualization, and QR dining engine.',
 };

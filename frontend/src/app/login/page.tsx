@@ -76,11 +76,11 @@ export default function LoginPage() {
       <div className="w-full max-w-md bg-[#FFFDF9]/95 backdrop-blur-xl rounded-3xl border border-[#E8DEC9] shadow-2xl p-8 sm:p-10 transition-all relative z-10">
         {/* Brand Header */}
         <div className="text-center mb-8 border-b border-[#E8DEC9] pb-6">
-          <div className="inline-flex w-14 h-14 bg-gradient-to-br from-[#8B1226] to-[#680514] text-[#FDE68A] rounded-2xl items-center justify-center font-luxury font-bold text-2xl mb-3 shadow-md shadow-rose-950/20">
-            P
+          <div className="inline-flex w-14 h-14 bg-gradient-to-br from-[#8B1226] to-[#680514] text-[#FDE68A] rounded-2xl items-center justify-center font-luxury font-black text-xl mb-3 shadow-md shadow-rose-950/20 tracking-tighter">
+            AR
           </div>
           <h1 className="font-luxury text-2xl font-bold tracking-tight text-[#7A0C1E]">
-            PRASADAM DINE
+            AR_DINE
           </h1>
           <p className="text-xs font-bold tracking-wider text-[#B45309] uppercase mt-1">
             Restaurant Operations & Management
@@ -165,7 +165,7 @@ export default function LoginPage() {
       </div>
 
       <div className="mt-6 text-center text-xs text-[#8C7A6F] font-semibold tracking-wide relative z-10">
-        PRASADAM DINE — AR DIGITAL DINING & OPERATIONS PLATFORM
+        AR_DINE — AR DIGITAL DINING & OPERATIONS PLATFORM
       </div>
     </div>
   );

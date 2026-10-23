@@ -89,7 +89,7 @@ function PublicMenuInner() {
             href="/"
             className="inline-flex items-center justify-center px-6 py-2.5 bg-gradient-to-r from-[#8B1226] to-[#680514] text-white text-xs font-bold uppercase tracking-wider rounded-xl hover:from-[#9E152D] hover:to-[#7A0C1E] transition-all shadow-md"
           >
-            Return to Prasadam Dine
+            Return to AR_DINE
           </Link>
         </div>
       </div>
@@ -141,7 +141,7 @@ function PublicMenuInner() {
             <div className="flex-1">
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 mb-1.5">
                 <h1 className="text-2xl sm:text-3xl font-black text-[#7A0C1E] uppercase tracking-wide font-luxury">
-                  {restaurant?.name || 'Prasadam Dining Venue'}
+                  {restaurant?.name || 'AR_DINE Venue'}
                 </h1>
                 <Badge variant="success">OPEN FOR DINING</Badge>
                 {tableParam && (
@@ -417,10 +417,10 @@ function PublicMenuInner() {
       <footer className="border-t border-[#E8DEC9] bg-[#FFFDF9] py-8 mt-12 text-center text-xs text-[#6E5D53]">
         <div className="max-w-5xl mx-auto px-4 space-y-2">
           <p className="font-black text-[#7A0C1E] uppercase tracking-widest font-luxury">
-            PRASADAM DINE — AR SMART RESTAURANT SYSTEM
+            AR_DINE — AR SMART RESTAURANT SYSTEM
           </p>
           <p className="text-[11px] text-[#8C7A6F]">
-            Powered by Prasadam Dine centralized multi-tenant restaurant cloud.
+            Powered by AR_DINE centralized multi-tenant restaurant cloud.
           </p>
         </div>
       </footer>
