@@ -11,7 +11,7 @@ export const Table: React.FC<React.TableHTMLAttributes<HTMLTableElement>> = ({
   children,
   ...props
 }) => (
-  <div className="w-full overflow-x-auto rounded-none border border-[#DCD5C9] bg-white shadow-none">
+  <div className="w-full overflow-x-auto rounded-2xl border border-[#E8DEC9] bg-white shadow-xs">
     <table className={clsx('w-full text-left text-xs border-collapse bg-white', className)} {...props}>
       {children}
     </table>
@@ -23,7 +23,7 @@ export const Thead: React.FC<React.HTMLAttributes<HTMLTableSectionElement>> = ({
   children,
   ...props
 }) => (
-  <thead className={clsx('bg-[#EDE1CF] border-b border-[#DCD5C9] text-[#5E0B15] uppercase text-[11px] font-black tracking-wider', className)} {...props}>
+  <thead className={clsx('bg-gradient-to-r from-[#FEF3C7] to-[#FAF7F2] border-b border-[#E8DEC9] text-[#7A0C1E] uppercase text-[11px] font-black tracking-wider', className)} {...props}>
     {children}
   </thead>
 );
@@ -33,7 +33,7 @@ export const Th: React.FC<React.ThHTMLAttributes<HTMLTableCellElement>> = ({
   children,
   ...props
 }) => (
-  <th className={clsx('px-4 py-3 font-black text-[#5E0B15]', className)} {...props}>
+  <th className={clsx('px-4 py-3 font-black text-[#7A0C1E]', className)} {...props}>
     {children}
   </th>
 );
@@ -43,7 +43,7 @@ export const Td: React.FC<React.TdHTMLAttributes<HTMLTableCellElement>> = ({
   children,
   ...props
 }) => (
-  <td className={clsx('px-4 py-3 border-b border-[#DCD5C9] text-[#1C120C] text-xs', className)} {...props}>
+  <td className={clsx('px-4 py-3 border-b border-[#FAF7F2] text-[#1C120C] text-xs', className)} {...props}>
     {children}
   </td>
 );
@@ -56,7 +56,7 @@ export const Skeleton: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   ...props
 }) => (
   <div
-    className={clsx('animate-pulse bg-[#EDE1CF]/60 rounded-none', className)}
+    className={clsx('animate-pulse bg-[#FEF3C7]/50 rounded-xl', className)}
     {...props}
   />
 );
@@ -84,17 +84,17 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
   return (
     <div
       className={clsx(
-        'w-full py-12 px-6 flex flex-col items-center justify-center text-center bg-white rounded-none border border-dashed border-[#DCD5C9]',
+        'w-full py-12 px-6 flex flex-col items-center justify-center text-center bg-white rounded-2xl border border-dashed border-[#E8DEC9]',
         className,
       )}
     >
-      <div className="w-12 h-12 rounded-none bg-[#EDE1CF] border border-[#DCD5C9] flex items-center justify-center mb-3">
-        <Icon className="w-6 h-6 text-[#90323D]" />
+      <div className="w-12 h-12 rounded-2xl bg-[#FEF3C7] border border-[#FDE68A] flex items-center justify-center mb-3 text-[#7A0C1E]">
+        <Icon className="w-6 h-6" />
       </div>
-      <h3 className="text-xs font-black text-[#5E0B15] uppercase tracking-wider mb-1">
+      <h3 className="text-xs font-black text-[#7A0C1E] uppercase tracking-wider mb-1 font-luxury">
         {title}
       </h3>
-      <p className="text-xs text-[#594B42] max-w-sm mb-4">{description}</p>
+      <p className="text-xs text-[#6B5B4E] max-w-sm mb-4">{description}</p>
       {actionLabel && onAction && (
         <Button variant="primary" size="sm" onClick={onAction}>
           {actionLabel}

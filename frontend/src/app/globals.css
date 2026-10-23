@@ -2,34 +2,31 @@
 
 @layer base {
   :root {
-    /* Strict 60:30:10 Brand Palette */
-    --color-almond: #EDE1CF;           /* 60% - Warm Architectural Surface & Canvas */
-    --color-almond-light: #F7F3EC;     /* Soft warm almond tint */
-    --color-almond-border: #DCD5C9;    /* Refined structural divider */
-    
-    --color-cordovan: #90323D;         /* 30% - Navigation accents, secondary actions, brand accents */
-    --color-cordovan-dark: #7A2731;    /* Cordovan Hover */
-    --color-cordovan-light: #F9ECEE;   /* Cordovan subtle tint */
-    
-    --color-chocolate-cosmos: #5E0B15; /* 10% - Primary actions, crucial headings, strong active states */
-    --color-chocolate-dark: #450810;   /* Deepest Chocolate Hover */
-    
-    --app-bg: #EDE1CF;                 /* Almond Canvas */
-    --surface-white: #FFFFFF;          /* Pure crisp white card surfaces for high contrast */
-    --surface-card: #FFFFFF;
-    --surface-subtle: #F7F3EC;
-    
-    --text-primary: #1C120C;           /* Crisp high-contrast readable dark espresso/charcoal */
-    --text-secondary: #252322;         /* Charcoal text */
-    --text-muted: #594B42;             /* Muted espresso taupe (WCAG AAA compliant on white) */
-    --border-subtle: #DCD5C9;          /* Neutral architectural border */
-    --border-strong: #90323D;          /* Cordovan border */
-    --border-chocolate: #5E0B15;       /* Chocolate cosmos border */
-  }
+    /* Theme: Yellow, Glossy Maroon & Milky White */
+    --color-milky-white: #FAF7F2;      /* Milky white warm canvas */
+    --color-milky-surface: #FFFDF9;    /* Pure milky card surface */
+    --color-milky-border: #E8DEC9;     /* Soft warm milky divider */
 
-  /* Architectural Square Geometry: Every UI element has square architectural corners */
-  *, *::before, *::after {
-    border-radius: 0px !important;
+    --color-maroon: #7A0C1E;           /* Glossy Royal Maroon */
+    --color-maroon-dark: #5E0513;      /* Deep Maroon */
+    --color-maroon-light: #FDF2F4;     /* Soft Maroon Tint */
+    
+    --color-yellow: #F59E0B;           /* Vibrant Golden Saffron Yellow */
+    --color-yellow-light: #FEF3C7;     /* Soft Warm Yellow Tint */
+    --color-yellow-dark: #D97706;      /* Deep Golden Amber */
+    
+    --app-bg: #FAF7F2;                 /* Milky White Background */
+    --surface-white: #FFFFFF;          /* Pure crisp white card surfaces */
+    --surface-card: #FFFFFF;
+    --surface-subtle: #FDFBF7;
+    
+    --text-primary: #1C120C;           /* Readable deep espresso text */
+    --text-secondary: #2E2219;         /* Charcoal text */
+    --text-muted: #6B5B4E;             /* Muted espresso warm taupe */
+    
+    --border-subtle: #E8DEC9;          /* Milky soft border */
+    --border-maroon: #7A0C1E;          /* Maroon accent border */
+    --border-yellow: #F59E0B;          /* Golden yellow border */
   }
 
   html {
@@ -57,70 +54,88 @@
 }
 
 /* Palette Utility Classes */
-.bg-almond { background-color: var(--color-almond); }
-.bg-almond-light { background-color: var(--color-almond-light); }
-.bg-cordovan { background-color: var(--color-cordovan); }
-.bg-cordovan-dark { background-color: var(--color-cordovan-dark); }
-.bg-cordovan-light { background-color: var(--color-cordovan-light); }
-.bg-chocolate { background-color: var(--color-chocolate-cosmos); }
-.bg-chocolate-dark { background-color: var(--color-chocolate-dark); }
+.bg-milky { background-color: var(--color-milky-white); }
+.bg-milky-surface { background-color: var(--color-milky-surface); }
+.bg-maroon { background-color: var(--color-maroon); }
+.bg-maroon-dark { background-color: var(--color-maroon-dark); }
+.bg-maroon-light { background-color: var(--color-maroon-light); }
+.bg-yellow-gold { background-color: var(--color-yellow); }
+.bg-yellow-light { background-color: var(--color-yellow-light); }
+.bg-yellow-dark { background-color: var(--color-yellow-dark); }
 
-.text-cordovan { color: var(--color-cordovan); }
-.text-chocolate { color: var(--color-chocolate-cosmos); }
+.text-maroon { color: var(--color-maroon); }
+.text-yellow-gold { color: var(--color-yellow-dark); }
 .text-primary-dark { color: var(--text-primary); }
 .text-muted-taupe { color: var(--text-muted); }
 
-.border-almond { border-color: var(--color-almond-border); }
-.border-cordovan { border-color: var(--color-cordovan); }
-.border-chocolate { border-color: var(--color-chocolate-cosmos); }
+.border-milky { border-color: var(--color-milky-border); }
+.border-maroon { border-color: var(--color-maroon); }
+.border-yellow { border-color: var(--color-yellow); }
 
-/* Architectural Surface Classes */
-.card-architectural {
+/* Glossy Maroon Effect */
+.bg-glossy-maroon {
+  background: linear-gradient(135deg, #8B1226 0%, #680514 100%);
+  box-shadow: 0 4px 14px 0 rgba(122, 12, 30, 0.22);
+}
+
+.bg-glossy-yellow {
+  background: linear-gradient(135deg, #FBBF24 0%, #E69500 100%);
+  box-shadow: 0 4px 14px 0 rgba(230, 149, 0, 0.22);
+}
+
+/* Rounded Surface Classes */
+.card-rounded {
   background-color: #FFFFFF;
-  border: 1px solid var(--color-almond-border);
-  box-shadow: 0 1px 3px 0 rgba(28, 18, 12, 0.04);
+  border: 1px solid var(--color-milky-border);
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px 0 rgba(28, 18, 12, 0.04);
 }
 
 .card-elevated {
   background-color: #FFFFFF;
-  border: 1px solid var(--color-almond-border);
-  box-shadow: 0 4px 12px 0 rgba(28, 18, 12, 0.08);
+  border: 1px solid var(--color-milky-border);
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px 0 rgba(122, 12, 30, 0.08);
 }
 
-/* Architectural Micro-Interactions */
-.hover-architectural {
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+/* Micro-Interactions */
+.hover-rounded {
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.hover-architectural:hover {
-  border-color: var(--color-cordovan);
-  box-shadow: 0 4px 12px 0 rgba(144, 50, 61, 0.10);
+.hover-rounded:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-yellow);
+  box-shadow: 0 8px 20px 0 rgba(122, 12, 30, 0.10);
 }
 
-/* Model Viewer Custom Element Dimensions with Architectural Square Corners */
+/* Model Viewer Custom Element Dimensions with Smooth Rounded Corners */
 model-viewer {
   width: 100%;
   height: 100%;
   min-height: 380px;
   background-color: #FAF7F2;
   --poster-color: transparent;
-  border-radius: 0px !important;
+  border-radius: 1.25rem;
+  overflow: hidden;
 }
 
-/* Architectural Clean Scrollbar */
+/* Clean Rounded Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-almond-light);
+  background: var(--color-milky-white);
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-almond-border);
+  background: var(--color-milky-border);
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-cordovan);
+  background: var(--color-maroon);
 }

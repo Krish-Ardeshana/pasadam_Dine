@@ -52,19 +52,19 @@ export default function AdminUsersPage() {
   return (
     <DashboardShell>
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E8E2D9] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E8DEC9] pb-4">
         <div>
-          <h1 className="text-xl font-black text-[#5E0B15] uppercase tracking-wider">
+          <h1 className="text-xl font-black text-[#7A0C1E] uppercase tracking-wider font-luxury">
             Platform Users & Staff
           </h1>
-          <p className="text-xs text-[#594B42] uppercase tracking-wider mt-0.5">
+          <p className="text-xs text-[#6B5B4E] uppercase tracking-wider mt-0.5">
             Role management, platform assignments, and account status controls
           </p>
         </div>
       </div>
 
       {/* Search Bar */}
-      <div className="bg-white rounded-none border border-[#DCD5C9] p-4 shadow-none">
+      <div className="bg-white rounded-2xl border border-[#E8DEC9] p-4 shadow-xs">
         <div className="w-full sm:w-80">
           <Input
             placeholder="SEARCH BY NAME OR EMAIL..."
@@ -98,7 +98,7 @@ export default function AdminUsersPage() {
             </tr>
           ) : users.length === 0 ? (
             <tr>
-              <Td colSpan={5} className="text-center py-8 text-xs font-bold uppercase text-[#594B42]">
+              <Td colSpan={5} className="text-center py-8 text-xs font-bold uppercase text-[#6B5B4E]">
                 No users found.
               </Td>
             </tr>
@@ -108,16 +108,16 @@ export default function AdminUsersPage() {
               const isSuper = u.role === Role.SUPER_ADMIN;
 
               return (
-                <tr key={uId} className="hover:bg-[#F7F3EC] transition-colors">
+                <tr key={uId} className="hover:bg-[#FEF3C7]/30 transition-colors">
                   <Td className="font-bold text-[#1C120C] uppercase tracking-wider">
                     {u.name}
                   </Td>
-                  <Td className="font-mono text-xs text-[#594B42]">{u.email}</Td>
+                  <Td className="font-mono text-xs text-[#6B5B4E]">{u.email}</Td>
                   <Td>
                     {isSuper ? (
                       <Badge variant="dietary">SUPER_ADMIN</Badge>
                     ) : u.role === Role.RESTAURANT_OWNER ? (
-                      <Badge variant="info">RESTAURANT_OWNER</Badge>
+                      <Badge variant="warning">RESTAURANT_OWNER</Badge>
                     ) : u.role === Role.RESTAURANT_MANAGER ? (
                       <Badge variant="neutral">MANAGER</Badge>
                     ) : (

@@ -18,28 +18,28 @@ export const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const baseClasses =
-    'inline-flex items-center justify-center font-bold tracking-wider uppercase transition-colors duration-150 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed select-none border text-xs rounded-none shadow-none';
+    'inline-flex items-center justify-center font-bold tracking-wider uppercase transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed select-none border text-xs rounded-xl shadow-xs';
 
   const sizeClasses = {
-    sm: 'px-3 py-1.5 text-[11px]',
-    md: 'px-4 py-2 text-xs',
-    lg: 'px-6 py-2.5 text-sm',
+    sm: 'px-3.5 py-1.5 text-[11px] rounded-lg',
+    md: 'px-4 py-2 text-xs rounded-xl',
+    lg: 'px-6 py-2.5 text-sm rounded-xl',
   };
 
   const variantClasses = {
-    // 30% Cordovan primary action button
+    // Glossy Maroon primary action button
     primary:
-      'bg-[#90323D] text-white border-[#90323D] hover:bg-[#7A2731] hover:border-[#7A2731] active:bg-[#641E26]',
-    // 10% Chocolate Cosmos secondary action button
+      'bg-gradient-to-r from-[#8B1226] to-[#680514] text-white border-[#7A0C1E] hover:from-[#9C162D] hover:to-[#7A0C1E] active:from-[#5E0513] active:to-[#45020B] shadow-sm hover:shadow-md hover:shadow-[#7A0C1E]/20',
+    // Golden Yellow secondary action button
     secondary:
-      'bg-[#5E0B15] text-white border-[#5E0B15] hover:bg-[#450810] hover:border-[#450810] active:bg-[#32040B]',
-    // 60% Almond neutral outline action button
+      'bg-gradient-to-r from-[#FBBF24] to-[#E69500] text-[#5E0513] border-[#F59E0B] hover:from-[#F59E0B] hover:to-[#D97706] hover:text-white active:from-[#D97706] active:to-[#B45309] shadow-sm hover:shadow-md hover:shadow-[#F59E0B]/20',
+    // Milky White outline button
     outline:
-      'bg-[#FAF8F5] text-[#1C120C] border-[#DCD5C9] hover:bg-[#EDE1CF] hover:border-[#90323D] active:bg-[#DCD5C9]',
+      'bg-white text-[#7A0C1E] border-[#E8DEC9] hover:bg-[#FEF3C7] hover:border-[#F59E0B] hover:text-[#5E0513] active:bg-[#FDE68A]',
     ghost:
-      'bg-transparent text-[#1C120C] border-transparent hover:bg-[#EDE1CF] active:bg-[#DCD5C9]',
+      'bg-transparent text-[#7A0C1E] border-transparent hover:bg-[#FEF3C7] active:bg-[#FDE68A]',
     danger:
-      'bg-[#90323D] text-white border-[#90323D] hover:bg-[#7A2731]',
+      'bg-[#7A0C1E] text-white border-[#7A0C1E] hover:bg-[#5E0513] active:bg-[#45020B] shadow-sm',
   };
 
   return (

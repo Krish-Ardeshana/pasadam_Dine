@@ -57,18 +57,18 @@ function PublicDishDetailContent() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-[#EDE1CF] flex items-center justify-center p-4">
-        <div className="max-w-md w-full bg-white border-2 border-[#5E0B15] p-8 text-center">
-          <div className="w-14 h-14 bg-[#FDF0F1] border border-[#F6C6CC] flex items-center justify-center mx-auto mb-4">
-            <AlertTriangle className="w-7 h-7 text-[#90323D]" />
+      <div className="min-h-screen bg-[#FAF7F2] flex items-center justify-center p-4">
+        <div className="max-w-md w-full bg-white rounded-3xl border border-[#E8DEC9] shadow-xl p-8 text-center">
+          <div className="w-14 h-14 bg-red-50 rounded-2xl border border-red-200 flex items-center justify-center mx-auto mb-4">
+            <AlertTriangle className="w-7 h-7 text-red-600" />
           </div>
-          <h1 className="text-lg font-bold text-[#5E0B15] uppercase tracking-wider mb-2 font-luxury">
+          <h1 className="text-lg font-bold text-[#7A0C1E] uppercase tracking-wider mb-2 font-luxury">
             Dish Not Available
           </h1>
-          <p className="text-xs text-[#594B42] mb-6 leading-relaxed">{error}</p>
+          <p className="text-xs text-[#6E5D53] mb-6 leading-relaxed">{error}</p>
           <Link
             href={`/r/${restaurantSlug}`}
-            className="inline-flex items-center justify-center px-5 py-2.5 bg-[#5E0B15] text-white text-xs font-bold uppercase tracking-wider hover:bg-[#450810] transition-colors"
+            className="inline-flex items-center justify-center px-6 py-2.5 bg-gradient-to-r from-[#8B1226] to-[#680514] text-white text-xs font-bold uppercase tracking-wider rounded-xl hover:from-[#9E152D] hover:to-[#7A0C1E] transition-all shadow-md"
           >
             Back to Restaurant Menu
           </Link>
@@ -80,19 +80,19 @@ function PublicDishDetailContent() {
   const has3D = !!dish?.model3dUrl;
 
   return (
-    <div className="min-h-screen bg-[#EDE1CF] text-[#1C120C]">
+    <div className="min-h-screen bg-[#FAF7F2] text-[#1C120C] selection:bg-[#F59E0B]/30 selection:text-[#7A0C1E]">
       {/* Top Navbar */}
-      <header className="bg-white border-b border-[#DCD5C9] px-4 py-4 sticky top-0 z-30">
+      <header className="bg-[#FFFDF9]/95 backdrop-blur-md border-b border-[#E8DEC9] px-4 py-4 sticky top-0 z-30 shadow-2xs">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <Link
             href={`/r/${restaurantSlug}`}
-            className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#5E0B15] hover:text-[#90323D] px-3 py-1.5 hover:bg-[#EDE1CF] transition-colors"
+            className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#7A0C1E] hover:text-[#5E0513] px-3.5 py-1.5 rounded-xl hover:bg-[#FEF3C7] transition-all border border-transparent hover:border-[#F59E0B]/30"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft className="w-4 h-4 text-[#F59E0B]" />
             <span>{restaurant?.name || 'Menu'}</span>
           </Link>
 
-          <span className="text-[11px] font-black uppercase tracking-widest text-[#5E0B15] bg-[#EDE1CF] px-2.5 py-1 border border-[#DCD5C9]">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-[#92400E] bg-[#FEF3C7] px-3 py-1 rounded-full border border-[#F59E0B]/30 shadow-2xs">
             PRASADAM DINE 3D AR
           </span>
         </div>
@@ -102,36 +102,36 @@ function PublicDishDetailContent() {
       <main className="max-w-4xl mx-auto px-4 py-8 space-y-6">
         {isLoading ? (
           <div className="space-y-4">
-            <Skeleton className="h-96 w-full" />
-            <Skeleton className="h-28 w-full" />
+            <Skeleton className="h-96 w-full rounded-3xl" />
+            <Skeleton className="h-28 w-full rounded-3xl" />
           </div>
         ) : (
           dish && (
             <>
               {/* Media Viewer Area */}
-              <div className="bg-white border border-[#DCD5C9] overflow-hidden">
+              <div className="bg-white rounded-3xl border border-[#E8DEC9] shadow-sm overflow-hidden">
                 {/* Mode Switcher Tabs */}
-                <div className="flex border-b border-[#DCD5C9] bg-[#EDE1CF]/60 p-2 gap-2">
+                <div className="flex border-b border-[#E8DEC9] bg-[#FAF7F2] p-2 gap-2">
                   <button
                     onClick={() => setActiveTab('3D')}
-                    className={`flex-1 py-2.5 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer transition-colors ${
+                    className={`flex-1 py-2.5 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 rounded-xl cursor-pointer transition-all ${
                       activeTab === '3D'
-                        ? 'bg-[#5E0B15] text-white'
-                        : 'bg-white text-[#594B42] hover:bg-[#EDE1CF] border border-[#DCD5C9]'
+                        ? 'bg-gradient-to-r from-[#8B1226] to-[#680514] text-white shadow-sm'
+                        : 'bg-white text-[#6E5D53] hover:bg-[#FEF3C7] hover:text-[#7A0C1E] border border-[#E8DEC9]'
                     }`}
                   >
-                    <Sparkles className="w-4 h-4" />
+                    <Sparkles className="w-4 h-4 text-[#FDE68A]" />
                     <span>Interactive 3D / AR View {has3D ? '' : '(Pending 3D Model)'}</span>
                   </button>
                   <button
                     onClick={() => setActiveTab('2D')}
-                    className={`flex-1 py-2.5 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer transition-colors ${
+                    className={`flex-1 py-2.5 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 rounded-xl cursor-pointer transition-all ${
                       activeTab === '2D'
-                        ? 'bg-[#5E0B15] text-white'
-                        : 'bg-white text-[#594B42] hover:bg-[#EDE1CF] border border-[#DCD5C9]'
+                        ? 'bg-gradient-to-r from-[#8B1226] to-[#680514] text-white shadow-sm'
+                        : 'bg-white text-[#6E5D53] hover:bg-[#FEF3C7] hover:text-[#7A0C1E] border border-[#E8DEC9]'
                     }`}
                   >
-                    <UtensilsCrossed className="w-4 h-4" />
+                    <UtensilsCrossed className="w-4 h-4 text-[#B45309]" />
                     <span>High-Res 2D Photography</span>
                   </button>
                 </div>
@@ -151,7 +151,7 @@ function PublicDishDetailContent() {
                 {/* 2D Photography Tab */}
                 {(activeTab === '2D' || !has3D) && (
                   <div className="p-6 bg-white flex flex-col items-center">
-                    <div className="w-full max-h-[420px] h-80 bg-[#FAF7F2] border border-[#DCD5C9] flex items-center justify-center overflow-hidden mb-4">
+                    <div className="w-full max-h-[420px] h-80 bg-[#FAF7F2] rounded-2xl border border-[#E8DEC9] flex items-center justify-center overflow-hidden mb-4">
                       {selectedImage ? (
                         <img
                           src={api.resolveMediaUrl(selectedImage)}
@@ -160,8 +160,8 @@ function PublicDishDetailContent() {
                         />
                       ) : (
                         <div className="text-center p-8">
-                          <UtensilsCrossed className="w-16 h-16 text-[#DCD5C9] mx-auto mb-2" />
-                          <p className="text-xs font-bold text-[#594B42] uppercase">
+                          <UtensilsCrossed className="w-16 h-16 text-[#E8DEC9] mx-auto mb-2" />
+                          <p className="text-xs font-bold text-[#6E5D53] uppercase">
                             No photograph uploaded
                           </p>
                         </div>
@@ -175,10 +175,10 @@ function PublicDishDetailContent() {
                           <button
                             key={idx}
                             onClick={() => setSelectedImage(img)}
-                            className={`w-16 h-16 border-2 shrink-0 overflow-hidden cursor-pointer transition-colors ${
+                            className={`w-16 h-16 rounded-xl border-2 shrink-0 overflow-hidden cursor-pointer transition-all ${
                               selectedImage === img
-                                ? 'border-[#5E0B15]'
-                                : 'border-[#DCD5C9] opacity-70 hover:opacity-100'
+                                ? 'border-[#7A0C1E] shadow-sm scale-105'
+                                : 'border-[#E8DEC9] opacity-70 hover:opacity-100'
                             }`}
                           >
                             <img
@@ -195,19 +195,19 @@ function PublicDishDetailContent() {
               </div>
 
               {/* Dish Specification & Details Card */}
-              <div className="bg-white border border-[#DCD5C9] p-7 space-y-6">
-                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 border-b border-[#DCD5C9] pb-5">
+              <div className="bg-white rounded-3xl border border-[#E8DEC9] p-7 sm:p-8 space-y-6 shadow-sm">
+                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 border-b border-[#E8DEC9] pb-5">
                   <div>
-                    <h1 className="text-2xl sm:text-3xl font-black text-[#5E0B15] uppercase tracking-wide font-luxury">
+                    <h1 className="text-2xl sm:text-3xl font-black text-[#7A0C1E] uppercase tracking-wide font-luxury">
                       {dish.name}
                     </h1>
-                    <p className="text-xs font-bold text-[#90323D] uppercase tracking-wider mt-1">
+                    <p className="text-xs font-bold text-[#B45309] uppercase tracking-wider mt-1">
                       {restaurant?.name}
                     </p>
                   </div>
 
                   <div className="text-left sm:text-right">
-                    <span className="text-2xl sm:text-3xl font-black font-mono text-[#5E0B15] block">
+                    <span className="text-2xl sm:text-3xl font-black font-mono text-[#7A0C1E] block">
                       {dish.currency} {dish.price.toFixed(2)}
                     </span>
                     <span className="text-xs font-bold uppercase tracking-wider">
@@ -216,7 +216,7 @@ function PublicDishDetailContent() {
                           Fresh & Available
                         </span>
                       ) : (
-                        <span className="text-[#90323D] flex items-center gap-1.5 sm:justify-end mt-1">
+                        <span className="text-[#8C7A6F] flex items-center gap-1.5 sm:justify-end mt-1">
                           Sold Out
                         </span>
                       )}
@@ -226,24 +226,24 @@ function PublicDishDetailContent() {
 
                 {/* Dietary & Recipe Attributes */}
                 <div>
-                  <h3 className="text-xs font-black uppercase tracking-wider text-[#5E0B15] mb-2.5">
+                  <h3 className="text-xs font-black uppercase tracking-wider text-[#7A0C1E] mb-2.5">
                     Dietary Classification & Hygiene
                   </h3>
                   <div className="flex flex-wrap gap-2">
                     {dish.dietaryFlags?.map((flag) => (
-                      <Badge key={flag} variant="dietary">
+                      <Badge key={flag} variant="dietary" className="rounded-full">
                         {flag}
                       </Badge>
                     ))}
                     {has3D && (
-                      <Badge variant="success">3D DIGITAL MODEL CERTIFIED</Badge>
+                      <Badge variant="success" className="rounded-full">3D DIGITAL MODEL CERTIFIED</Badge>
                     )}
                   </div>
                 </div>
 
                 {/* Description */}
                 <div>
-                  <h3 className="text-xs font-black uppercase tracking-wider text-[#5E0B15] mb-1.5">
+                  <h3 className="text-xs font-black uppercase tracking-wider text-[#7A0C1E] mb-1.5">
                     Preparation & Ingredients
                   </h3>
                   <p className="text-sm text-[#1C120C] leading-relaxed">
@@ -254,10 +254,10 @@ function PublicDishDetailContent() {
 
                 {/* AR Instructions Box */}
                 {has3D && (
-                  <div className="p-4 bg-[#EDE1CF]/60 border border-[#DCD5C9] flex items-start gap-3">
-                    <Smartphone className="w-5 h-5 text-[#90323D] shrink-0 mt-0.5" />
-                    <div className="text-xs text-[#594B42] leading-relaxed">
-                      <strong className="text-[#5E0B15] uppercase block mb-1">
+                  <div className="p-5 bg-[#FEF3C7]/60 rounded-2xl border border-[#F59E0B]/30 flex items-start gap-3 shadow-2xs">
+                    <Smartphone className="w-5 h-5 text-[#B45309] shrink-0 mt-0.5" />
+                    <div className="text-xs text-[#6E5D53] leading-relaxed">
+                      <strong className="text-[#7A0C1E] uppercase block mb-1">
                         How to place in Augmented Reality:
                       </strong>
                       On mobile devices (iOS Safari with AR Quick Look or Android Chrome with Scene Viewer),
@@ -279,8 +279,8 @@ export default function PublicDishDetailPage() {
   return (
     <React.Suspense
       fallback={
-        <div className="min-h-screen bg-[#EDE1CF] flex items-center justify-center">
-          <div className="w-8 h-8 border-4 border-[#5E0B15] border-t-transparent animate-spin" />
+        <div className="min-h-screen bg-[#FAF7F2] flex items-center justify-center">
+          <div className="w-8 h-8 border-4 border-[#7A0C1E] border-t-transparent rounded-full animate-spin" />
         </div>
       }
     >

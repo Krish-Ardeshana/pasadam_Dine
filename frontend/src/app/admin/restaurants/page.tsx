@@ -95,19 +95,19 @@ export default function AdminRestaurantsPage() {
   return (
     <DashboardShell>
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E8E2D9] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E8DEC9] pb-4">
         <div>
-          <h1 className="text-xl font-black text-[#5E0B15] uppercase tracking-wider">
+          <h1 className="text-xl font-black text-[#7A0C1E] uppercase tracking-wider font-luxury">
             Restaurant Approvals & Tenants
           </h1>
-          <p className="text-xs text-[#594B42] uppercase tracking-wider mt-0.5">
+          <p className="text-xs text-[#6E5D53] uppercase tracking-wider mt-0.5">
             Platform governance, status approval, and multi-tenant security
           </p>
         </div>
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white rounded-none border border-[#DCD5C9] p-4 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-none">
+      <div className="bg-white rounded-2xl border border-[#E8DEC9] p-4 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
         <div className="w-full sm:w-72 relative">
           <Input
             placeholder="SEARCH BY RESTAURANT NAME..."
@@ -123,10 +123,10 @@ export default function AdminRestaurantsPage() {
             <button
               key={st}
               onClick={() => setStatusFilter(st)}
-              className={`px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider rounded-none border cursor-pointer transition-colors ${
+              className={`px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider rounded-xl border cursor-pointer transition-all ${
                 statusFilter === st
-                  ? 'bg-[#5E0B15] text-[#EDE1CF] border-[#5E0B15]'
-                  : 'bg-white text-[#594B42] border-[#DCD5C9] hover:bg-[#EDE1CF]'
+                  ? 'bg-gradient-to-r from-[#8B1226] to-[#680514] text-white border-transparent shadow-xs'
+                  : 'bg-[#FFFDF9] text-[#6E5D53] border-[#E8DEC9] hover:bg-[#FAF7F2]'
               }`}
             >
               {st}

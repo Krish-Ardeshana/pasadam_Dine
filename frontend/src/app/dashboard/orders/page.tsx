@@ -269,72 +269,72 @@ export default function RestaurantOrdersPage() {
     <DashboardShell>
       <div className="space-y-6">
         {/* Page Header */}
-        <div className="flex items-center justify-between pb-3 border-b border-[#DCD5C9]">
+        <div className="flex items-center justify-between pb-3 border-b border-[#E8DEC9]">
           <div>
-            <h1 className="text-xl font-black text-[#5E0B15] uppercase tracking-wider font-luxury">
+            <h1 className="text-xl font-black text-[#7A0C1E] uppercase tracking-wider font-luxury">
               Kitchen & Live Orders
             </h1>
-            <p className="text-xs text-[#594B42] uppercase tracking-wider mt-0.5">
+            <p className="text-xs text-[#6E5D53] uppercase tracking-wider mt-0.5">
               Manage real-time dining requests for {currentRestaurant?.name || 'Restaurant'}
             </p>
           </div>
         </div>
 
         {/* Top Control Bar */}
-        <div className="bg-white p-3 border border-[#DCD5C9] flex flex-col md:flex-row items-center justify-between gap-3">
+        <div className="bg-white p-3.5 rounded-2xl border border-[#E8DEC9] shadow-sm flex flex-col md:flex-row items-center justify-between gap-3">
           {/* Status Filter Tabs */}
-          <div className="flex items-center gap-1 overflow-x-auto w-full md:w-auto">
+          <div className="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto">
             <button
               onClick={() => setActiveTab('ACTIVE')}
-              className={`px-3 py-1.5 text-xs font-bold uppercase tracking-wider cursor-pointer transition-colors ${
+              className={`px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider rounded-xl cursor-pointer transition-all ${
                 activeTab === 'ACTIVE'
-                  ? 'bg-[#5E0B15] text-white'
-                  : 'bg-transparent text-[#594B42] hover:bg-[#EDE1CF]'
+                  ? 'bg-gradient-to-r from-[#8B1226] to-[#680514] text-white shadow-xs'
+                  : 'bg-transparent text-[#6E5D53] hover:bg-[#FAF7F2]'
               }`}
             >
               Active Stream ({orders.filter((o) => o.status !== OrderStatus.SERVED && o.status !== OrderStatus.CANCELLED).length})
             </button>
             <button
               onClick={() => setActiveTab('PENDING')}
-              className={`px-3 py-1.5 text-xs font-bold uppercase tracking-wider cursor-pointer transition-colors flex items-center gap-1.5 ${
+              className={`px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider rounded-xl cursor-pointer transition-all flex items-center gap-1.5 ${
                 activeTab === 'PENDING'
-                  ? 'bg-[#90323D] text-white'
-                  : 'bg-transparent text-[#594B42] hover:bg-[#EDE1CF]'
+                  ? 'bg-gradient-to-r from-[#8B1226] to-[#680514] text-white shadow-xs'
+                  : 'bg-transparent text-[#6E5D53] hover:bg-[#FAF7F2]'
               }`}
             >
               <span>Pending New</span>
               {pendingCount > 0 && (
-                <span className="w-4 h-4 bg-white text-[#90323D] font-black text-[10px] flex items-center justify-center">
+                <span className="w-4 h-4 rounded-full bg-[#FEF3C7] text-[#92400E] font-black text-[10px] flex items-center justify-center">
                   {pendingCount}
                 </span>
               )}
             </button>
             <button
               onClick={() => setActiveTab('PREPARING')}
-              className={`px-3 py-1.5 text-xs font-bold uppercase tracking-wider cursor-pointer transition-colors ${
+              className={`px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider rounded-xl cursor-pointer transition-all ${
                 activeTab === 'PREPARING'
-                  ? 'bg-[#5E0B15] text-white'
-                  : 'bg-transparent text-[#594B42] hover:bg-[#EDE1CF]'
+                  ? 'bg-gradient-to-r from-[#8B1226] to-[#680514] text-white shadow-xs'
+                  : 'bg-transparent text-[#6E5D53] hover:bg-[#FAF7F2]'
               }`}
             >
               Cooking ({preparingCount})
             </button>
             <button
               onClick={() => setActiveTab('READY')}
-              className={`px-3 py-1.5 text-xs font-bold uppercase tracking-wider cursor-pointer transition-colors ${
+              className={`px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider rounded-xl cursor-pointer transition-all ${
                 activeTab === 'READY'
-                  ? 'bg-[#1E562A] text-white'
-                  : 'bg-transparent text-[#594B42] hover:bg-[#EDE1CF]'
+                  ? 'bg-emerald-700 text-white shadow-xs'
+                  : 'bg-transparent text-[#6E5D53] hover:bg-[#FAF7F2]'
               }`}
             >
               Ready to Serve ({readyCount})
             </button>
             <button
               onClick={() => setActiveTab('ALL')}
-              className={`px-3 py-1.5 text-xs font-bold uppercase tracking-wider cursor-pointer transition-colors ${
+              className={`px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider rounded-xl cursor-pointer transition-all ${
                 activeTab === 'ALL'
-                  ? 'bg-[#5E0B15] text-white'
-                  : 'bg-transparent text-[#594B42] hover:bg-[#EDE1CF]'
+                  ? 'bg-gradient-to-r from-[#8B1226] to-[#680514] text-white shadow-xs'
+                  : 'bg-transparent text-[#6E5D53] hover:bg-[#FAF7F2]'
               }`}
             >
               All / History
@@ -344,13 +344,13 @@ export default function RestaurantOrdersPage() {
           {/* Quick Actions & Live Badge */}
           <div className="flex items-center gap-2 w-full md:w-auto justify-end">
             {/* Real-time Indicator */}
-            <div className="flex items-center gap-1.5 px-2.5 py-1.5 bg-[#EDE1CF] border border-[#DCD5C9] text-[11px] font-bold">
+            <div className="flex items-center gap-1.5 px-3 py-1.5 bg-[#FEF3C7] rounded-xl border border-[#F59E0B]/30 text-[11px] font-bold">
               <span
-                className={`w-2 h-2 ${
-                  isConnectedSse ? 'bg-[#1E562A] animate-ping' : 'bg-[#90323D]'
+                className={`w-2 h-2 rounded-full ${
+                  isConnectedSse ? 'bg-emerald-600 animate-ping' : 'bg-[#7A0C1E]'
                 }`}
               />
-              <span className="text-[#594B42] uppercase">
+              <span className="text-[#92400E] uppercase">
                 {isConnectedSse ? 'Live Stream Active' : 'Polling Sync (6s)'}
               </span>
             </div>
@@ -358,10 +358,10 @@ export default function RestaurantOrdersPage() {
             {/* Audio chime toggle */}
             <button
               onClick={() => setSoundEnabled(!soundEnabled)}
-              className={`p-1.5 border transition-colors cursor-pointer ${
+              className={`p-2 rounded-xl border transition-all cursor-pointer ${
                 soundEnabled
-                  ? 'bg-[#5E0B15] text-white border-[#5E0B15]'
-                  : 'bg-white text-[#594B42] border-[#DCD5C9] hover:bg-[#EDE1CF]'
+                  ? 'bg-[#7A0C1E] text-white border-[#7A0C1E] shadow-xs'
+                  : 'bg-white text-[#6E5D53] border-[#E8DEC9] hover:bg-[#FAF7F2]'
               }`}
               title={soundEnabled ? 'Kitchen alerts sound on' : 'Kitchen alerts sound off'}
             >
@@ -375,7 +375,7 @@ export default function RestaurantOrdersPage() {
                 loadOrders();
               }}
               disabled={isRefreshing}
-              className="p-1.5 bg-white text-[#594B42] hover:text-[#5E0B15] border border-[#DCD5C9] transition-colors cursor-pointer"
+              className="p-2 rounded-xl bg-white text-[#6E5D53] hover:text-[#7A0C1E] border border-[#E8DEC9] transition-all cursor-pointer shadow-2xs"
             >
               <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin' : ''}`} />
             </button>
@@ -384,38 +384,38 @@ export default function RestaurantOrdersPage() {
 
         {/* Search Bar */}
         <div className="relative">
-          <Search className="w-4 h-4 text-[#594B42] absolute left-3 top-3 pointer-events-none" />
+          <Search className="w-4 h-4 text-[#8C7A6F] absolute left-3.5 top-3.5 pointer-events-none" />
           <input
             type="text"
             placeholder="FILTER ORDERS BY ORDER #, TABLE, OR CUSTOMER..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 text-xs bg-white border border-[#DCD5C9] focus:outline-none focus:border-[#90323D] uppercase placeholder-[#594B42] text-[#1C120C]"
+            className="w-full pl-10 pr-4 py-2.5 text-xs bg-white rounded-xl border border-[#E8DEC9] focus:outline-none focus:border-[#F59E0B] focus:ring-1 focus:ring-[#F59E0B] uppercase placeholder-[#8C7A6F] text-[#1C120C] shadow-2xs"
           />
         </div>
 
         {/* Orders Feed */}
         {isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <Skeleton className="h-64" />
-            <Skeleton className="h-64" />
-            <Skeleton className="h-64" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <Skeleton className="h-64 rounded-2xl" />
+            <Skeleton className="h-64 rounded-2xl" />
+            <Skeleton className="h-64 rounded-2xl" />
           </div>
         ) : error ? (
-          <div className="p-4 bg-[#FDF0F1] border border-[#F6C6CC] text-[#90323D] flex items-start gap-3">
-            <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
+          <div className="p-4 bg-red-50 rounded-2xl border border-red-200 text-red-800 flex items-start gap-3 shadow-xs">
+            <AlertCircle className="w-5 h-5 shrink-0 mt-0.5 text-red-600" />
             <div>
               <h4 className="text-sm font-bold uppercase tracking-wider mb-1">Error Loading Orders</h4>
               <p className="text-xs">{error}</p>
             </div>
           </div>
         ) : filteredOrders.length === 0 ? (
-          <div className="bg-white border border-[#DCD5C9] p-12 text-center">
-            <UtensilsCrossed className="w-8 h-8 text-[#594B42] mx-auto mb-3" />
-            <h3 className="text-xs font-black text-[#5E0B15] uppercase tracking-wider mb-1">
+          <div className="bg-white rounded-3xl border border-[#E8DEC9] p-12 text-center shadow-sm">
+            <UtensilsCrossed className="w-8 h-8 text-[#B45309] mx-auto mb-3" />
+            <h3 className="text-xs font-black text-[#7A0C1E] uppercase tracking-wider mb-1">
               No orders found
             </h3>
-            <p className="text-xs text-[#594B42] max-w-sm mx-auto">
+            <p className="text-xs text-[#6E5D53] max-w-sm mx-auto">
               New dining and online orders placed via QR codes or digital menu will appear here automatically.
             </p>
           </div>
@@ -437,12 +437,12 @@ export default function RestaurantOrdersPage() {
               return (
                 <div
                   key={order._id}
-                  className={`bg-white border transition-colors duration-150 p-5 flex flex-col justify-between ${
+                  className={`bg-white rounded-2xl border transition-all duration-150 p-5 flex flex-col justify-between shadow-sm ${
                     isPending
-                      ? 'border-2 border-[#90323D]'
+                      ? 'border-2 border-[#F59E0B] shadow-md ring-1 ring-[#F59E0B]/20'
                       : isReady
-                        ? 'border-2 border-[#1E562A]'
-                        : 'border border-[#DCD5C9] hover:border-[#90323D]'
+                        ? 'border-2 border-emerald-600 shadow-md ring-1 ring-emerald-600/20'
+                        : 'border border-[#E8DEC9] hover:border-[#F59E0B]/50 hover:shadow-md'
                   }`}
                 >
                   <div className="space-y-4">
@@ -542,20 +542,20 @@ export default function RestaurantOrdersPage() {
                   </div>
 
                   {/* Lifecycle Action Buttons */}
-                  <div className="pt-4 border-t border-[#DCD5C9] mt-4">
+                  <div className="pt-4 border-t border-[#E8DEC9] mt-4">
                     {isPending && (
                       <div className="grid grid-cols-2 gap-2">
                         <button
                           type="button"
                           onClick={() => setDeclineOrderId(order._id)}
-                          className="py-2 px-3 text-xs font-bold uppercase border border-[#F6C6CC] bg-white text-[#90323D] hover:bg-[#FDF0F1] transition-colors cursor-pointer"
+                          className="py-2.5 px-3 text-xs font-bold uppercase rounded-xl border border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100 transition-all cursor-pointer"
                         >
                           Decline
                         </button>
                         <button
                           type="button"
                           onClick={() => handleUpdateStatus(order._id, OrderStatus.ACCEPTED)}
-                          className="py-2 px-3 text-xs font-bold uppercase bg-[#5E0B15] hover:bg-[#450810] text-white transition-colors cursor-pointer"
+                          className="py-2.5 px-3 text-xs font-bold uppercase rounded-xl bg-gradient-to-r from-[#8B1226] to-[#680514] hover:from-[#9E152D] hover:to-[#7A0C1E] text-white transition-all shadow-xs cursor-pointer"
                         >
                           Accept Order
                         </button>
@@ -566,9 +566,9 @@ export default function RestaurantOrdersPage() {
                       <button
                         type="button"
                         onClick={() => handleUpdateStatus(order._id, OrderStatus.PREPARING)}
-                        className="w-full py-2 px-3 text-xs font-bold uppercase bg-[#90323D] hover:bg-[#7A2731] text-white transition-colors cursor-pointer flex items-center justify-center gap-2"
+                        className="w-full py-2.5 px-3 text-xs font-bold uppercase rounded-xl bg-gradient-to-r from-[#8B1226] to-[#680514] hover:from-[#9E152D] hover:to-[#7A0C1E] text-white transition-all shadow-xs cursor-pointer flex items-center justify-center gap-2"
                       >
-                        <ChefHat className="w-4 h-4" />
+                        <ChefHat className="w-4 h-4 text-[#FDE68A]" />
                         <span>Start Cooking</span>
                       </button>
                     )}
@@ -577,9 +577,9 @@ export default function RestaurantOrdersPage() {
                       <button
                         type="button"
                         onClick={() => handleUpdateStatus(order._id, OrderStatus.READY)}
-                        className="w-full py-2 px-3 text-xs font-bold uppercase bg-[#1E562A] hover:bg-[#163f1f] text-white transition-colors cursor-pointer flex items-center justify-center gap-2"
+                        className="w-full py-2.5 px-3 text-xs font-bold uppercase rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white transition-all shadow-xs cursor-pointer flex items-center justify-center gap-2"
                       >
-                        <BellRing className="w-4 h-4" />
+                        <BellRing className="w-4 h-4 text-emerald-200" />
                         <span>Mark Ready for Pickup/Serve</span>
                       </button>
                     )}
@@ -588,21 +588,21 @@ export default function RestaurantOrdersPage() {
                       <button
                         type="button"
                         onClick={() => handleUpdateStatus(order._id, OrderStatus.SERVED)}
-                        className="w-full py-2 px-3 text-xs font-bold uppercase bg-[#1C120C] hover:bg-black text-white transition-colors cursor-pointer flex items-center justify-center gap-2"
+                        className="w-full py-2.5 px-3 text-xs font-bold uppercase rounded-xl bg-[#1C120C] hover:bg-black text-white transition-all shadow-xs cursor-pointer flex items-center justify-center gap-2"
                       >
-                        <Check className="w-4 h-4" />
+                        <Check className="w-4 h-4 text-emerald-400" />
                         <span>Mark as Served</span>
                       </button>
                     )}
 
                     {isServed && (
-                      <div className="text-center text-xs text-[#1E562A] font-bold uppercase py-1">
+                      <div className="text-center text-xs text-[#1E562A] font-bold uppercase py-1.5 bg-[#EBF7EE] rounded-xl border border-[#BCE1C7]">
                         ✓ Order Completed & Served
                       </div>
                     )}
 
                     {isCancelled && (
-                      <div className="text-center text-xs text-[#90323D] font-bold uppercase py-1">
+                      <div className="text-center text-xs text-rose-800 font-bold uppercase py-1.5 bg-rose-50 rounded-xl border border-rose-200">
                         ✕ Order Cancelled
                       </div>
                     )}

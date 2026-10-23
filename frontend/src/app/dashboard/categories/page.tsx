@@ -149,12 +149,12 @@ export default function CategoriesPage() {
   return (
     <DashboardShell>
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E8E2D9] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E8DEC9] pb-4">
         <div>
-          <h1 className="text-xl font-black text-[#5E0B15] uppercase tracking-wider">
+          <h1 className="text-xl font-black text-[#7A0C1E] uppercase tracking-wider font-luxury">
             Menu Categories
           </h1>
-          <p className="text-xs text-[#594B42] uppercase tracking-wider mt-0.5">
+          <p className="text-xs text-[#6E5D53] uppercase tracking-wider mt-0.5">
             Organize menu structure and sequence for the public digital menu
           </p>
         </div>

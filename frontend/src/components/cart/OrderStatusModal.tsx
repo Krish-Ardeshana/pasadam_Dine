@@ -137,41 +137,41 @@ export const OrderStatusModal: React.FC<OrderStatusModalProps> = ({ restaurantSl
         onClick={() => setIsDismissed(true)}
       />
 
-      <div className="relative w-full max-w-lg bg-white border-2 border-[#5E0B15] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      <div className="relative w-full max-w-lg bg-white rounded-3xl border border-[#E8DEC9] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
-        <div className="p-4 bg-[#EDE1CF] border-b border-[#DCD5C9] flex items-center justify-between">
+        <div className="p-4 bg-[#FFFDF9] border-b border-[#E8DEC9] flex items-center justify-between shadow-2xs">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-[#5E0B15] text-white flex items-center justify-center font-mono font-bold">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#8B1226] to-[#680514] text-[#FDE68A] flex items-center justify-center font-mono font-bold shadow-xs">
               #
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="text-sm font-black text-[#5E0B15] tracking-wider uppercase font-luxury">
+                <h3 className="text-sm font-black text-[#7A0C1E] tracking-wider uppercase font-luxury">
                   {currentOrder.orderNumber}
                 </h3>
                 {currentOrder.tableNumber && (
-                  <span className="text-[10px] font-bold bg-white border border-[#DCD5C9] text-[#594B42] px-1.5 py-0.5 uppercase">
+                  <span className="text-[10px] font-bold bg-[#FEF3C7] border border-[#F59E0B]/30 text-[#92400E] px-2 py-0.5 rounded-full uppercase">
                     {currentOrder.tableNumber}
                   </span>
                 )}
               </div>
-              <p className="text-[11px] text-[#594B42]">Live Kitchen Status Tracking</p>
+              <p className="text-[11px] text-[#6E5D53]">Live Kitchen Status Tracking</p>
             </div>
           </div>
           <div className="flex items-center gap-1.5">
             <button
               onClick={handleManualRefresh}
               disabled={isRefreshing}
-              className="p-1.5 text-[#594B42] hover:text-[#5E0B15] hover:bg-[#DCD5C9] transition-colors cursor-pointer"
+              className="p-2 rounded-xl text-[#6E5D53] hover:text-[#7A0C1E] hover:bg-[#FAF7F2] transition-colors cursor-pointer"
               title="Refresh status"
             >
               <RefreshCw
-                className={`w-4 h-4 ${isRefreshing ? 'animate-spin text-[#5E0B15]' : ''}`}
+                className={`w-4 h-4 ${isRefreshing ? 'animate-spin text-[#7A0C1E]' : ''}`}
               />
             </button>
             <button
               onClick={() => setIsDismissed(true)}
-              className="p-1.5 text-[#594B42] hover:text-[#5E0B15] hover:bg-[#DCD5C9] transition-colors cursor-pointer"
+              className="p-2 rounded-xl text-[#6E5D53] hover:text-[#7A0C1E] hover:bg-[#FAF7F2] transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -179,11 +179,11 @@ export const OrderStatusModal: React.FC<OrderStatusModalProps> = ({ restaurantSl
         </div>
 
         {/* Content */}
-        <div className="p-5 overflow-y-auto space-y-6">
+        <div className="p-5 overflow-y-auto space-y-5 bg-[#FAF7F2]">
           {/* Status Stepper */}
           {isCancelled ? (
-            <div className="p-4 bg-[#FDF0F1] border border-[#F6C6CC] text-[#90323D] flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 shrink-0 mt-0.5" />
+            <div className="p-4 bg-red-50 rounded-2xl border border-red-200 text-red-800 flex items-start gap-3 shadow-xs">
+              <AlertTriangle className="w-5 h-5 shrink-0 mt-0.5 text-red-600" />
               <div>
                 <h4 className="text-xs font-black uppercase tracking-wider mb-1">
                   Order Cancelled
@@ -195,12 +195,12 @@ export const OrderStatusModal: React.FC<OrderStatusModalProps> = ({ restaurantSl
               </div>
             </div>
           ) : (
-            <div className="bg-[#FAF7F2] border border-[#DCD5C9] p-4">
+            <div className="bg-white rounded-2xl border border-[#E8DEC9] p-5 shadow-sm">
               <div className="relative flex justify-between items-center">
                 {/* Connecting track */}
-                <div className="absolute top-4 left-4 right-4 h-0.5 bg-[#DCD5C9] z-0" />
+                <div className="absolute top-4 left-4 right-4 h-0.5 bg-[#E8DEC9] z-0" />
                 <div
-                  className="absolute top-4 left-4 h-0.5 bg-[#1E562A] z-0 transition-all duration-500"
+                  className="absolute top-4 left-4 h-0.5 bg-gradient-to-r from-[#F59E0B] to-[#1E562A] z-0 transition-all duration-500"
                   style={{
                     width: `${Math.min(100, (currentStepIndex / (steps.length - 1)) * 100)}%`,
                   }}
@@ -217,21 +217,21 @@ export const OrderStatusModal: React.FC<OrderStatusModalProps> = ({ restaurantSl
                       className="relative z-10 flex flex-col items-center gap-1.5"
                     >
                       <div
-                        className={`w-8 h-8 flex items-center justify-center transition-all ${
+                        className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${
                           isDone
-                            ? 'bg-[#1E562A] text-white'
-                            : 'bg-white border-2 border-[#DCD5C9] text-[#594B42]'
-                        } ${isCurrent ? 'ring-2 ring-[#5E0B15]' : ''}`}
+                            ? 'bg-[#1E562A] text-white shadow-xs'
+                            : 'bg-white border-2 border-[#E8DEC9] text-[#8C7A6F]'
+                        } ${isCurrent ? 'ring-4 ring-[#FEF3C7] bg-[#7A0C1E] text-white' : ''}`}
                       >
                         <Icon className="w-4 h-4" />
                       </div>
                       <span
                         className={`text-[9px] font-bold uppercase text-center max-w-[65px] leading-tight ${
                           isCurrent
-                            ? 'text-[#5E0B15]'
+                            ? 'text-[#7A0C1E]'
                             : isDone
                               ? 'text-[#1C120C]'
-                              : 'text-[#594B42]'
+                              : 'text-[#8C7A6F]'
                         }`}
                       >
                         {s.label}
@@ -244,20 +244,20 @@ export const OrderStatusModal: React.FC<OrderStatusModalProps> = ({ restaurantSl
           )}
 
           {/* Itemized Order Details */}
-          <div className="bg-white border border-[#DCD5C9] p-4 space-y-3">
-            <div className="flex items-center justify-between border-b border-[#DCD5C9] pb-2 text-xs font-black uppercase text-[#5E0B15]">
+          <div className="bg-white rounded-2xl border border-[#E8DEC9] p-5 space-y-3.5 shadow-sm">
+            <div className="flex items-center justify-between border-b border-[#E8DEC9] pb-2 text-xs font-black uppercase text-[#7A0C1E]">
               <span>Items Ordered</span>
-              <span className="font-mono">
+              <span className="font-mono text-sm">
                 {currentOrder.pricing.currency} {currentOrder.pricing.total.toFixed(2)}
               </span>
             </div>
 
             <div className="space-y-2 max-h-44 overflow-y-auto pr-1">
               {currentOrder.items.map((item, idx) => (
-                <div key={idx} className="flex justify-between items-start text-xs border-b border-[#FAF7F2] pb-1">
+                <div key={idx} className="flex justify-between items-start text-xs border-b border-[#FAF7F2] pb-1.5">
                   <div>
                     <div className="flex items-center gap-1.5">
-                      <span className="font-mono font-bold text-[#5E0B15]">
+                      <span className="font-mono font-bold text-[#7A0C1E]">
                         {item.quantity}x
                       </span>
                       <span className="font-bold text-[#1C120C] uppercase tracking-wide">
@@ -265,28 +265,28 @@ export const OrderStatusModal: React.FC<OrderStatusModalProps> = ({ restaurantSl
                       </span>
                     </div>
                     {item.instructions && (
-                      <p className="text-[10px] text-[#90323D] italic ml-5">
+                      <p className="text-[10px] text-[#B45309] italic ml-5">
                         Note: {item.instructions}
                       </p>
                     )}
                   </div>
-                  <span className="font-mono text-[#594B42]">
+                  <span className="font-mono text-[#6E5D53]">
                     {currentOrder.pricing.currency} {item.subtotal.toFixed(2)}
                   </span>
                 </div>
               ))}
             </div>
 
-            <div className="pt-2.5 border-t border-[#DCD5C9] flex justify-between items-center text-xs">
-              <span className="text-[#594B42] font-medium">Payment Status:</span>
+            <div className="pt-2.5 border-t border-[#E8DEC9] flex justify-between items-center text-xs">
+              <span className="text-[#6E5D53] font-medium">Payment Status:</span>
               <div className="flex items-center gap-1.5">
                 {currentOrder.paymentStatus === OrderPaymentStatus.PAID ? (
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-bold bg-[#EBF7EE] text-[#1E562A] border border-[#BCE1C7] uppercase">
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 text-[10px] font-bold bg-[#EBF7EE] text-[#1E562A] border border-[#BCE1C7] rounded-full uppercase">
                     <ShieldCheck className="w-3 h-3 text-[#1E562A]" />
                     PAID ({currentOrder.paymentMethod.replace(/_/g, ' ')})
                   </span>
                 ) : (
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-bold bg-[#FEF7EC] text-[#9A6216] border border-[#F6DEBA] uppercase">
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 text-[10px] font-bold bg-[#FEF3C7] text-[#92400E] border border-[#F59E0B]/30 rounded-full uppercase">
                     UNPAID ({currentOrder.paymentMethod.replace(/_/g, ' ')})
                   </span>
                 )}
@@ -296,10 +296,10 @@ export const OrderStatusModal: React.FC<OrderStatusModalProps> = ({ restaurantSl
             {/* Pay Now Button for Unpaid Orders */}
             {currentOrder.paymentStatus !== OrderPaymentStatus.PAID &&
               currentOrder.status !== OrderStatus.CANCELLED && (
-                <div className="pt-3 border-t border-[#DCD5C9]">
+                <div className="pt-3 border-t border-[#E8DEC9]">
                   {payError && (
-                    <div className="mb-2 p-2 bg-[#FDF0F1] border border-[#F6C6CC] text-[#90323D] text-[11px] flex items-center gap-2">
-                      <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
+                    <div className="mb-2 p-2 bg-red-50 rounded-xl border border-red-200 text-red-800 text-[11px] flex items-center gap-2">
+                      <AlertTriangle className="w-3.5 h-3.5 shrink-0 text-red-600" />
                       <span>{payError}</span>
                     </div>
                   )}
@@ -307,16 +307,16 @@ export const OrderStatusModal: React.FC<OrderStatusModalProps> = ({ restaurantSl
                     type="button"
                     onClick={handlePayNow}
                     disabled={isPaying}
-                    className="w-full py-2.5 bg-[#5E0B15] hover:bg-[#450810] text-white text-xs font-black uppercase tracking-wider transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                    className="w-full py-3 bg-gradient-to-r from-[#8B1226] to-[#680514] hover:from-[#9E152D] hover:to-[#7A0C1E] text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                   >
                     {isPaying ? (
                       <>
-                        <Loader2 className="w-4 h-4 animate-spin text-white" />
+                        <Loader2 className="w-4 h-4 animate-spin text-[#FDE68A]" />
                         <span>Opening Razorpay Checkout...</span>
                       </>
                     ) : (
                       <>
-                        <CreditCard className="w-4 h-4 text-white" />
+                        <CreditCard className="w-4 h-4 text-[#FDE68A]" />
                         <span>
                           Pay Now via Razorpay ({currentOrder.pricing.currency}{' '}
                           {currentOrder.pricing.total.toFixed(2)})
@@ -324,7 +324,7 @@ export const OrderStatusModal: React.FC<OrderStatusModalProps> = ({ restaurantSl
                       </>
                     )}
                   </button>
-                  <p className="text-[10px] text-center text-[#594B42] mt-1.5 uppercase font-bold">
+                  <p className="text-[10px] text-center text-[#8C7A6F] mt-1.5 uppercase font-semibold">
                     Test Mode Active • Instant Kitchen Confirmation
                   </p>
                 </div>
@@ -333,19 +333,19 @@ export const OrderStatusModal: React.FC<OrderStatusModalProps> = ({ restaurantSl
         </div>
 
         {/* Footer Actions */}
-        <div className="p-4 bg-[#EDE1CF] border-t border-[#DCD5C9] flex items-center justify-between gap-3">
+        <div className="p-4 bg-[#FFFDF9] border-t border-[#E8DEC9] flex items-center justify-between gap-3">
           <button
             onClick={() => {
               clearActiveOrder();
               setIsDismissed(true);
             }}
-            className="text-xs text-[#594B42] hover:text-[#90323D] font-bold uppercase underline cursor-pointer"
+            className="text-xs text-[#8C7A6F] hover:text-[#7A0C1E] font-bold uppercase underline cursor-pointer"
           >
             Start New Order
           </button>
           <button
             onClick={() => setIsDismissed(true)}
-            className="px-5 py-2 bg-[#5E0B15] hover:bg-[#450810] text-white text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer"
+            className="px-5 py-2.5 bg-gradient-to-r from-[#8B1226] to-[#680514] hover:from-[#9E152D] hover:to-[#7A0C1E] text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all shadow-xs cursor-pointer"
           >
             Keep Browsing Menu
           </button>

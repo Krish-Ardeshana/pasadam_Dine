@@ -87,19 +87,19 @@ export default function AdminDashboardPage() {
   return (
     <DashboardShell>
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#DCD5C9] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E8DEC9] pb-4">
         <div>
-          <h1 className="text-xl sm:text-2xl font-black text-[#5E0B15] uppercase tracking-wider">
+          <h1 className="text-xl sm:text-2xl font-black text-[#7A0C1E] uppercase tracking-wider font-luxury">
             Platform Super Admin Operations
           </h1>
-          <p className="text-xs text-[#594B42] uppercase tracking-wider mt-0.5">
+          <p className="text-xs text-[#6E5D53] uppercase tracking-wider mt-0.5">
             Real-time multi-tenant telemetry, restaurant approvals, and 3D catalog status
           </p>
         </div>
         <div className="flex items-center gap-2">
           <Link href="/admin/activity">
             <Button variant="outline" size="sm">
-              <Activity className="w-3.5 h-3.5 mr-1.5 text-[#90323D]" />
+              <Activity className="w-3.5 h-3.5 mr-1.5 text-[#B45309]" />
               Activity Audit
             </Button>
           </Link>
@@ -113,141 +113,157 @@ export default function AdminDashboardPage() {
 
       {/* Row 1: Restaurant & Platform Scope */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="border-l-4 border-l-[#5E0B15]">
+        <Card className="border border-[#E8DEC9] bg-white rounded-2xl shadow-sm hover:border-[#F59E0B]/50 transition-all p-5">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[11px] font-black text-[#594B42] uppercase tracking-wider">
+            <span className="text-[11px] font-black text-[#6E5D53] uppercase tracking-wider">
               Total Restaurants
             </span>
-            <Building2 className="w-4 h-4 text-[#5E0B15]" />
+            <div className="w-8 h-8 rounded-xl bg-[#FAF7F2] text-[#7A0C1E] flex items-center justify-center">
+              <Building2 className="w-4 h-4" />
+            </div>
           </div>
           {isLoading ? (
             <Skeleton className="h-7 w-16" />
           ) : (
-            <div className="text-2xl font-black text-[#1C120C] font-mono">{totalRestaurants}</div>
+            <div className="text-2xl font-black text-[#7A0C1E] font-mono">{totalRestaurants}</div>
           )}
-          <p className="text-[10px] text-[#594B42] mt-1 font-bold uppercase tracking-wider">Registered platform tenants</p>
+          <p className="text-[10px] text-[#8C7A6F] mt-1 font-bold uppercase tracking-wider">Registered platform tenants</p>
         </Card>
 
-        <Card className="border-l-4 border-l-[#1E562A]">
+        <Card className="border border-[#E8DEC9] bg-white rounded-2xl shadow-sm hover:border-[#F59E0B]/50 transition-all p-5">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[11px] font-black text-[#594B42] uppercase tracking-wider">
+            <span className="text-[11px] font-black text-[#6E5D53] uppercase tracking-wider">
               Active Dining Venues
             </span>
-            <CheckCircle className="w-4 h-4 text-[#1E562A]" />
+            <div className="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+              <CheckCircle className="w-4 h-4" />
+            </div>
           </div>
           {isLoading ? (
             <Skeleton className="h-7 w-16" />
           ) : (
-            <div className="text-2xl font-black text-[#1E562A] font-mono">{activeRestaurants}</div>
+            <div className="text-2xl font-black text-emerald-700 font-mono">{activeRestaurants}</div>
           )}
-          <p className="text-[10px] text-[#594B42] mt-1 font-bold uppercase tracking-wider">Approved & serving customers</p>
+          <p className="text-[10px] text-[#8C7A6F] mt-1 font-bold uppercase tracking-wider">Approved & serving customers</p>
         </Card>
 
-        <Card className="border-l-4 border-l-[#9A6216]">
+        <Card className="border border-[#E8DEC9] bg-white rounded-2xl shadow-sm hover:border-[#F59E0B]/50 transition-all p-5">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[11px] font-black text-[#594B42] uppercase tracking-wider">
+            <span className="text-[11px] font-black text-[#6E5D53] uppercase tracking-wider">
               Pending Approvals
             </span>
-            <Clock className="w-4 h-4 text-[#9A6216]" />
+            <div className="w-8 h-8 rounded-xl bg-[#FEF3C7] text-[#92400E] flex items-center justify-center">
+              <Clock className="w-4 h-4" />
+            </div>
           </div>
           {isLoading ? (
             <Skeleton className="h-7 w-16" />
           ) : (
-            <div className="text-2xl font-black text-[#9A6216] font-mono">{pendingApprovals}</div>
+            <div className="text-2xl font-black text-[#B45309] font-mono">{pendingApprovals}</div>
           )}
-          <p className="text-[10px] text-[#594B42] mt-1 font-bold uppercase tracking-wider">Requires Super Admin action</p>
+          <p className="text-[10px] text-[#8C7A6F] mt-1 font-bold uppercase tracking-wider">Requires Super Admin action</p>
         </Card>
 
-        <Card className="border-l-4 border-l-[#90323D]">
+        <Card className="border border-[#E8DEC9] bg-white rounded-2xl shadow-sm hover:border-[#F59E0B]/50 transition-all p-5">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[11px] font-black text-[#594B42] uppercase tracking-wider">
+            <span className="text-[11px] font-black text-[#6E5D53] uppercase tracking-wider">
               Platform Accounts
             </span>
-            <Users className="w-4 h-4 text-[#90323D]" />
+            <div className="w-8 h-8 rounded-xl bg-[#FAF7F2] text-[#7A0C1E] flex items-center justify-center">
+              <Users className="w-4 h-4" />
+            </div>
           </div>
           {isLoading ? (
             <Skeleton className="h-7 w-16" />
           ) : (
             <div className="text-2xl font-black text-[#1C120C] font-mono">{totalUsers}</div>
           )}
-          <p className="text-[10px] text-[#594B42] mt-1 font-bold uppercase tracking-wider">Owners, managers & staff</p>
+          <p className="text-[10px] text-[#8C7A6F] mt-1 font-bold uppercase tracking-wider">Owners, managers & staff</p>
         </Card>
       </div>
 
       {/* Row 2: Menu, 3D Models & Financial Analytics */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="border-l-4 border-l-[#5E0B15]">
+        <Card className="border border-[#E8DEC9] bg-white rounded-2xl shadow-sm hover:border-[#F59E0B]/50 transition-all p-5">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[11px] font-black text-[#594B42] uppercase tracking-wider">
+            <span className="text-[11px] font-black text-[#6E5D53] uppercase tracking-wider">
               Menu Categories
             </span>
-            <Layers className="w-4 h-4 text-[#5E0B15]" />
+            <div className="w-8 h-8 rounded-xl bg-[#FEF3C7] text-[#92400E] flex items-center justify-center">
+              <Layers className="w-4 h-4" />
+            </div>
           </div>
           {isLoading ? (
             <Skeleton className="h-7 w-16" />
           ) : (
             <div className="text-2xl font-black text-[#1C120C] font-mono">{totalCategories}</div>
           )}
-          <p className="text-[10px] text-[#594B42] mt-1 font-bold uppercase tracking-wider">Across all dining menus</p>
+          <p className="text-[10px] text-[#8C7A6F] mt-1 font-bold uppercase tracking-wider">Across all dining menus</p>
         </Card>
 
-        <Card className="border-l-4 border-l-[#90323D]">
+        <Card className="border border-[#E8DEC9] bg-white rounded-2xl shadow-sm hover:border-[#F59E0B]/50 transition-all p-5">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[11px] font-black text-[#594B42] uppercase tracking-wider">
+            <span className="text-[11px] font-black text-[#6E5D53] uppercase tracking-wider">
               Total Menu Dishes
             </span>
-            <UtensilsCrossed className="w-4 h-4 text-[#90323D]" />
+            <div className="w-8 h-8 rounded-xl bg-[#FAF7F2] text-[#7A0C1E] flex items-center justify-center">
+              <UtensilsCrossed className="w-4 h-4" />
+            </div>
           </div>
           {isLoading ? (
             <Skeleton className="h-7 w-16" />
           ) : (
             <div className="text-2xl font-black text-[#1C120C] font-mono">{totalDishes}</div>
           )}
-          <p className="text-[10px] text-[#594B42] mt-1 font-bold uppercase tracking-wider">Published culinary items</p>
+          <p className="text-[10px] text-[#8C7A6F] mt-1 font-bold uppercase tracking-wider">Published culinary items</p>
         </Card>
 
-        <Card className="border-l-4 border-l-[#1E562A]">
+        <Card className="border border-[#E8DEC9] bg-white rounded-2xl shadow-sm hover:border-[#F59E0B]/50 transition-all p-5">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[11px] font-black text-[#594B42] uppercase tracking-wider">
+            <span className="text-[11px] font-black text-[#6E5D53] uppercase tracking-wider">
               3D AR Enabled Dishes
             </span>
-            <Box className="w-4 h-4 text-[#1E562A]" />
+            <div className="w-8 h-8 rounded-xl bg-[#FEF3C7] text-[#92400E] flex items-center justify-center">
+              <Box className="w-4 h-4" />
+            </div>
           </div>
           {isLoading ? (
             <Skeleton className="h-7 w-16" />
           ) : (
-            <div className="text-2xl font-black text-[#1E562A] font-mono">{dishesWith3d}</div>
+            <div className="text-2xl font-black text-[#7A0C1E] font-mono">{dishesWith3d}</div>
           )}
-          <p className="text-[10px] text-[#594B42] mt-1 font-bold uppercase tracking-wider">
+          <p className="text-[10px] text-[#8C7A6F] mt-1 font-bold uppercase tracking-wider">
             {dishesWithout3d} dishes without 3D models
           </p>
         </Card>
 
-        <Card className="border-l-4 border-l-[#90323D]">
+        <Card className="border border-[#E8DEC9] bg-white rounded-2xl shadow-sm hover:border-[#F59E0B]/50 transition-all p-5">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[11px] font-black text-[#594B42] uppercase tracking-wider">
+            <span className="text-[11px] font-black text-[#6E5D53] uppercase tracking-wider">
               Verified Revenue
             </span>
-            <IndianRupee className="w-4 h-4 text-[#90323D]" />
+            <div className="w-8 h-8 rounded-xl bg-[#FEF3C7] text-[#92400E] flex items-center justify-center">
+              <IndianRupee className="w-4 h-4" />
+            </div>
           </div>
           {isLoading ? (
             <Skeleton className="h-7 w-20" />
           ) : (
-            <div className="text-2xl font-black text-[#5E0B15] font-mono">
+            <div className="text-2xl font-black text-[#7A0C1E] font-mono">
               ₹{totalRevenue.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
             </div>
           )}
-          <p className="text-[10px] text-[#594B42] mt-1 font-bold uppercase tracking-wider">
+          <p className="text-[10px] text-[#8C7A6F] mt-1 font-bold uppercase tracking-wider">
             {totalOrders} orders ({completedOrders} completed)
           </p>
         </Card>
       </div>
 
       {/* Priority Verification Queue */}
-      <div className="bg-white border border-[#DCD5C9] p-6 space-y-4">
-        <div className="flex items-center justify-between border-b border-[#DCD5C9] pb-3">
+      <div className="bg-white rounded-2xl border border-[#E8DEC9] p-6 space-y-4 shadow-sm">
+        <div className="flex items-center justify-between border-b border-[#E8DEC9] pb-3">
           <div className="flex items-center gap-2">
-            <Clock className="w-4 h-4 text-[#9A6216]" />
+            <Clock className="w-4 h-4 text-[#B45309]" />
             <h2 className="text-xs font-black uppercase tracking-wider text-[#5E0B15]">
               Priority Verification Queue ({pendingApprovals})
             </h2>

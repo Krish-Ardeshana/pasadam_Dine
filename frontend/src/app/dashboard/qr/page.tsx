@@ -142,12 +142,12 @@ export default function QrManagementPage() {
   return (
     <DashboardShell>
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#DCD5C9] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E8DEC9] pb-4">
         <div>
-          <h1 className="text-xl font-black text-[#5E0B15] uppercase tracking-wider font-luxury">
+          <h1 className="text-xl font-black text-[#7A0C1E] uppercase tracking-wider font-luxury">
             Dine-In QR Codes & Placards
           </h1>
-          <p className="text-xs text-[#594B42] uppercase tracking-wider mt-0.5">
+          <p className="text-xs text-[#6E5D53] uppercase tracking-wider mt-0.5">
             Table stands and direct dish AR QR codes pointing to live digital menu
           </p>
         </div>
@@ -161,35 +161,35 @@ export default function QrManagementPage() {
       </div>
 
       {/* Tabs & Search Bar */}
-      <div className="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between bg-white border border-[#DCD5C9] p-3">
+      <div className="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between bg-white rounded-2xl border border-[#E8DEC9] p-3.5 shadow-sm">
         {/* Tabs */}
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1.5">
           <button
             onClick={() => setActiveTab('ALL')}
-            className={`px-3 py-1.5 text-xs font-bold uppercase tracking-wider cursor-pointer transition-colors ${
+            className={`px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider rounded-xl cursor-pointer transition-all ${
               activeTab === 'ALL'
-                ? 'bg-[#5E0B15] text-white'
-                : 'bg-transparent text-[#594B42] hover:bg-[#EDE1CF]'
+                ? 'bg-gradient-to-r from-[#8B1226] to-[#680514] text-white shadow-xs'
+                : 'bg-transparent text-[#6E5D53] hover:bg-[#FAF7F2]'
             }`}
           >
             All QRs ({qrCodes.length})
           </button>
           <button
             onClick={() => setActiveTab('MENU')}
-            className={`px-3 py-1.5 text-xs font-bold uppercase tracking-wider cursor-pointer transition-colors ${
+            className={`px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider rounded-xl cursor-pointer transition-all ${
               activeTab === 'MENU'
-                ? 'bg-[#5E0B15] text-white'
-                : 'bg-transparent text-[#594B42] hover:bg-[#EDE1CF]'
+                ? 'bg-gradient-to-r from-[#8B1226] to-[#680514] text-white shadow-xs'
+                : 'bg-transparent text-[#6E5D53] hover:bg-[#FAF7F2]'
             }`}
           >
             Menu Stands ({qrCodes.filter((q) => q.qrType === QrType.RESTAURANT_MENU).length})
           </button>
           <button
             onClick={() => setActiveTab('DISH')}
-            className={`px-3 py-1.5 text-xs font-bold uppercase tracking-wider cursor-pointer transition-colors ${
+            className={`px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider rounded-xl cursor-pointer transition-all ${
               activeTab === 'DISH'
-                ? 'bg-[#5E0B15] text-white'
-                : 'bg-transparent text-[#594B42] hover:bg-[#EDE1CF]'
+                ? 'bg-gradient-to-r from-[#8B1226] to-[#680514] text-white shadow-xs'
+                : 'bg-transparent text-[#6E5D53] hover:bg-[#FAF7F2]'
             }`}
           >
             Dish 3D AR ({qrCodes.filter((q) => q.qrType === QrType.DISH_DIRECT).length})
@@ -203,7 +203,7 @@ export default function QrManagementPage() {
             placeholder="Search QR codes or URLs..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full px-3 py-1.5 bg-white border border-[#DCD5C9] text-xs text-[#1C120C] focus:outline-none focus:border-[#90323D] placeholder-[#594B42]"
+            className="w-full px-3.5 py-2 bg-[#FFFDF9] rounded-xl border border-[#E8DEC9] text-xs text-[#1C120C] focus:outline-none focus:border-[#F59E0B] focus:ring-1 focus:ring-[#F59E0B] placeholder-[#8C7A6F]"
           />
         </div>
       </div>
@@ -211,12 +211,12 @@ export default function QrManagementPage() {
       {/* QR Codes Grid */}
       {isLoading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Skeleton className="h-64 w-full" />
-          <Skeleton className="h-64 w-full" />
-          <Skeleton className="h-64 w-full" />
+          <Skeleton className="h-64 w-full rounded-2xl" />
+          <Skeleton className="h-64 w-full rounded-2xl" />
+          <Skeleton className="h-64 w-full rounded-2xl" />
         </div>
       ) : filteredQrCodes.length === 0 ? (
-        <div className="bg-white border border-[#DCD5C9] p-12 text-center text-xs font-bold uppercase text-[#594B42]">
+        <div className="bg-white rounded-3xl border border-[#E8DEC9] p-12 text-center text-xs font-bold uppercase text-[#6E5D53] shadow-sm">
           No QR codes found matching your criteria. Click &quot;Generate QR Code&quot; to create a new stand.
         </div>
       ) : (
@@ -231,7 +231,7 @@ export default function QrManagementPage() {
             return (
               <div
                 key={qr._id}
-                className="bg-white border border-[#DCD5C9] p-6 flex flex-col justify-between hover:border-[#90323D] transition-colors"
+                className="bg-white rounded-2xl border border-[#E8DEC9] p-6 flex flex-col justify-between hover:border-[#F59E0B]/50 hover:shadow-md transition-all shadow-sm"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">

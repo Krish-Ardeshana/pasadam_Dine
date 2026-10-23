@@ -269,12 +269,12 @@ export default function DishesPage() {
   return (
     <DashboardShell>
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E8E2D9] pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E8DEC9] pb-4">
         <div>
-          <h1 className="text-xl font-black text-[#5E0B15] uppercase tracking-wider">
+          <h1 className="text-xl font-black text-[#7A0C1E] uppercase tracking-wider font-luxury">
             Dishes & 3D AR Assets
           </h1>
-          <p className="text-xs text-[#594B42] uppercase tracking-wider mt-0.5">
+          <p className="text-xs text-[#6E5D53] uppercase tracking-wider mt-0.5">
             Manage culinary offerings, pricing, availability, and 3D food models ({filteredDishes.length} items)
           </p>
         </div>
@@ -289,13 +289,13 @@ export default function DishesPage() {
       </div>
 
       {categories.length === 0 && (
-        <div className="p-4 bg-[#FDF0F1] border border-[#F6C6CC] text-[#90323D] text-xs font-semibold uppercase tracking-wider">
+        <div className="p-4 bg-red-50 rounded-2xl border border-red-200 text-red-800 text-xs font-semibold uppercase tracking-wider shadow-xs">
           Notice: You must create at least one Menu Category before adding dishes.
         </div>
       )}
 
       {/* Comprehensive Multi-Filter Bar */}
-      <div className="bg-white border border-[#DCD5C9] p-4 flex flex-wrap items-center justify-between gap-3 shadow-none">
+      <div className="bg-white rounded-2xl border border-[#E8DEC9] p-4 flex flex-wrap items-center justify-between gap-3 shadow-sm">
         <div className="flex flex-wrap items-center gap-3 flex-1 min-w-[280px]">
           {/* Search Input */}
           <div className="w-full sm:w-64">
@@ -312,7 +312,7 @@ export default function DishesPage() {
             <select
               value={selectedCatId}
               onChange={(e) => setSelectedCatId(e.target.value)}
-              className="w-full px-3 py-2 bg-white border border-[#DCD5C9] text-xs font-semibold uppercase text-[#594B42] focus:outline-none focus:ring-1 focus:ring-[#90323D] focus:border-[#90323D]"
+              className="w-full px-3 py-2 bg-[#FFFDF9] rounded-xl border border-[#E8DEC9] text-xs font-semibold uppercase text-[#6E5D53] focus:outline-none focus:ring-1 focus:ring-[#F59E0B] focus:border-[#F59E0B]"
             >
               <option value="">All Categories</option>
               {categories.map((c) => (
@@ -328,7 +328,7 @@ export default function DishesPage() {
             <select
               value={availabilityFilter}
               onChange={(e) => setAvailabilityFilter(e.target.value as any)}
-              className="w-full px-3 py-2 bg-white border border-[#DCD5C9] text-xs font-semibold uppercase text-[#594B42] focus:outline-none focus:ring-1 focus:ring-[#90323D] focus:border-[#90323D]"
+              className="w-full px-3 py-2 bg-[#FFFDF9] rounded-xl border border-[#E8DEC9] text-xs font-semibold uppercase text-[#6E5D53] focus:outline-none focus:ring-1 focus:ring-[#F59E0B] focus:border-[#F59E0B]"
             >
               <option value="ALL">All Availability</option>
               <option value="AVAILABLE">In Stock Only</option>
@@ -341,7 +341,7 @@ export default function DishesPage() {
             <select
               value={model3dFilter}
               onChange={(e) => setModel3dFilter(e.target.value as any)}
-              className="w-full px-3 py-2 bg-white border border-[#DCD5C9] text-xs font-semibold uppercase text-[#594B42] focus:outline-none focus:ring-1 focus:ring-[#90323D] focus:border-[#90323D]"
+              className="w-full px-3 py-2 bg-[#FFFDF9] rounded-xl border border-[#E8DEC9] text-xs font-semibold uppercase text-[#6E5D53] focus:outline-none focus:ring-1 focus:ring-[#F59E0B] focus:border-[#F59E0B]"
             >
               <option value="ALL">All 3D Status</option>
               <option value="HAS_3D">3D Model Ready</option>
@@ -350,23 +350,21 @@ export default function DishesPage() {
           </div>
         </div>
 
-        {/* View Mode Switcher */}
-        <div className="flex items-center border border-[#DCD5C9]">
+        {/* View Mode Toggle */}
+        <div className="flex items-center gap-1 border border-[#E8DEC9] rounded-xl p-1 bg-[#FAF7F2]">
           <button
-            type="button"
             onClick={() => setViewMode('TABLE')}
-            className={`p-2 transition-colors cursor-pointer ${
-              viewMode === 'TABLE' ? 'bg-[#5E0B15] text-white' : 'bg-white text-[#594B42] hover:bg-[#F7F3EC]'
+            className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
+              viewMode === 'TABLE' ? 'bg-[#7A0C1E] text-white shadow-xs' : 'text-[#6E5D53] hover:text-[#7A0C1E]'
             }`}
             title="Table View"
           >
             <List className="w-4 h-4" />
           </button>
           <button
-            type="button"
             onClick={() => setViewMode('CARDS')}
-            className={`p-2 transition-colors cursor-pointer ${
-              viewMode === 'CARDS' ? 'bg-[#5E0B15] text-white' : 'bg-white text-[#594B42] hover:bg-[#F7F3EC]'
+            className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
+              viewMode === 'CARDS' ? 'bg-[#7A0C1E] text-white shadow-xs' : 'text-[#6E5D53] hover:text-[#7A0C1E]'
             }`}
             title="Cards View"
           >
