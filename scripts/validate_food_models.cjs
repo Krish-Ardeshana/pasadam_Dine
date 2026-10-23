@@ -10,6 +10,7 @@ const expectedCatalog = [
   { id: 'rice-biryani', file: 'biryani_rice.glb', category: 'Rice and Biryani', license: 'CC-BY' },
   { id: 'dal-curry-tadka', file: 'dal_curry.glb', category: 'Gujarati & Punjabi Food', license: 'CC-BY' },
   { id: 'badam-halwa-dessert', file: 'halwa_dessert.glb', category: 'Desserts', license: 'CC-BY' },
+  { id: 'rajasthani-ghewar', file: 'premium_ghewar_lowpoly.glb', category: 'Desserts (Rajasthani Sweets)', license: 'Custom 3D' },
   { id: 'chocolate-mousse-cake', file: 'chocolate_cake.glb', category: 'Cakes and Bakery', license: 'CC-BY' },
   { id: 'paneer-tikka-starter', file: 'paneer_tikka_platter.glb', category: 'Indian Starters', license: 'CC0' },
   { id: 'garden-kachumber-salad', file: 'salad_bowl.glb', category: 'Indian Starters', license: 'CC-BY' },

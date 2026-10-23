@@ -346,6 +346,38 @@ export class BootstrapService implements OnApplicationBootstrap {
             }
           ).exec();
         }
+
+        // Ensure Royal Rajasthani Rabri Ghewar is provisioned with 3D AR model
+        const ghewarDish = await this.dishModel.findOne({ restaurantId: restaurant._id, slug: 'royal-rajasthani-rabri-ghewar' }).exec();
+        if (!ghewarDish) {
+          await this.dishModel.create({
+            name: 'Royal Rajasthani Rabri Ghewar',
+            slug: 'royal-rajasthani-rabri-ghewar',
+            restaurantId: restaurant._id,
+            categoryId: category._id,
+            price: 8.50,
+            currency: 'USD',
+            description: 'Traditional crisp honeycomb ghewar soaked in saffron sugar syrup, topped with rich malai rabri, roasted pistachios, and pure saffron strands.',
+            isAvailable: true,
+            isPublished: true,
+            dietaryFlags: ['Pure Vegetarian', 'Satvik', 'Contains Dairy', 'Contains Nuts'],
+            imageUrls: ['/images/hero_thali.jpg'],
+            model3dUrl: '/models/premium_ghewar_lowpoly.glb',
+            displayOrder: 11,
+          });
+          this.logger.log('Royal Rajasthani Rabri Ghewar created with 3D model');
+        } else {
+          await this.dishModel.updateOne(
+            { _id: ghewarDish._id },
+            {
+              $set: {
+                model3dUrl: '/models/premium_ghewar_lowpoly.glb',
+                isAvailable: true,
+                isPublished: true,
+              },
+            }
+          ).exec();
+        }
       }
     } catch (error) {
       this.logger.error(`Error provisioning demo restaurant: ${(error as any).message}`);

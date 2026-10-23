@@ -192,6 +192,29 @@ export const FOOD_MODEL_CATALOG: FoodModelMeta[] = [
     },
   },
   {
+    id: 'rajasthani-ghewar',
+    foodName: 'Premium Rajasthani Rabri Ghewar',
+    category: 'Desserts',
+    glbUrl: '/models/premium_ghewar_lowpoly.glb',
+    thumbnailUrl: '/images/hero_thali.jpg',
+    description: 'Traditional Rajasthani honeycomb ghewar topped with creamy rabri, pistachio and saffron garnish on a serving plate.',
+    fileSizeFormatted: '100 KB',
+    sizeBytes: 102360,
+    source: 'Low-Poly 3D Artisan Sweets',
+    license: 'Custom 3D Food Asset',
+    licenseUrl: '#',
+    author: 'AR_DINE Culinary 3D Studio',
+    status: 'VERIFIED',
+    scaleConfig: {
+      cameraOrbit: '0deg 75deg auto',
+      fieldOfView: '30deg',
+      exposure: '1.0',
+      shadowIntensity: '0.8',
+      shadowSoftness: '0.6',
+      arScale: 'auto',
+    },
+  },
+  {
     id: 'chocolate-mousse-cake',
     foodName: 'Belgian Chocolate Truffle Mousse Cake',
     category: 'Cakes and Bakery',
@@ -318,7 +341,8 @@ export function findFoodModelByUrl(url?: string): FoodModelMeta | undefined {
     (m) =>
       cleanUrl.includes(m.glbUrl.toLowerCase()) ||
       cleanUrl.endsWith(m.id.toLowerCase()) ||
-      cleanUrl.includes(m.id.toLowerCase())
+      cleanUrl.includes(m.id.toLowerCase()) ||
+      (m.id === 'rajasthani-ghewar' && (cleanUrl.includes('ghewar') || cleanUrl.includes('premium_ghewar')))
   );
 }
 
@@ -332,6 +356,8 @@ export function suggestModelForDish(dishName: string, categoryName: string = '')
     return FOOD_MODEL_CATALOG.find((m) => m.id === 'the-golden-enigma');
   if (text.includes('gujarati'))
     return FOOD_MODEL_CATALOG.find((m) => m.id === 'gujarati-thali');
+  if (text.includes('ghewar') || text.includes('gevar') || text.includes('rabri'))
+    return FOOD_MODEL_CATALOG.find((m) => m.id === 'rajasthani-ghewar');
   if (text.includes('pizza')) return FOOD_MODEL_CATALOG.find((m) => m.id === 'pizza-margherita');
   if (text.includes('burger')) return FOOD_MODEL_CATALOG.find((m) => m.id === 'burger-gourmet');
   if (text.includes('biryani') || text.includes('pulao') || text.includes('rice'))
