@@ -198,10 +198,10 @@ export const FOOD_MODEL_CATALOG: FoodModelMeta[] = [
     glbUrl: '/models/premium_ghewar_lowpoly.glb',
     thumbnailUrl: '/images/hero_thali.jpg',
     description: 'Traditional Rajasthani honeycomb ghewar topped with creamy rabri, pistachio and saffron garnish on a serving plate.',
-    fileSizeFormatted: '100 KB',
-    sizeBytes: 102360,
-    source: 'Low-Poly 3D Artisan Sweets',
-    license: 'Custom 3D Food Asset',
+    fileSizeFormatted: '2.10 MB',
+    sizeBytes: 2202296,
+    source: 'Custom 3D Food Asset',
+    license: 'Proprietary / AR_DINE',
     licenseUrl: '#',
     author: 'AR_DINE Culinary 3D Studio',
     status: 'VERIFIED',
@@ -342,7 +342,7 @@ export function findFoodModelByUrl(url?: string): FoodModelMeta | undefined {
       cleanUrl.includes(m.glbUrl.toLowerCase()) ||
       cleanUrl.endsWith(m.id.toLowerCase()) ||
       cleanUrl.includes(m.id.toLowerCase()) ||
-      (m.id === 'rajasthani-ghewar' && (cleanUrl.includes('ghewar') || cleanUrl.includes('premium_ghewar')))
+      (m.id === 'rajasthani-ghewar' && (cleanUrl.includes('ghewar') || cleanUrl.includes('premium_ghewar') || cleanUrl.includes('870e955b')))
   );
 }
 
